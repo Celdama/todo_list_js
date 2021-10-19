@@ -7,6 +7,8 @@ const todo2 = todoFactory('todo2', 'fdsfdqfd');
 const todo3 = todoFactory('todo3', 'dfsqfdsqfdqfsfsdqf');
 const todo4 = todoFactory('buy milk', 'buy milk for luna');
 
+console.log(todo1);
+
 handleTodo.addTodo(todo1);
 handleTodo.addTodo(todo2);
 handleTodo.addTodo(todo3);
