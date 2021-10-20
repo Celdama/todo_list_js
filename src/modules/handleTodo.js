@@ -1,10 +1,11 @@
 import { v4 as uuidv4 } from 'uuid';
+// import { handleProjectList } from './handleProject';
 
-const todoFactory = (title, description, project) => ({
+const todoFactory = (title, description, project = 'inbox') => ({
   id: uuidv4(),
   title,
   description,
-  project: project || 'inbox',
+  project: project.toLowerCase(),
 });
 
 const handleTodoList = (() => {
@@ -18,6 +19,7 @@ const handleTodoList = (() => {
   const deleteTodo = (todo) => {
     listTodo = listTodo.filter((item) => item.id !== todo.id);
     console.log('todo deleted');
+    console.log(todo.id);
   };
 
   const getTodoList = () => {
@@ -29,10 +31,11 @@ const handleTodoList = (() => {
     console.log(todo.id);
   };
 
-  const updateTodo = (todo, title, description) => {
+  const updateTodo = (todo, title, description, project) => {
     const updatedTodo = {
       title,
       description,
+      project: project.toLowerCase(),
     };
 
     Object.assign(todo, updatedTodo);

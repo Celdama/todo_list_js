@@ -6,7 +6,7 @@ const projectFactory = (title) => {
 
   return {
     id: uuidv4(),
-    title,
+    title: title.toLowerCase(),
     todos,
   };
 };
@@ -21,17 +21,22 @@ const handleProjectList = (() => {
   };
 
   const getProjectByName = (name) => {
-    const results = listProject.find((project) => project.title === name);
-    // console.log(results);
+    const results = listProject.find((project) => project.title === name.toLowerCase());
     return results;
   };
 
   const addTodoToProject = (project, todo) => {
     const projectToAdd = getProjectByName(project.title);
 
-    if (projectToAdd.todos.find((t) => t.id === todo.id)) return;
+    if (projectToAdd.todos.find((task) => task.id === todo.id)) return;
     if (todo.project !== project.title) return;
     projectToAdd.todos.push(todo);
+  };
+
+  const deleteTodoFromProject = (project, todo) => {
+    const projectToDelete = getProjectByName(project);
+
+    projectToDelete.todos = projectToDelete.todos.filter((item) => item.id !== todo.id);
   };
 
   const showAllTodos = () => {
@@ -49,6 +54,7 @@ const handleProjectList = (() => {
     getProjectByName,
     showAllTodos,
     addTodoToProject,
+    deleteTodoFromProject,
   };
 })();
 
