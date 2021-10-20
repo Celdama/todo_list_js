@@ -15,36 +15,40 @@ const handleProjectList = (() => {
   const allTodos = handleTodoList.getTodoList();
   const listProject = [];
 
-  const dispatchTodoInProject = () => {
-    allTodos.forEach((todo) => {
-      listProject.forEach((project) => {
-        if (todo.project === project.title) {
-          project.todos.push(todo);
-        }
-      });
-    });
-  };
-
   const addProject = (project) => {
     listProject.push(project);
     // console.log('project added');
   };
 
-  const getAllProject = () => {
-    console.log(listProject);
-  };
-
   const getProjectByName = (name) => {
-    const results = listProject.filter((project) => project.title === name);
+    const results = listProject.find((project) => project.title === name);
     // console.log(results);
     return results;
   };
 
+  const addTodoToProject = (project, todo) => {
+    const projectToAdd = getProjectByName(project.title);
+
+    if (projectToAdd.todos.find((t) => t.id === todo.id)) return;
+    if (todo.project !== project.title) return;
+    projectToAdd.todos.push(todo);
+  };
+
+  const showAllTodos = () => {
+    console.log('-----');
+    console.table(allTodos);
+  };
+
+  const getAllProject = () => {
+    console.table(listProject);
+  };
+
   return {
     addProject,
-    dispatchTodoInProject,
     getAllProject,
     getProjectByName,
+    showAllTodos,
+    addTodoToProject,
   };
 })();
 
