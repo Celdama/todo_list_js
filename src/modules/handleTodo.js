@@ -1,5 +1,4 @@
 import { v4 as uuidv4 } from 'uuid';
-// import { handleProjectList } from './handleProject';
 
 const todoFactory = (title, description, project = 'inbox') => ({
   id: uuidv4(),
@@ -8,18 +7,28 @@ const todoFactory = (title, description, project = 'inbox') => ({
   project: project.toLowerCase(),
 });
 
-const handleTodoList = (() => {
+const todoFactory2 = (todo) => ({
+  id: uuidv4(),
+  title: todo.title,
+  description: todo.description,
+  project: todo.project.toLowerCase() || 'inbox',
+});
+
+const handleTodoListModule = (() => {
   let listTodo = [];
 
   const addTodo = (todo) => {
     listTodo.push(todo);
-    // console.log('todo added');
   };
 
   const deleteTodo = (todo) => {
+    // function inutile, mais je la garde pour le moment.
+    // j'utilise l'id via le dom pour delete
     listTodo = listTodo.filter((item) => item.id !== todo.id);
-    console.log('todo deleted');
-    console.log(todo.id);
+  };
+
+  const deleteTodoWithID = (id) => {
+    listTodo = listTodo.filter((item) => item.id !== id);
   };
 
   const deleteAllTodoFromDeletedProject = (projectName) => {
@@ -43,7 +52,6 @@ const handleTodoList = (() => {
     };
 
     Object.assign(todo, updatedTodo);
-    console.log(todo);
   };
 
   return {
@@ -53,7 +61,8 @@ const handleTodoList = (() => {
     getTodoId,
     updateTodo,
     deleteAllTodoFromDeletedProject,
+    deleteTodoWithID,
   };
 })();
 
-export { todoFactory, handleTodoList };
+export { todoFactory, todoFactory2, handleTodoListModule };

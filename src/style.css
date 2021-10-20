@@ -4,6 +4,14 @@
   font-family: sans-serif;
 }
 
-h1 {
-  color: red;
+.todo-list {
+  /* border: 1px solid black; */
+  padding: 20px;
+}
+
+.todo-item {
+  display: flex;
+  justify-content: space-between;
+  padding: 10px 0;
+  border-bottom: 1px solid black;
 }

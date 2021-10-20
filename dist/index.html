@@ -1,15 +1,47 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Todo List</title>
-  <script src="./main.js" defer></script>
-</head>
-<body>
-  <div id="content">
-    <h1>Todo List</h1>
-  </div>
-</body>
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Todo List</title>
+    <script src="./main.js" defer></script>
+  </head>
+  <body>
+    <div id="content">
+      <h1>Todo List</h1>
+
+      <h3>Inbox</h3>
+      <div class="todo-list"></div>
+
+      <div>
+        <h3>add todo</h3>
+        <form id="add-todo-form" action="#">
+          <label for="title">title task</label>
+          <input type="text" placeholder="title task" name="title" id="title" />
+          <br />
+          <br />
+          <label for="description">description task</label>
+          <input
+            type="text"
+            placeholder="description task"
+            name="description"
+            id="description"
+          />
+          <br />
+          <br />
+          <label for="project">project</label>
+          <input
+            type="text"
+            placeholder="project task"
+            name="project"
+            id="project"
+          />
+          <br />
+          <br />
+          <button type="submit">Add</button>
+        </form>
+      </div>
+    </div>
+  </body>
 </html>

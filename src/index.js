@@ -1,24 +1,27 @@
 import './style.css';
-import { todoFactory, handleTodoList } from './modules/handleTodo';
-import { projectFactory, handleProjectList } from './modules/handleProject';
+import { todoFactory, handleTodoListModule } from './modules/handleTodo';
+import { projectFactory, handleProjectListModule } from './modules/handleProject';
+import UI from './modules/UI';
 
 const newTodo = todoFactory('start react', 'buy milk for lune', 'JavaScript');
 const todo2 = todoFactory('call mom', 'call mom for birthday', 'Perso');
 const todo3 = todoFactory('read You dont know JS', 'buy the book first', 'JavaScript');
 const todo4 = todoFactory('watch barcelona', 'league des champiosn');
 const deleteTodo = todoFactory('foo', 'bar', 'JAVASCRIPT');
+const todo5 = todoFactory('another todo', 'its cool');
 // console.log(newTodo);
 
 // handleTodoList.getTodoList();
-handleTodoList.addTodo(newTodo);
-handleTodoList.addTodo(todo2);
-handleTodoList.addTodo(todo3);
-handleTodoList.addTodo(todo4);
-handleTodoList.addTodo(deleteTodo);
+handleTodoListModule.addTodo(newTodo);
+handleTodoListModule.addTodo(todo2);
+handleTodoListModule.addTodo(todo3);
+handleTodoListModule.addTodo(todo4);
+handleTodoListModule.addTodo(deleteTodo);
+handleTodoListModule.addTodo(todo5);
 // handleTodoList.getTodoList();
 
 // handleTodoList.getTodoId(todo2);
-handleTodoList.updateTodo(todo4, 'watch Barcelona', 'Champions League', 'Football');
+handleTodoListModule.updateTodo(todo4, 'watch Barcelona', 'Champions League', 'Football');
 // handleTodoList.deleteTodo(todo3);
 
 const newProject = projectFactory('JavaScript');
@@ -26,30 +29,37 @@ const persoProject = projectFactory('Perso');
 const football = projectFactory('fooTball');
 
 // console.log(newProject);
-handleProjectList.addProject(newProject);
-handleProjectList.addProject(persoProject);
-handleProjectList.addProject(football);
-handleProjectList.showAllTodos();
-handleProjectList.addTodoToProject(newProject, todo3);
-handleProjectList.addTodoToProject(football, todo4);
-handleProjectList.addTodoToProject(persoProject, todo2);
-handleProjectList.addTodoToProject(newProject, todo3);
-handleProjectList.addTodoToProject(newProject, deleteTodo);
-handleProjectList.addTodoToProject(newProject, todo3);
-handleProjectList.addTodoToProject(newProject, todo3);
-handleProjectList.addTodoToProject(newProject, newTodo);
-handleProjectList.addTodoToProject(newProject, todo3);
+handleProjectListModule.addProject(newProject);
+handleProjectListModule.addProject(persoProject);
+handleProjectListModule.addProject(football);
+handleProjectListModule.showAllTodos();
+handleProjectListModule.addTodoToProject(newProject, todo3);
+handleProjectListModule.addTodoToProject(football, todo4);
+handleProjectListModule.addTodoToProject(persoProject, todo2);
+handleProjectListModule.addTodoToProject(newProject, todo3);
+handleProjectListModule.addTodoToProject(newProject, deleteTodo);
+handleProjectListModule.addTodoToProject(newProject, todo3);
+handleProjectListModule.addTodoToProject(newProject, todo3);
+handleProjectListModule.addTodoToProject(newProject, newTodo);
+handleProjectListModule.addTodoToProject(newProject, todo3);
 
 // handleProjectList.getProjectByName('JavaScript');
-handleProjectList.showAllTodos();
-handleProjectList.getProjectByName('javAscRipt');
+handleProjectListModule.showAllTodos();
+handleProjectListModule.getProjectByName('javAscRipt');
 
-handleTodoList.deleteTodo(deleteTodo);
-handleProjectList.deleteTodoFromProject(deleteTodo.project, deleteTodo);
-handleTodoList.getTodoList();
+handleTodoListModule.deleteTodo(deleteTodo);
+handleProjectListModule.deleteTodoFromProject(deleteTodo.project, deleteTodo);
+handleTodoListModule.getTodoList();
 
-handleProjectList.getAllProject();
+handleProjectListModule.getAllProject();
 
-handleProjectList.deleteProject(persoProject);
-handleProjectList.getAllProject();
-handleProjectList.showAllTodos();
+handleProjectListModule.deleteProject(persoProject);
+handleProjectListModule.getAllProject();
+handleProjectListModule.showAllTodos();
+
+// UI.loadTodoList();
+// UI.deleteTodoUI();
+
+UI.loadTodoList();
+UI.deleteTodoUI();
+UI.addTodoUI();

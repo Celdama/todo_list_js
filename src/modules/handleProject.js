@@ -1,5 +1,5 @@
 import { v4 as uuidv4 } from 'uuid';
-import { handleTodoList } from './handleTodo';
+import { handleTodoListModule } from './handleTodo';
 
 const projectFactory = (title) => {
   const todos = [];
@@ -11,13 +11,12 @@ const projectFactory = (title) => {
   };
 };
 
-const handleProjectList = (() => {
-  const allTodos = handleTodoList.getTodoList();
+const handleProjectListModule = (() => {
+  const allTodos = handleTodoListModule.getTodoList();
   let listProject = [];
 
   const addProject = (project) => {
     listProject.push(project);
-    // console.log('project added');
   };
 
   const getProjectByName = (name) => {
@@ -40,19 +39,17 @@ const handleProjectList = (() => {
   };
 
   const showAllTodos = () => {
-    console.log('-----');
     console.table(allTodos);
   };
 
   const getAllProject = () => {
-    console.log('-------------');
     console.table(listProject);
   };
 
   const deleteProject = (project) => {
     listProject = listProject.filter((item) => item.id !== project.id);
 
-    handleTodoList.deleteAllTodoFromDeletedProject(project.title);
+    handleTodoListModule.deleteAllTodoFromDeletedProject(project.title);
   };
 
   return {
@@ -66,4 +63,4 @@ const handleProjectList = (() => {
   };
 })();
 
-export { projectFactory, handleProjectList };
+export { projectFactory, handleProjectListModule };
