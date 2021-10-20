@@ -29,7 +29,6 @@ const football = projectFactory('fooTball');
 handleProjectList.addProject(newProject);
 handleProjectList.addProject(persoProject);
 handleProjectList.addProject(football);
-handleProjectList.getAllProject();
 handleProjectList.showAllTodos();
 handleProjectList.addTodoToProject(newProject, todo3);
 handleProjectList.addTodoToProject(football, todo4);
@@ -42,11 +41,15 @@ handleProjectList.addTodoToProject(newProject, newTodo);
 handleProjectList.addTodoToProject(newProject, todo3);
 
 // handleProjectList.getProjectByName('JavaScript');
-handleProjectList.getAllProject();
 handleProjectList.showAllTodos();
 handleProjectList.getProjectByName('javAscRipt');
 
 handleTodoList.deleteTodo(deleteTodo);
 handleProjectList.deleteTodoFromProject(deleteTodo.project, deleteTodo);
 handleTodoList.getTodoList();
+
 handleProjectList.getAllProject();
+
+handleProjectList.deleteProject(persoProject);
+handleProjectList.getAllProject();
+handleProjectList.showAllTodos();

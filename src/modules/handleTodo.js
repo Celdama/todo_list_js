@@ -22,6 +22,10 @@ const handleTodoList = (() => {
     console.log(todo.id);
   };
 
+  const deleteAllTodoFromDeletedProject = (projectName) => {
+    listTodo = listTodo.filter((item) => item.project !== projectName);
+  };
+
   const getTodoList = () => {
     console.table(listTodo);
     return listTodo;
@@ -48,6 +52,7 @@ const handleTodoList = (() => {
     getTodoList,
     getTodoId,
     updateTodo,
+    deleteAllTodoFromDeletedProject,
   };
 })();
 

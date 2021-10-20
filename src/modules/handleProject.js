@@ -13,7 +13,7 @@ const projectFactory = (title) => {
 
 const handleProjectList = (() => {
   const allTodos = handleTodoList.getTodoList();
-  const listProject = [];
+  let listProject = [];
 
   const addProject = (project) => {
     listProject.push(project);
@@ -45,7 +45,14 @@ const handleProjectList = (() => {
   };
 
   const getAllProject = () => {
+    console.log('-------------');
     console.table(listProject);
+  };
+
+  const deleteProject = (project) => {
+    listProject = listProject.filter((item) => item.id !== project.id);
+
+    handleTodoList.deleteAllTodoFromDeletedProject(project.title);
   };
 
   return {
@@ -55,6 +62,7 @@ const handleProjectList = (() => {
     showAllTodos,
     addTodoToProject,
     deleteTodoFromProject,
+    deleteProject,
   };
 })();
 
