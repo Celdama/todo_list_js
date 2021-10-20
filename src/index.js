@@ -1,25 +1,19 @@
 import './style.css';
-import handleTodoList from './modules/handleTodo';
-import todoFactory from './modules/createTodo';
+import { todoFactory, handleTodoList } from './modules/handleTodo';
+import { projectFactory, handleProjectList } from './modules/handleProject';
 
-const todo1 = todoFactory('todo1', 'some good vibe');
-const todo2 = todoFactory('todo2', 'fdsfdqfd');
-const todo3 = todoFactory('todo3', 'dfsqfdsqfdqfsfsdqf');
-const todo4 = todoFactory('buy milk', 'buy milk for luna');
-
-// console.log(todo1);
-
-handleTodoList.addTodo(todo1);
-handleTodoList.addTodo(todo2);
-handleTodoList.addTodo(todo3);
-handleTodoList.addTodo(todo4);
+const newTodo = todoFactory('buy milk', 'buy milk for lune');
+const todo2 = todoFactory('call mom', 'call mom for birthday');
+const todo3 = todoFactory('buy shirt', 'buyfdjkjfdkjkfd');
+console.log(newTodo);
 
 handleTodoList.getTodoList();
-// console.log(allTodos);
+handleTodoList.addTodo(newTodo);
+handleTodoList.addTodo(todo2);
+handleTodoList.addTodo(todo3);
+handleTodoList.getTodoList();
 
-console.log(handleTodoList.getTodoList());
-
+handleTodoList.getTodoId(todo2);
+handleTodoList.updateTodo(todo2, 'call dady', 'call daaaaaad');
 handleTodoList.deleteTodo(todo3);
-console.log(handleTodoList.getTodoList());
-handleTodoList.deleteTodo(todo4);
-console.log(handleTodoList.getTodoList());
+handleTodoList.getTodoList();
