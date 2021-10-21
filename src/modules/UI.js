@@ -10,14 +10,21 @@ const UI = (() => {
 
     const todoList = handleProjectListModule.getTodosByProjectName(name);
 
-    todoList.forEach((todo) => {
-      const appendTodo = renderTodoItem(todo);
-      displayTodoList.appendChild(appendTodo);
-    });
+    if (todoList.length === 0) {
+      const emptyTodo = document.createElement('h2');
+      emptyTodo.textContent = 'empty todo for now';
+      displayTodoList.appendChild(emptyTodo);
+    } else {
+      todoList.forEach((todo) => {
+        const appendTodo = renderTodoItem(todo);
+        displayTodoList.appendChild(appendTodo);
+      });
+    }
   };
 
   const loadProjectList = () => {
     const projectList = document.getElementById('project-list');
+    projectList.textContent = '';
 
     const projects = handleProjectListModule.getAllProject();
     // const projects = null;
@@ -87,6 +94,12 @@ const UI = (() => {
     return newTodo;
   };
 
+  const getProjectToAddInfo = () => {
+    const projectTitle = document.querySelector('#add-project-form input').value;
+
+    return projectTitle.toLowerCase();
+  };
+
   const addTodoUI = () => {
     const addTodoForm = document.getElementById('add-todo-form');
 
@@ -100,7 +113,7 @@ const UI = (() => {
     });
   };
 
-  const getTodoInProject = () => {
+  const AddEventListenerTogetTodoInProject = () => {
     const projectName = document.querySelectorAll('.project-name');
     projectName.forEach((project) => {
       console.log(project);
@@ -110,11 +123,28 @@ const UI = (() => {
     });
   };
 
+  const addProjectUI = () => {
+    const addProjectForm = document.getElementById('add-project-form');
+
+    addProjectForm.addEventListener('submit', (e) => {
+      e.preventDefault();
+      const newProjectTitle = getProjectToAddInfo();
+      const newProject = projectFactory(newProjectTitle);
+      console.log(newProject);
+      // handleProjectListModule.getAllProject();
+      handleProjectListModule.addProject(newProject);
+      handleProjectListModule.getAllProject();
+      loadProjectList();
+      AddEventListenerTogetTodoInProject();
+    });
+  };
+
   return {
     loadTodoList,
     loadProjectList,
     addTodoUI,
-    getTodoInProject,
+    addProjectUI,
+    AddEventListenerTogetTodoInProject,
   };
 })();
 

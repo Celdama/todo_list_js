@@ -65,5 +65,6 @@ handleProjectListModule.showAllTodos();
 
 UI.loadTodoList();
 UI.loadProjectList();
+UI.addProjectUI();
 UI.addTodoUI();
-UI.getTodoInProject();
+UI.AddEventListenerTogetTodoInProject();
