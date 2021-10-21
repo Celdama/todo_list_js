@@ -15,13 +15,24 @@ const handleProjectListModule = (() => {
   const allTodos = handleTodoListModule.getTodoList();
   let listProject = [];
 
+  const testOnClik = () => {
+    console.log('hello');
+  };
+
   const addProject = (project) => {
     listProject.push(project);
   };
 
   const getProjectByName = (name) => {
     const results = listProject.find((project) => project.title === name.toLowerCase());
+    console.log(results);
     return results;
+  };
+
+  const getTodosByProjectName = (name) => {
+    const results = listProject.find((project) => project.title === name.toLowerCase());
+    console.log(results.todos);
+    return results.todos;
   };
 
   const addTodoToProject = (project, todo) => {
@@ -56,10 +67,12 @@ const handleProjectListModule = (() => {
     addProject,
     getAllProject,
     getProjectByName,
+    getTodosByProjectName,
     showAllTodos,
     addTodoToProject,
     deleteTodoFromProject,
     deleteProject,
+    testOnClik,
   };
 })();
 

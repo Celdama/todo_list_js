@@ -27,11 +27,13 @@ handleTodoListModule.updateTodo(todo4, 'watch Barcelona', 'Champions League', 'F
 const newProject = projectFactory('JavaScript');
 const persoProject = projectFactory('Perso');
 const football = projectFactory('fooTball');
+const inbox = projectFactory('inbox');
 
 // console.log(newProject);
 handleProjectListModule.addProject(newProject);
 handleProjectListModule.addProject(persoProject);
 handleProjectListModule.addProject(football);
+handleProjectListModule.addProject(inbox);
 handleProjectListModule.showAllTodos();
 handleProjectListModule.addTodoToProject(newProject, todo3);
 handleProjectListModule.addTodoToProject(football, todo4);
@@ -42,6 +44,7 @@ handleProjectListModule.addTodoToProject(newProject, todo3);
 handleProjectListModule.addTodoToProject(newProject, todo3);
 handleProjectListModule.addTodoToProject(newProject, newTodo);
 handleProjectListModule.addTodoToProject(newProject, todo3);
+handleProjectListModule.addTodoToProject(inbox, todo5);
 
 // handleProjectList.getProjectByName('JavaScript');
 handleProjectListModule.showAllTodos();
@@ -63,3 +66,4 @@ handleProjectListModule.showAllTodos();
 UI.loadTodoList();
 UI.deleteTodoUI();
 UI.addTodoUI();
+UI.getTodoInProject();

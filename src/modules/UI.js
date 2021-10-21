@@ -4,27 +4,15 @@ import { projectFactory, handleProjectListModule } from './handleProject';
 const UI = (() => {
   console.log('UI loaded');
 
-  const loadTodoList = () => {
+  const loadTodoList = (name = 'inbox') => {
     const displayTodoList = document.querySelector('.todo-list');
     displayTodoList.textContent = '';
 
-    const todoList = handleTodoListModule.getTodoList();
+    const todoList = handleProjectListModule.getTodosByProjectName(name);
 
     todoList.forEach((todo) => {
-      const todoItem = document.createElement('div');
-      todoItem.classList.add('todo-item');
-      todoItem.innerHTML = `
-        <div class="left">
-          <button>done</button>
-          <span>${todo.title}</span>
-        </div>
-        <div class="right">
-          <button>edit</button>
-          <span>priority</span>
-          <button id="delete-todo-btn" data-id=${todo.id}>delete</button>
-        </div>
-      `;
-      displayTodoList.appendChild(todoItem);
+      const appendTodo = renderTodoItem(todo);
+      displayTodoList.appendChild(appendTodo);
     });
   };
 
@@ -61,10 +49,68 @@ const UI = (() => {
     });
   };
 
+  const testOn = (todo) => {
+    console.log(todo.id);
+    console.log(todo.project);
+    handleProjectListModule.getTodosByProjectName(todo.project);
+    handleTodoListModule.deleteTodoWithID(todo.id);
+    handleProjectListModule.deleteTodoFromProject(todo.project, todo);
+    handleProjectListModule.getTodosByProjectName(todo.project);
+
+    loadTodoList(todo.project);
+  };
+
+  const renderTodoItem = (todo) => {
+    // console.log(todo);
+    const todoItem = document.createElement('div');
+    const leftSideOfTodoItem = document.createElement('div');
+    const rightSideOfTodoItem = document.createElement('div');
+    const doneBtn = document.createElement('button');
+    const editBtn = document.createElement('button');
+    const deleteBtn = document.createElement('button');
+    const dislayTodoTitle = document.createElement('span');
+    const displayPriority = document.createElement('span');
+
+    todoItem.classList.add('todo-item');
+    leftSideOfTodoItem.classList.add('left');
+    rightSideOfTodoItem.classList.add('right');
+
+    dislayTodoTitle.textContent = `${todo.title}`;
+    doneBtn.textContent = 'done';
+    editBtn.textContent = 'edit';
+    displayPriority.textContent = 'priority';
+    deleteBtn.textContent = 'delete';
+    deleteBtn.onclick = () => testOn(todo);
+
+    leftSideOfTodoItem.appendChild(doneBtn);
+    leftSideOfTodoItem.appendChild(dislayTodoTitle);
+
+    rightSideOfTodoItem.appendChild(editBtn);
+    rightSideOfTodoItem.appendChild(displayPriority);
+    rightSideOfTodoItem.appendChild(deleteBtn);
+
+    todoItem.appendChild(leftSideOfTodoItem);
+    todoItem.appendChild(rightSideOfTodoItem);
+
+    return todoItem;
+  };
+
+  const getTodoInProject = () => {
+    const projectName = document.getElementById('projectName');
+    console.log(projectName);
+    const name = projectName.textContent;
+
+    projectName.addEventListener('click', () => {
+      console.log('clicked');
+      loadTodoList(name);
+    });
+  };
+
   return {
     loadTodoList,
     deleteTodoUI,
     addTodoUI,
+    getTodoInProject,
   };
 })();
 
