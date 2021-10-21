@@ -47,7 +47,6 @@ header h1 {
 
 main {
   position: absolute;
-  outline: 1px solid red;
   justify-self: center;
   left: 340px;
   width: calc(100% - 340px);
