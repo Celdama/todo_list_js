@@ -11,7 +11,6 @@ html {
 }
 
 .todo-list {
-  /* border: 1px solid black; */
   padding: 20px;
 }
 
@@ -43,26 +42,21 @@ header h1 {
   overflow-y: hidden;
   height: 100vh;
   display: flex;
-  outline: 2px solid green;
-  background-color: paleturquoise;
 }
 
 
 main {
   position: absolute;
-  outline: 2px solid red;
-  background-color: palegreen;
-  /* margin-left: 340px; */
+  outline: 1px solid red;
+  justify-self: center;
   left: 340px;
-  /* flex-grow: 2; */
   width: calc(100% - 340px);
 
-  transition: left .6s ease-in-out;
+  transition: left .6s ease;
 }
 
 main .display-todo-list {
   padding: 60px;
-  /* width: 80%; */
 }
 
 .full-main-on-click {
@@ -70,7 +64,11 @@ main .display-todo-list {
 }
 
 .full-main {
-  left: 0;
+  left: 0px;
+}
+
+#projects-list {
+  margin-left: 18px;
 }
 
 
@@ -79,28 +77,24 @@ main .display-todo-list {
 
 aside {
   position: absolute;
-  /* min-width: 270px; */
   background-color: #f7f7f7;
   z-index: 10;
-  /* top: 0; */
-  left: 0;
+  transform: translateX(0);
   width: 340px;
   height: 100%;
-  /* outline: 1px solid red; */
-  /* height: calc(100% - 40px); */
-  transition: left .6s ease-in-out;
+  transition: transform .6s ease;
 }
 
-.hide-aside-on-click {
-  left: -400px;
+
+.show-aside {
+  transform: translateX(0);
 }
 
 .hide-aside {
-  left: -400px;
+  transform: translateX(-400px);
 }
 
 aside #projects-main-list {
-  outline: 1px solid red;
   padding: 20px;
 }
 
@@ -128,19 +122,18 @@ header {
   main {
     width: 100%;
     position: absolute;
-    outline: 2px solid red;
-    background-color: palegreen;
     margin-left: 0px;
+    /* margin: 0 auto; */
     left: 0px;
-    /* flex-grow: 2; */
-    /* width: calc(100% - 340px); */
   }
 
-  /* aside {
-    left: -400px;
-  } */
+  aside {
+    transform: translateX(-340px);
+  }
+}
 
-  /* .full-main {
-    left: 0px;
-  } */
+@media only screen and (min-width: 815px) {
+  .full-main {
+    left: 140px;
+  }
 }

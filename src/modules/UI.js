@@ -166,9 +166,7 @@ const UI = (() => {
     console.log(asideInfo);
     console.log(mainInfo);
     hideBtn.addEventListener('click', () => {
-      console.log(hideBtn);
-      console.log(asideInfo);
-      console.log(mainInfo);
+      asideInfo.classList.toggle('show-aside');
       asideInfo.classList.toggle('hide-aside');
       mainInfo.classList.toggle('full-main');
     });
@@ -179,14 +177,22 @@ const UI = (() => {
     const mainInfo = document.getElementById('main-informations');
 
     window.addEventListener('resize', () => {
-      if (window.innerWidth < 815) {
-        asideInfo.classList.add('hide-aside');
-        mainInfo.classList.add('full-main');
+      const width = document.body.clientWidth;
+      if (width < 815) {
+        if (asideInfo.classList.value === 'show-aside') {
+          asideInfo.classList.remove('show-aside');
+          asideInfo.classList.add('hide-aside');
+        }
       }
 
-      if (window.innerWidth > 815) {
-        asideInfo.classList.remove('hide-aside');
-        mainInfo.classList.remove('full-main');
+      if (width > 815) {
+        if (asideInfo.classList.value === 'hide-aside') {
+          asideInfo.classList.remove('hide-aside');
+          asideInfo.classList.add('show-aside');
+        }
+        if (mainInfo.classList.value === 'full-main') {
+          mainInfo.classList.remove('full-main');
+        }
       }
     });
   };
