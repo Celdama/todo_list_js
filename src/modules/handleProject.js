@@ -35,11 +35,11 @@ const handleProjectListModule = (() => {
     return results.todos;
   };
 
-  const addTodoToProject = (project, todo) => {
-    const projectToAdd = getProjectByName(project.title);
+  const addTodoToProject = (name, todo) => {
+    const projectToAdd = getProjectByName(name);
 
     if (projectToAdd.todos.find((task) => task.id === todo.id)) return;
-    if (todo.project !== project.title) return;
+    if (todo.project !== name) return;
     projectToAdd.todos.push(todo);
   };
 
@@ -55,6 +55,7 @@ const handleProjectListModule = (() => {
 
   const getAllProject = () => {
     console.table(listProject);
+    return listProject;
   };
 
   const deleteProject = (project) => {
