@@ -68,4 +68,5 @@ UI.loadProjectList();
 UI.addProjectUI();
 UI.addTodoUI();
 UI.AddEventListenerToFetchTodoInProject();
-handleProjectListModule.getAllProjectExceptInbox();
+UI.hideAsideSide();
+UI.toggleClassOnSmallerScreen();

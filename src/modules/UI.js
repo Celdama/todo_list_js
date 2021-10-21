@@ -158,12 +158,47 @@ const UI = (() => {
     });
   };
 
+  const hideAsideSide = () => {
+    const hideBtn = document.getElementById('hide-aside');
+    const asideInfo = document.getElementById('aside-informations');
+    const mainInfo = document.getElementById('main-informations');
+    console.log(hideBtn);
+    console.log(asideInfo);
+    console.log(mainInfo);
+    hideBtn.addEventListener('click', () => {
+      console.log(hideBtn);
+      console.log(asideInfo);
+      console.log(mainInfo);
+      asideInfo.classList.toggle('hide-aside');
+      mainInfo.classList.toggle('full-main');
+    });
+  };
+
+  const toggleClassOnSmallerScreen = () => {
+    const asideInfo = document.getElementById('aside-informations');
+    const mainInfo = document.getElementById('main-informations');
+
+    window.addEventListener('resize', () => {
+      if (window.innerWidth < 815) {
+        asideInfo.classList.add('hide-aside');
+        mainInfo.classList.add('full-main');
+      }
+
+      if (window.innerWidth > 815) {
+        asideInfo.classList.remove('hide-aside');
+        mainInfo.classList.remove('full-main');
+      }
+    });
+  };
+
   return {
     loadTodoList,
     loadProjectList,
     addTodoUI,
     addProjectUI,
     AddEventListenerToFetchTodoInProject,
+    hideAsideSide,
+    toggleClassOnSmallerScreen,
   };
 })();
 
