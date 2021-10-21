@@ -5,6 +5,9 @@ const UI = (() => {
   console.log('UI loaded');
 
   const loadTodoList = (name = 'inbox') => {
+    const todoCategory = document.getElementById('todo-category');
+    todoCategory.textContent = name;
+
     const displayTodoList = document.querySelector('.todo-list');
     displayTodoList.textContent = '';
 
@@ -35,10 +38,8 @@ const UI = (() => {
       projectList.appendChild(emptyProject);
     } else {
       projects.forEach((project) => {
-        const titleProject = document.createElement('h3');
-        titleProject.textContent = project.title;
-        titleProject.classList.add('project-name');
-        projectList.appendChild(titleProject);
+        const appendProject = renderProjectItem(project);
+        projectList.appendChild(appendProject);
       });
     }
   };
@@ -48,6 +49,25 @@ const UI = (() => {
     handleProjectListModule.deleteTodoFromProject(todo.project, todo);
 
     loadTodoList(todo.project);
+  };
+
+  const deleteProject = (project) => {
+    handleProjectListModule.deleteProject(project);
+    loadProjectList();
+  };
+
+  const renderProjectItem = (project) => {
+    const wrapperProject = document.createElement('div');
+    const projectTitle = document.createElement('h3');
+    const deleteProjectBtn = document.createElement('button');
+    projectTitle.textContent = project.title;
+    projectTitle.classList.add('project-name');
+    deleteProjectBtn.textContent = 'X';
+    deleteProjectBtn.onclick = () => deleteProject(project);
+    wrapperProject.appendChild(projectTitle);
+    wrapperProject.appendChild(deleteProjectBtn);
+
+    return wrapperProject;
   };
 
   const renderTodoItem = (todo) => {
@@ -113,7 +133,7 @@ const UI = (() => {
     });
   };
 
-  const AddEventListenerTogetTodoInProject = () => {
+  const AddEventListenerToFetchTodoInProject = () => {
     const projectName = document.querySelectorAll('.project-name');
     projectName.forEach((project) => {
       console.log(project);
@@ -131,11 +151,10 @@ const UI = (() => {
       const newProjectTitle = getProjectToAddInfo();
       const newProject = projectFactory(newProjectTitle);
       console.log(newProject);
-      // handleProjectListModule.getAllProject();
       handleProjectListModule.addProject(newProject);
-      handleProjectListModule.getAllProject();
+      // handleProjectListModule.getAllProject();
       loadProjectList();
-      AddEventListenerTogetTodoInProject();
+      AddEventListenerToFetchTodoInProject();
     });
   };
 
@@ -144,7 +163,7 @@ const UI = (() => {
     loadProjectList,
     addTodoUI,
     addProjectUI,
-    AddEventListenerTogetTodoInProject,
+    AddEventListenerToFetchTodoInProject,
   };
 })();
 

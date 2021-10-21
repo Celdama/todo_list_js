@@ -67,4 +67,4 @@ UI.loadTodoList();
 UI.loadProjectList();
 UI.addProjectUI();
 UI.addTodoUI();
-UI.AddEventListenerTogetTodoInProject();
+UI.AddEventListenerToFetchTodoInProject();
