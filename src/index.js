@@ -68,3 +68,4 @@ UI.loadProjectList();
 UI.addProjectUI();
 UI.addTodoUI();
 UI.AddEventListenerToFetchTodoInProject();
+handleProjectListModule.getAllProjectExceptInbox();

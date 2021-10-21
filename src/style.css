@@ -4,10 +4,16 @@
   font-family: sans-serif;
 }
 
+html {
+  font-size: 10px;
+}
+
 .todo-list {
   /* border: 1px solid black; */
   padding: 20px;
 }
+
+
 
 .todo-item {
   display: flex;
@@ -15,3 +21,65 @@
   padding: 10px 0;
   border-bottom: 1px solid black;
 }
+
+#content {
+  display: flex;
+  flex-direction: column;
+  font-size: 1.6rem;
+}
+
+header h1 {
+  font-size: 2rem;
+  color: #fff;
+  height: 20px;
+}
+
+
+main {
+  position: absolute;
+  margin-left: 340px;
+  width: calc(100% - 340px);
+}
+
+main .display-todo-list {
+  padding: 60px;
+}
+
+
+
+aside {
+  position: absolute;
+  /* min-width: 270px; */
+  background-color: #f7f7f7;
+  /* top: 0; */
+  /* left: 0; */
+  width: 340px;
+  /* outline: 1px solid red; */
+  height: calc(100% - 40px);
+}
+
+aside #projects-main-list {
+  outline: 1px solid red;
+  padding: 20px;
+}
+
+aside #projects-main-list ul {
+  list-style-type: none;
+}
+
+aside #projects-main-list li {
+  list-style-type: none;
+  padding: 10px 0;
+}
+
+
+
+aside .todo-informations {
+  padding: 40px;
+}
+
+header {
+  background-color: #db4c3f;
+  padding: 1rem;
+}
+

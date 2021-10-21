@@ -26,10 +26,10 @@ const UI = (() => {
   };
 
   const loadProjectList = () => {
-    const projectList = document.getElementById('project-list');
+    const projectList = document.getElementById('projects-list');
     projectList.textContent = '';
 
-    const projects = handleProjectListModule.getAllProject();
+    const projects = handleProjectListModule.getAllProjectExceptInbox();
     // const projects = null;
 
     if (!projects) {
@@ -58,7 +58,7 @@ const UI = (() => {
 
   const renderProjectItem = (project) => {
     const wrapperProject = document.createElement('div');
-    const projectTitle = document.createElement('h3');
+    const projectTitle = document.createElement('span');
     const deleteProjectBtn = document.createElement('button');
     projectTitle.textContent = project.title;
     projectTitle.classList.add('project-name');

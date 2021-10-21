@@ -58,6 +58,11 @@ const handleProjectListModule = (() => {
     return listProject;
   };
 
+  const getAllProjectExceptInbox = () => {
+    const allProjectExceptInbox = listProject.filter((project) => project.title !== 'inbox');
+    return allProjectExceptInbox;
+  };
+
   const deleteProject = (project) => {
     listProject = listProject.filter((item) => item.id !== project.id);
 
@@ -67,6 +72,7 @@ const handleProjectListModule = (() => {
   return {
     addProject,
     getAllProject,
+    getAllProjectExceptInbox,
     getProjectByName,
     getTodosByProjectName,
     showAllTodos,

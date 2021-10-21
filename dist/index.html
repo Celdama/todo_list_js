@@ -9,48 +9,78 @@
   </head>
   <body>
     <div id="content">
-      <h1>Todo List</h1>
+      <header>
+        <h1>Todo List</h1>
+      </header>
+      <div id="app">
+        <aside>
+          <div class="todo-informations">
+            <ul id="projects-main-list">
+              <li>
+                <span class="project-name">Inbox</span>
+              </li>
+              <li>
+                <span>Today</span>
+              </li>
+              <li>
+                <span>Projects</span>
+              </li>
+              <div id="projects-list"></div>
+            </ul>
+            <h2>Inbox</h2>
+            <h3>add todo</h3>
+            <form id="add-todo-form" action="#">
+              <label for="title">title task</label>
+              <input
+                type="text"
+                placeholder="title task"
+                name="title"
+                id="title"
+              />
+              <br />
+              <br />
+              <label for="description">description task</label>
+              <input
+                type="text"
+                placeholder="description task"
+                name="description"
+                id="description"
+              />
+              <br />
+              <br />
+              <label for="project">project</label>
+              <input
+                type="text"
+                placeholder="project task"
+                name="project"
+                id="project"
+              />
+              <br />
+              <button type="submit">Add</button>
+            </form>
 
-      <h3 id="todo-category">Inbox</h3>
-      <div class="todo-list"></div>
-
-      <div>
-        <h3>add todo</h3>
-        <form id="add-todo-form" action="#">
-          <label for="title">title task</label>
-          <input type="text" placeholder="title task" name="title" id="title" />
-          <br />
-          <br />
-          <label for="description">description task</label>
-          <input
-            type="text"
-            placeholder="description task"
-            name="description"
-            id="description"
-          />
-          <br />
-          <br />
-          <label for="project">project</label>
-          <input
-            type="text"
-            placeholder="project task"
-            name="project"
-            id="project"
-          />
-          <br />
-          <button type="submit">Add</button>
-        </form>
-
-        <div id="project-list">
-          <h2>Project</h2>
-
-        </div>
-        <form id="add-project-form" action="#">
-          <label for="title">Add new project</label>
-          <input type="text" name="title" id="title" placeholder="title project">
-          <br>
-          <button type="submit">Add</button>
-        </form>
+            <h3>Projects</h3>
+            <div id="project-list">
+            </div>
+            <form id="add-project-form" action="#">
+              <label for="title">Add new project</label>
+              <input
+                type="text"
+                name="title"
+                id="title"
+                placeholder="title project"
+              />
+              <br />
+              <button type="submit">Add</button>
+            </form>
+          </div>
+        </aside>
+        <main>
+          <div class="display-todo-list">
+            <h3 id="todo-category">Inbox</h3>
+            <div class="todo-list"></div>
+          </div>
+        </main>
       </div>
     </div>
   </body>
