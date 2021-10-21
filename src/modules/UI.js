@@ -162,9 +162,6 @@ const UI = (() => {
     const hideBtn = document.getElementById('hide-aside');
     const asideInfo = document.getElementById('aside-informations');
     const mainInfo = document.getElementById('main-informations');
-    console.log(hideBtn);
-    console.log(asideInfo);
-    console.log(mainInfo);
     hideBtn.addEventListener('click', () => {
       asideInfo.classList.toggle('show-aside');
       asideInfo.classList.toggle('hide-aside');

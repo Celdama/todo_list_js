@@ -15,23 +15,17 @@ const handleProjectListModule = (() => {
   const allTodos = handleTodoListModule.getTodoList();
   let listProject = [];
 
-  const testOnClik = () => {
-    console.log('hello');
-  };
-
   const addProject = (project) => {
     listProject.push(project);
   };
 
   const getProjectByName = (name) => {
     const results = listProject.find((project) => project.title === name.toLowerCase());
-    console.log(results);
     return results;
   };
 
   const getTodosByProjectName = (name) => {
     const results = listProject.find((project) => project.title === name.toLowerCase());
-    console.log(results.todos);
     return results.todos;
   };
 
@@ -53,10 +47,7 @@ const handleProjectListModule = (() => {
     console.table(allTodos);
   };
 
-  const getAllProject = () => {
-    console.table(listProject);
-    return listProject;
-  };
+  const getAllProject = () => listProject;
 
   const getAllProjectExceptInbox = () => {
     const allProjectExceptInbox = listProject.filter((project) => project.title !== 'inbox');
@@ -79,7 +70,6 @@ const handleProjectListModule = (() => {
     addTodoToProject,
     deleteTodoFromProject,
     deleteProject,
-    testOnClik,
   };
 })();
 
