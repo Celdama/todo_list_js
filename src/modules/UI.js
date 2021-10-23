@@ -26,7 +26,7 @@ const UI = (() => {
   };
 
   const loadProjectList = () => {
-    const projectList = document.getElementById('projects-list');
+    const projectList = document.getElementById('display-projects-list');
     projectList.textContent = '';
 
     const projects = handleProjectListModule.getAllProjectExceptInbox();
@@ -58,13 +58,31 @@ const UI = (() => {
 
   const renderProjectItem = (project) => {
     const wrapperProject = document.createElement('div');
+    const projectInfo = document.createElement('div');
+    const circleColorProject = document.createElement('span');
     const projectTitle = document.createElement('span');
     const deleteProjectBtn = document.createElement('button');
-    projectTitle.textContent = project.title;
+    wrapperProject.classList.add('project');
+    projectInfo.classList.add('project-info');
+    circleColorProject.classList.add('circle-color');
     projectTitle.classList.add('project-name');
-    deleteProjectBtn.textContent = 'X';
+    deleteProjectBtn.classList.add('delete-project-btn');
+    projectTitle.textContent = project.title;
+    deleteProjectBtn.innerHTML = `
+      <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" fill="currentColor" class="bi bi-x-lg delete-project" viewBox="0 0 16 16">
+        <path fill-rule="evenodd" d="M13.854 2.146a.5.5 0 0 1 0 .708l-11 11a.5.5 0 0 1-.708-.708l11-11a.5.5 0 0 1 .708 0Z"/>
+        <path fill-rule="evenodd" d="M2.146 2.146a.5.5 0 0 0 0 .708l11 11a.5.5 0 0 0 .708-.708l-11-11a.5.5 0 0 0-.708 0Z"/>
+      </svg>
+    `;
+    circleColorProject.innerHTML = `
+      <svg xmlns="http://www.w3.org/2000/svg" width="10" height="10" fill="#ff9933" class="bi bi-circle-fill" viewBox="0 0 16 16">
+        <circle cx="8" cy="8" r="8"/>
+      </svg>
+    `;
     deleteProjectBtn.onclick = () => deleteProject(project);
-    wrapperProject.appendChild(projectTitle);
+    projectInfo.appendChild(circleColorProject);
+    projectInfo.appendChild(projectTitle);
+    wrapperProject.appendChild(projectInfo);
     wrapperProject.appendChild(deleteProjectBtn);
 
     return wrapperProject;

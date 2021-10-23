@@ -3,7 +3,7 @@
 @import './styles/animation.scss';
 
 html {
-  font-size: 10px;
+  font-size: $base-font-size;
   overflow-y: hidden;
 
   body {
@@ -20,15 +20,15 @@ html {
 
         button {
           border: none;
-          padding: 2px;
+          padding: 0.2rem;
           border-radius: 2px;
           background-color: transparent;
           display: flex;
-          margin-left: 15px;
+          margin-left: 1.5rem;
 
           &:hover {
             cursor: pointer;
-            background-color: rgba(255, 255, 255, 0.3);
+            background-color: $header-button-hover;
           }
         }
       }
@@ -43,16 +43,15 @@ html {
           position: absolute;
           background-color: $aside-color;
           z-index: 10;
-
           width: 300px;
           height: 100%;
           transition: transform 0.6s ease;
 
           .todo-informations {
-            padding: 12px 6px 12px 12px;
+            padding: 1.2rem 0.6rem 1.2rem 1.2rem;
 
             #projects-main-list {
-              padding: 20px 0 20px 20px;
+              padding: 2rem 0 2rem 2rem;
 
               li {
                 display: flex;
@@ -60,10 +59,10 @@ html {
                 font-size: 1.4rem;
                 font-weight: 400;
                 list-style-type: none;
-                padding: 10px 8px;
+                padding: 1rem 0.8rem;
 
-                svg {
-                  margin-right: 10px;
+                .main-list-icon {
+                  margin-right: 1rem;
                 }
               }
 
@@ -72,16 +71,105 @@ html {
 
                 &:hover {
                   cursor: pointer;
-                  background-color: #ececec;
+                  background-color: $aside-color-hover;
+                }
+
+                span {
+                  color: $main-list-color;
                 }
               }
 
-              .display-projects-list {
-                padding-top: 2rem;
+              .display-projects {
+                display: flex;
+                flex-direction: column;
+                justify-content: center;
+                align-items: flex-start;
+                padding: 2rem 0 0 0;
+
+                .display-projects-title {
+                  display: flex;
+                  width: 100%;
+                  padding: 1rem 0 1rem 0.8rem;
+
+                  .dropdown-projects-list {
+                    display: flex;
+                    align-items: center;
+                    width: 100%;
+                    border: none;
+                    background-color: transparent;
+
+                    &:hover {
+                      cursor: pointer;
+                    }
+
+                    span {
+                      color: #333333;
+                      font-weight: bold;
+                    }
+                  }
+
+                  .add-project {
+                    width: 10%;
+                    display: flex;
+                    justify-content: center;
+                    border: none;
+                    background-color: transparent;
+
+                    &:hover {
+                      cursor: pointer;
+                    }
+                  }
+                }
               }
 
-              #projects-list {
-                margin-left: 34px;
+              #display-projects-list {
+                // margin-left: 3.4rem;
+                width: 100%;
+
+                .project {
+                  display: flex;
+                  align-items: center;
+                  border-radius: 5px;
+
+                  &:hover {
+                    cursor: pointer;
+                    background-color: $aside-color-hover;
+
+                    .delete-project-btn {
+                      opacity: 1;
+                    }
+                  }
+                  .project-info {
+                    display: flex;
+                    width: 100%;
+                    justify-content: center;
+                    align-items: center;
+                    padding: 1rem 0.8rem;
+
+                    .circle-color {
+                      width: 13%;
+                    }
+
+                    .project-name {
+                      width: 100%;
+                      font-weight: lighter;
+                      letter-spacing: 0.5px;
+                    }
+                  }
+
+                  .delete-project-btn {
+                    width: 10%;
+                    opacity: 0;
+                    border: none;
+                    background-color: transparent;
+                    display: flex;
+                    justify-content: center;
+
+                    &:hover {
+                      cursor: pointer;
+                    }
+                  }
+                }
               }
             }
           }
@@ -95,15 +183,15 @@ html {
           transition: left 0.6s ease;
 
           .display-todo-list {
-            padding: 60px;
+            padding: 6rem;
 
             .todo-list {
-              padding: 20px;
+              padding: 2rem;
 
               .todo-item {
                 display: flex;
                 justify-content: space-between;
-                padding: 10px 0;
+                padding: 1rem 0;
                 border-bottom: 1px solid black;
               }
             }
