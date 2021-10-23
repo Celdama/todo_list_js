@@ -215,6 +215,23 @@ const UI = (() => {
     });
   };
 
+  const toggleDropdowProjectsList = () => {
+    const toggleBtn = document.querySelector('.dropdown-projects-list');
+    const chevronSVG = document.querySelector('.bi-chevron-right');
+    const projectsList = document.getElementById('display-projects-list');
+
+    toggleBtn.addEventListener('click', () => {
+      const style = getComputedStyle(chevronSVG);
+      if (style.transform === 'matrix(1, 0, 0, 1, 0, 0)') {
+        chevronSVG.style.transform = 'rotate(90deg)';
+        projectsList.classList.toggle('collapse');
+      } else {
+        chevronSVG.style.transform = 'rotate(0deg)';
+        projectsList.classList.toggle('collapse');
+      }
+    });
+  };
+
   return {
     loadTodoList,
     loadProjectList,
@@ -223,6 +240,7 @@ const UI = (() => {
     AddEventListenerToFetchTodoInProject,
     hideAsideSide,
     toggleClassOnSmallerScreen,
+    toggleDropdowProjectsList,
   };
 })();
 

@@ -87,3 +87,4 @@ UI.addTodoUI();
 UI.AddEventListenerToFetchTodoInProject();
 UI.hideAsideSide();
 UI.toggleClassOnSmallerScreen();
+UI.toggleDropdowProjectsList();
