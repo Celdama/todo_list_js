@@ -11,6 +11,11 @@
 }
 
 .collapse {
-  height: auto !important;
-  overflow: visible !important;
+  max-height: 0;
+  overflow: hidden;
+  transition: max-height 0.3s ease-out;
+}
+
+.not-collapse {
+  max-height: 300px;
 }

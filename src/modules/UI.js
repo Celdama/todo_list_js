@@ -224,11 +224,12 @@ const UI = (() => {
       const style = getComputedStyle(chevronSVG);
       if (style.transform === 'matrix(1, 0, 0, 1, 0, 0)') {
         chevronSVG.style.transform = 'rotate(90deg)';
-        projectsList.classList.toggle('collapse');
+        chevronSVG.style.transition = 'transform .1s ease';
       } else {
         chevronSVG.style.transform = 'rotate(0deg)';
-        projectsList.classList.toggle('collapse');
       }
+      projectsList.classList.toggle('collapse');
+      projectsList.classList.toggle('not-collapse');
     });
   };
 
