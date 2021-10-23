@@ -1,11 +1,19 @@
 import './style.css';
+import './style.scss';
 import { todoFactory, handleTodoListModule } from './modules/handleTodo';
-import { projectFactory, handleProjectListModule } from './modules/handleProject';
+import {
+  projectFactory,
+  handleProjectListModule,
+} from './modules/handleProject';
 import UI from './modules/UI';
 
 const newTodo = todoFactory('start react', 'buy milk for lune', 'JavaScript');
 const todo2 = todoFactory('call mom', 'call mom for birthday', 'Perso');
-const todo3 = todoFactory('read You dont know JS', 'buy the book first', 'JavaScript');
+const todo3 = todoFactory(
+  'read You dont know JS',
+  'buy the book first',
+  'JavaScript'
+);
 const todo4 = todoFactory('watch barcelona', 'league des champiosn');
 const deleteTodo = todoFactory('foo', 'bar', 'JAVASCRIPT');
 const todo5 = todoFactory('another todo', 'its cool');
@@ -21,7 +29,12 @@ handleTodoListModule.addTodo(todo5);
 // handleTodoList.getTodoList();
 
 // handleTodoList.getTodoId(todo2);
-handleTodoListModule.updateTodo(todo4, 'watch Barcelona', 'Champions League', 'Football');
+handleTodoListModule.updateTodo(
+  todo4,
+  'watch Barcelona',
+  'Champions League',
+  'Football'
+);
 // handleTodoList.deleteTodo(todo3);
 
 const newProject = projectFactory('JavaScript');
