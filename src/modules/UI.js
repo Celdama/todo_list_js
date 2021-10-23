@@ -106,16 +106,17 @@ const UI = (() => {
   };
 
   const getTodoInfo = () => {
-    const newTodo = Array.from(document.querySelectorAll('#add-todo-form input'))
-      .reduce((acc, input) => (
-        { ...acc, [input.id]: input.value }
-      ), {});
+    const newTodo = Array.from(
+      document.querySelectorAll('#add-todo-form input')
+    ).reduce((acc, input) => ({ ...acc, [input.id]: input.value }), {});
 
     return newTodo;
   };
 
   const getProjectToAddInfo = () => {
-    const projectTitle = document.querySelector('#add-project-form input').value;
+    const projectTitle = document.querySelector(
+      '#add-project-form input'
+    ).value;
 
     return projectTitle.toLowerCase();
   };
@@ -136,7 +137,7 @@ const UI = (() => {
   const AddEventListenerToFetchTodoInProject = () => {
     const projectName = document.querySelectorAll('.project-name');
     projectName.forEach((project) => {
-      console.log(project);
+      // console.log(project);
       project.addEventListener('click', () => {
         loadTodoList(project.textContent);
       });

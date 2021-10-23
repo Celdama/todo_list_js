@@ -1,0 +1,11 @@
+.full-main {
+  left: 0px !important;
+}
+
+.show-aside {
+  transform: translateX(0);
+}
+
+.hide-aside {
+  transform: translateX(-400px);
+}
