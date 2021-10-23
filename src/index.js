@@ -40,13 +40,17 @@ handleTodoListModule.updateTodo(
 const newProject = projectFactory('JavaScript');
 const persoProject = projectFactory('Perso');
 const football = projectFactory('fooTball');
-const inbox = projectFactory('inbox');
+const inbox = projectFactory('inbox', true);
+const today = projectFactory('today', true);
+const upcoming = projectFactory('upcoming', true);
 
 // console.log(newProject);
 handleProjectListModule.addProject(newProject);
 handleProjectListModule.addProject(persoProject);
 handleProjectListModule.addProject(football);
 handleProjectListModule.addProject(inbox);
+handleProjectListModule.addProject(today);
+handleProjectListModule.addProject(upcoming);
 handleProjectListModule.showAllTodos();
 handleProjectListModule.addTodoToProject(newProject.title, todo3);
 handleProjectListModule.addTodoToProject(football.title, todo4);

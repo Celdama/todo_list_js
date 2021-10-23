@@ -29,8 +29,8 @@ const UI = (() => {
     const projectList = document.getElementById('display-projects-list');
     projectList.textContent = '';
 
-    const projects = handleProjectListModule.getAllProjectExceptInbox();
-    // const projects = null;
+    const projects =
+      handleProjectListModule.getAllProjectExceptDefaultProject();
 
     if (!projects) {
       const emptyProject = document.createElement('h3');
@@ -64,6 +64,7 @@ const UI = (() => {
     const deleteProjectBtn = document.createElement('button');
     wrapperProject.classList.add('project');
     projectInfo.classList.add('project-info');
+    projectInfo.dataset.list = `${project.title}`;
     circleColorProject.classList.add('circle-color');
     projectTitle.classList.add('project-name');
     deleteProjectBtn.classList.add('delete-project-btn');
@@ -153,11 +154,13 @@ const UI = (() => {
   };
 
   const AddEventListenerToFetchTodoInProject = () => {
-    const projectName = document.querySelectorAll('.project-name');
+    const projectName = document.querySelectorAll(
+      '.display-main-list, .project-info'
+    );
+
     projectName.forEach((project) => {
-      // console.log(project);
       project.addEventListener('click', () => {
-        loadTodoList(project.textContent);
+        loadTodoList(project.dataset.list);
       });
     });
   };
@@ -171,7 +174,6 @@ const UI = (() => {
       const newProject = projectFactory(newProjectTitle);
       console.log(newProject);
       handleProjectListModule.addProject(newProject);
-      // handleProjectListModule.getAllProject();
       loadProjectList();
       AddEventListenerToFetchTodoInProject();
     });

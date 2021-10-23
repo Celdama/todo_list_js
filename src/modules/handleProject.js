@@ -1,13 +1,14 @@
 import { v4 as uuidv4 } from 'uuid';
 import { handleTodoListModule } from './handleTodo';
 
-const projectFactory = (title) => {
+const projectFactory = (title, defaultProject) => {
   const todos = [];
 
   return {
     id: uuidv4(),
     title: title.toLowerCase(),
     todos,
+    defaultProject: defaultProject || false,
   };
 };
 
@@ -20,12 +21,16 @@ const handleProjectListModule = (() => {
   };
 
   const getProjectByName = (name) => {
-    const results = listProject.find((project) => project.title === name.toLowerCase());
+    const results = listProject.find(
+      (project) => project.title === name.toLowerCase()
+    );
     return results;
   };
 
   const getTodosByProjectName = (name) => {
-    const results = listProject.find((project) => project.title === name.toLowerCase());
+    const results = listProject.find(
+      (project) => project.title === name.toLowerCase()
+    );
     return results.todos;
   };
 
@@ -40,17 +45,24 @@ const handleProjectListModule = (() => {
   const deleteTodoFromProject = (project, todo) => {
     const projectToDelete = getProjectByName(project);
 
-    projectToDelete.todos = projectToDelete.todos.filter((item) => item.id !== todo.id);
+    projectToDelete.todos = projectToDelete.todos.filter(
+      (item) => item.id !== todo.id
+    );
   };
 
   const showAllTodos = () => {
     console.table(allTodos);
   };
 
-  const getAllProject = () => listProject;
+  const getAllProject = () => {
+    console.log(listProject);
+    return listProject;
+  };
 
-  const getAllProjectExceptInbox = () => {
-    const allProjectExceptInbox = listProject.filter((project) => project.title !== 'inbox');
+  const getAllProjectExceptDefaultProject = () => {
+    const allProjectExceptInbox = listProject.filter(
+      (project) => !project.defaultProject
+    );
     return allProjectExceptInbox;
   };
 
@@ -63,7 +75,7 @@ const handleProjectListModule = (() => {
   return {
     addProject,
     getAllProject,
-    getAllProjectExceptInbox,
+    getAllProjectExceptDefaultProject,
     getProjectByName,
     getTodosByProjectName,
     showAllTodos,
