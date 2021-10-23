@@ -7,12 +7,18 @@ import {
 } from './modules/handleProject';
 import UI from './modules/UI';
 
-const newTodo = todoFactory('start react', 'buy milk for lune', 'JavaScript');
+const newTodo = todoFactory(
+  'start react',
+  'buy milk for lune',
+  'JavaScript',
+  'low'
+);
 const todo2 = todoFactory('call mom', 'call mom for birthday', 'Perso');
 const todo3 = todoFactory(
   'read You dont know JS',
   'buy the book first',
-  'JavaScript'
+  'JavaScript',
+  'high'
 );
 const todo4 = todoFactory('watch barcelona', 'league des champiosn');
 const deleteTodo = todoFactory('foo', 'bar', 'JAVASCRIPT');

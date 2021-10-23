@@ -194,8 +194,46 @@ html {
               .todo-item {
                 display: flex;
                 justify-content: space-between;
+                align-items: center;
                 padding: 1rem 0;
-                border-bottom: 1px solid black;
+                border-bottom: 1px solid #f0f0f0;
+                color: #808080;
+                // background-color: paleturquoise;
+
+                // button {
+                //   display: flex;
+                //   flex-direction: row;
+                // }
+
+                .left {
+                  display: flex;
+                  button {
+                    padding: 0 5px;
+                    // display: flex;
+                    border: none;
+                    background-color: transparent;
+                  }
+                  div {
+                    color: $main-list-color;
+                    padding-left: 10px;
+                    font-size: 1.4rem;
+                    line-height: 21px;
+                  }
+                }
+                .right {
+                  button {
+                    padding: 5px;
+                    background-color: transparent;
+                    margin: 0 3px;
+                    border: none;
+                    border-radius: 5px;
+
+                    &:hover {
+                      background-color: $aside-color-hover;
+                      cursor: pointer;
+                    }
+                  }
+                }
               }
             }
           }
