@@ -1,6 +1,6 @@
-const domElementFactory = (type, text, className) => {
+const domElementFactory = (type, content, className) => {
   const el = document.createElement(type);
-  el.textContent = text;
+  el.textContent = content;
   if (className) {
     el.classList.add(`${className}`);
   }
