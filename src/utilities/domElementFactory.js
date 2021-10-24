@@ -1,4 +1,4 @@
-const domElementFactory = (type, content, className) => {
+const domElementFactory = (type, content = '', className = '') => {
   const el = document.createElement(type);
   el.textContent = content;
   if (className) {

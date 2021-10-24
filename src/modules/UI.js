@@ -96,10 +96,15 @@ const UI = (() => {
     const todoItem = domElementFactory('div', '', 'todo-item');
     const leftSideOfTodoItem = domElementFactory('div', '', 'left');
     const rightSideOfTodoItem = domElementFactory('div', '', 'right');
-    const doneBtn = domElementFactory('button', '', '');
-    const editBtn = domElementFactory('button', '', '');
-    const deleteBtn = domElementFactory('button', '', '');
-    const priorityBtn = domElementFactory('button', '', '');
+    const editWrapper = domElementFactory('div', '', 'edit-wrapper');
+    const priorityWrapper = domElementFactory('div', '', 'priority-wrapper');
+    const deleteWrapper = domElementFactory('div', '', 'delete-wrapper');
+    const doneWrapper = domElementFactory('div', '', 'done-wrapper');
+    const todoTitleWrapper = domElementFactory('div', '', 'title-wrapper');
+    const doneBtn = domElementFactory('button');
+    const editBtn = domElementFactory('button');
+    const deleteBtn = domElementFactory('button');
+    const priorityBtn = domElementFactory('button');
     const displayTodoTitle = domElementFactory(
       'div',
       `${todo.title}`,
@@ -137,13 +142,24 @@ const UI = (() => {
     `;
 
     deleteBtn.el.onclick = () => deleteTodo(todo);
+    priorityBtn.el.onclick = () => editTodoPriority(todo);
+    const popUpPriority = createEditPriorityPopUp(priorityBtn.el);
 
-    appendDomElementToParent(leftSideOfTodoItem.el, doneBtn, displayTodoTitle);
+    appendDomElementToParent(doneWrapper.el, doneBtn);
+    appendDomElementToParent(todoTitleWrapper.el, displayTodoTitle);
+    appendDomElementToParent(
+      leftSideOfTodoItem.el,
+      doneWrapper,
+      todoTitleWrapper
+    );
+    appendDomElementToParent(editWrapper.el, editBtn);
+    appendDomElementToParent(priorityWrapper.el, priorityBtn, popUpPriority);
+    appendDomElementToParent(deleteWrapper.el, deleteBtn);
     appendDomElementToParent(
       rightSideOfTodoItem.el,
-      editBtn,
-      priorityBtn,
-      deleteBtn
+      editWrapper,
+      priorityWrapper,
+      deleteWrapper
     );
 
     appendDomElementToParent(
@@ -262,6 +278,20 @@ const UI = (() => {
       projectsList.classList.toggle('collapse');
       projectsList.classList.toggle('not-collapse');
     });
+  };
+
+  const editTodoPriority = (todo) => {
+    const popUpPriority = document.querySelector('.pop-up-priority');
+    console.log('pop up created');
+    popUpPriority.style.display = 'inline';
+    console.log(todo);
+  };
+
+  const createEditPriorityPopUp = (editBtn) => {
+    const popUp = domElementFactory('div', 'im a pop up', 'pop-up-priority');
+    console.log(editBtn);
+
+    return popUp;
   };
 
   return {

@@ -221,6 +221,22 @@ html {
                   }
                 }
                 .right {
+                  display: flex;
+
+                  .priority-wrapper {
+                    outline: 1px solid red;
+                    position: relative;
+
+                    .pop-up-priority {
+                      display: none;
+                      border: 1px solid green;
+                      padding: 10px;
+                      width: 100px;
+                      position: absolute;
+                      background-color: paleturquoise;
+                      right: 38px;
+                    }
+                  }
                   button {
                     padding: 5px;
                     background-color: transparent;
