@@ -1,4 +1,4 @@
-const elementFactory = (type, text, className) => {
+const domElementFactory = (type, text, className) => {
   const el = document.createElement(type);
   el.textContent = text;
   if (className) {
@@ -10,4 +10,4 @@ const elementFactory = (type, text, className) => {
   };
 };
 
-export default elementFactory;
+export default domElementFactory;
