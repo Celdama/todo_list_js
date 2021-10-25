@@ -126,7 +126,6 @@ const UI = (() => {
     addTodoForm.addEventListener('submit', (e) => {
       e.preventDefault();
       const newTodo = todoFactory2(getTodoInfo());
-      console.log(newTodo.project);
       handleTodoListModule.addTodo(newTodo);
       handleProjectListModule.addTodoToProject(newTodo.project, newTodo);
       loadTodoList(newTodo.project);
@@ -136,7 +135,6 @@ const UI = (() => {
   const AddEventListenerToFetchTodoInProject = () => {
     const projectName = document.querySelectorAll('.project-name');
     projectName.forEach((project) => {
-      console.log(project);
       project.addEventListener('click', () => {
         loadTodoList(project.textContent);
       });
@@ -150,9 +148,7 @@ const UI = (() => {
       e.preventDefault();
       const newProjectTitle = getProjectToAddInfo();
       const newProject = projectFactory(newProjectTitle);
-      console.log(newProject);
       handleProjectListModule.addProject(newProject);
-      // handleProjectListModule.getAllProject();
       loadProjectList();
       AddEventListenerToFetchTodoInProject();
     });
