@@ -1,10 +1,11 @@
 import { v4 as uuidv4 } from 'uuid';
 
-const todoFactory = (title, description, project = 'inbox') => ({
+const todoFactory = (title, description, project = 'inbox', priority) => ({
   id: uuidv4(),
   title,
   description,
   project: project.toLowerCase(),
+  priority: priority || 'medium',
 });
 
 const todoFactory2 = (todo) => ({
@@ -12,6 +13,7 @@ const todoFactory2 = (todo) => ({
   title: todo.title,
   description: todo.description,
   project: todo.project.toLowerCase() || 'inbox',
+  priority: todo.priority || 'medium',
 });
 
 const handleTodoListModule = (() => {
