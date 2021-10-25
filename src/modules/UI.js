@@ -1,7 +1,8 @@
 import { todoFactory, handleTodoListModule, todoFactory2 } from './handleTodo';
 import { projectFactory, handleProjectListModule } from './handleProject';
-import domElementFactory from '../utilities/domelementFactory';
+import domElementFactory from '../utilities/domElementFactory';
 import appendDomElementToParent from '../utilities/appendDomElementToParent';
+import { displayEditTodoPriorityPopUp, createEditPriorityPopUp } from '../utilities/priorityPopUp';
 
 const UI = (() => {
   console.log('UI loaded');
@@ -141,8 +142,8 @@ const UI = (() => {
     `;
 
     deleteBtn.el.onclick = () => deleteTodo(todo);
-    priorityBtn.el.onclick = () => editTodoPriority(todo);
-    const popUpPriority = createEditPriorityPopUp(priorityBtn.el);
+    const popUpPriority = createEditPriorityPopUp(todo, () => loadTodoList(todo.project));
+    priorityBtn.el.onclick = () => displayEditTodoPriorityPopUp(popUpPriority);
 
     appendDomElementToParent(doneWrapper.el, doneBtn);
     appendDomElementToParent(todoTitleWrapper.el, displayTodoTitle);
@@ -275,20 +276,6 @@ const UI = (() => {
       projectsList.classList.toggle('collapse');
       projectsList.classList.toggle('not-collapse');
     });
-  };
-
-  const editTodoPriority = (todo) => {
-    const popUpPriority = document.querySelector('.pop-up-priority');
-    console.log('pop up created');
-    popUpPriority.style.display = 'inline';
-    console.log(todo);
-  };
-
-  const createEditPriorityPopUp = (editBtn) => {
-    const popUp = domElementFactory('div', 'im a pop up', 'pop-up-priority');
-    console.log(editBtn);
-
-    return popUp;
   };
 
   return {

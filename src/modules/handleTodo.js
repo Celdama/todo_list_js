@@ -56,6 +56,14 @@ const handleTodoListModule = (() => {
     Object.assign(todo, updatedTodo);
   };
 
+  const updateTodoPriority = (todo, newPriority) => {
+    const updatedTodoPriority = {
+      priority: newPriority,
+    };
+
+    Object.assign(todo, updatedTodoPriority);
+  };
+
   return {
     addTodo,
     deleteTodo,
@@ -64,6 +72,7 @@ const handleTodoListModule = (() => {
     updateTodo,
     deleteAllTodoFromDeletedProject,
     deleteTodoWithID,
+    updateTodoPriority,
   };
 })();
 
