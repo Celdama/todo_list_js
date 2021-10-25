@@ -31,12 +31,11 @@ const UI = (() => {
     const projectList = document.getElementById('display-projects-list');
     projectList.textContent = '';
 
-    const projects =
-      handleProjectListModule.getAllProjectExceptDefaultProject();
+    const projects = handleProjectListModule.getAllProjectExceptDefaultProject();
 
     if (!projects) {
       const emptyProject = document.createElement('h3');
-      emptyProject.textContent = 'No project yet';
+      emptyProject.textContent = 'No project';
       projectList.appendChild(emptyProject);
     } else {
       projects.forEach((project) => {
@@ -65,12 +64,12 @@ const UI = (() => {
     const projectTitle = domElementFactory(
       'span',
       `${project.title}`,
-      'project-name'
+      'project-name',
     );
     const deleteProjectBtn = domElementFactory(
       'button',
       '',
-      'delete-project-btn'
+      'delete-project-btn',
     );
     projectInfo.el.dataset.list = `${project.title}`;
     deleteProjectBtn.el.innerHTML = `
@@ -108,7 +107,7 @@ const UI = (() => {
     const displayTodoTitle = domElementFactory(
       'div',
       `${todo.title}`,
-      'todo-title'
+      'todo-title',
     );
 
     let colorFlagPriority = '#ff9933';
@@ -150,7 +149,7 @@ const UI = (() => {
     appendDomElementToParent(
       leftSideOfTodoItem.el,
       doneWrapper,
-      todoTitleWrapper
+      todoTitleWrapper,
     );
     appendDomElementToParent(editWrapper.el, editBtn);
     appendDomElementToParent(priorityWrapper.el, priorityBtn, popUpPriority);
@@ -159,13 +158,13 @@ const UI = (() => {
       rightSideOfTodoItem.el,
       editWrapper,
       priorityWrapper,
-      deleteWrapper
+      deleteWrapper,
     );
 
     appendDomElementToParent(
       todoItem.el,
       leftSideOfTodoItem,
-      rightSideOfTodoItem
+      rightSideOfTodoItem,
     );
 
     return todoItem.el;
@@ -173,7 +172,7 @@ const UI = (() => {
 
   const getTodoInfo = () => {
     const newTodo = Array.from(
-      document.querySelectorAll('#add-todo-form input')
+      document.querySelectorAll('#add-todo-form input'),
     ).reduce((acc, input) => ({ ...acc, [input.id]: input.value }), {});
 
     return newTodo;
@@ -181,7 +180,7 @@ const UI = (() => {
 
   const getProjectToAddInfo = () => {
     const projectTitle = document.querySelector(
-      '#add-project-form input'
+      '#add-project-form input',
     ).value;
 
     return projectTitle.toLowerCase();
@@ -201,7 +200,7 @@ const UI = (() => {
 
   const AddEventListenerToFetchTodoInProject = () => {
     const projectName = document.querySelectorAll(
-      '.display-main-list, .project-info'
+      '.display-main-list, .project-info',
     );
 
     projectName.forEach((project) => {
