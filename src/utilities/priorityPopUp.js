@@ -21,7 +21,8 @@ const createEditPriorityPopUp = (todo, reloadTodoFunctionFromUI) => {
   priorityChoice.forEach((choice) => {
     const priorityBtn = domElementFactory('button', `${choice}`, 'priority-choice');
     priorityBtn.el.onclick = () => {
-      editTodoPriorityUi(todo, priorityBtn.el.textContent);
+      const newPriority = priorityBtn.el.textContent;
+      editTodoPriorityUi(todo, newPriority);
       reloadTodoFunctionFromUI();
     };
     appendDomElementToParent(popUp.el, priorityBtn);

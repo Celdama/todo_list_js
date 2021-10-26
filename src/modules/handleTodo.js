@@ -1,4 +1,5 @@
 import { v4 as uuidv4 } from 'uuid';
+// import { handleProjectListModule } from './handleProject';
 
 const todoFactory = (title, description, project = 'inbox', priority) => ({
   id: uuidv4(),
@@ -46,14 +47,14 @@ const handleTodoListModule = (() => {
     console.log(todo.id);
   };
 
-  const updateTodo = (todo, title, description, project) => {
-    const updatedTodo = {
-      title,
-      description,
-      project: project.toLowerCase(),
-    };
+  const getTodoById = (id) => {
+    const todo = listTodo.find((item) => item.id === id);
+    return todo;
+  };
 
-    Object.assign(todo, updatedTodo);
+  const updateTodo = (todo, update) => {
+    const todoUpdate = Object.assign(todo, update);
+    return todoUpdate;
   };
 
   const updateTodoPriority = (todo, newPriority) => {
@@ -73,6 +74,7 @@ const handleTodoListModule = (() => {
     deleteAllTodoFromDeletedProject,
     deleteTodoWithID,
     updateTodoPriority,
+    getTodoById,
   };
 })();
 

@@ -144,6 +144,7 @@ const UI = (() => {
     deleteBtn.el.onclick = () => deleteTodo(todo);
     const popUpPriority = createEditPriorityPopUp(todo, () => loadTodoList(todo.project));
     priorityBtn.el.onclick = () => displayEditTodoPriorityPopUp(popUpPriority);
+    editBtn.el.onclick = (todo, () => updateTodo(todo));
 
     appendDomElementToParent(doneWrapper.el, doneBtn);
     appendDomElementToParent(todoTitleWrapper.el, displayTodoTitle);
@@ -169,6 +170,74 @@ const UI = (() => {
     );
 
     return todoItem.el;
+  };
+
+  const addEventListenerToUpdateTodo = (editForm, wrapper) => {
+    editForm.addEventListener('submit', (e) => {
+      e.preventDefault();
+      e.stopImmediatePropagation();
+      // check if project value change
+      const projectInputValue = document.querySelector('.project-input');
+      let newProject = projectInputValue.value;
+      const olderProject = projectInputValue.placeholder;
+
+      if (!newProject) {
+        newProject = olderProject;
+      }
+
+      const todoUpdatedInfo = getUpdateTodoInfo();
+      const formId = editForm.getAttribute('data-id');
+      const updateThisTodo = handleTodoListModule.getTodoById(formId);
+
+      if (formId === updateThisTodo.id) {
+        const todoUpdated = handleTodoListModule.updateTodo(updateThisTodo, todoUpdatedInfo);
+
+        // this mean i have to moove todo in another folder project
+        if (olderProject !== newProject) {
+          handleProjectListModule.deleteTodoFromProject(olderProject, updateThisTodo);
+          handleProjectListModule.addTodoToProject(todoUpdated.project, todoUpdated);
+          loadTodoList(todoUpdated.project);
+        } else {
+          loadTodoList(olderProject);
+        }
+
+        wrapper.classList.toggle('hidden-edit-wrapper-todo');
+        wrapper.classList.toggle('visible-edit-wrapper-todo');
+      }
+      editForm.reset();
+    });
+  };
+
+  const getUpdateTodoInfo = () => {
+    const updatedTodo = Array.from(
+      document.querySelectorAll('#edit-todo-form input'),
+    ).reduce((acc, input) => ({ ...acc, [input.id]: input.value || input.placeholder }), {});
+
+    return updatedTodo;
+  };
+
+  const fillPlaceHolderFormEditWithTodoData = (data) => {
+    const inputEditTodo = Array.from(
+      document.querySelectorAll('#edit-todo-form input'),
+    );
+
+    inputEditTodo.forEach((input) => {
+      input.classList.add(`${input.id}-input`);
+      input.value = '';
+      input.placeholder = data[input.id];
+    });
+  };
+
+  const updateTodo = (todo) => {
+    const editTodoWrapper = document.getElementById('edit-todo-wrapper');
+    editTodoWrapper.classList.remove('hidden-edit-wrapper-todo');
+    editTodoWrapper.classList.add('visible-edit-wrapper-todo');
+
+    const editTodoForm = document.getElementById('edit-todo-form');
+    editTodoForm.dataset.id = todo.id;
+
+    fillPlaceHolderFormEditWithTodoData(todo);
+    addEventListenerToUpdateTodo(editTodoForm, editTodoWrapper);
   };
 
   const getTodoInfo = () => {

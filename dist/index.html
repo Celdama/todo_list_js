@@ -148,6 +148,7 @@
                 name="title"
                 id="title"
               />
+
               <br />
               <br />
               <label for="description">description task</label>
@@ -193,6 +194,38 @@
           <div class="display-todo-list">
             <h3 id="todo-category">Inbox</h3>
             <div class="todo-list"></div>
+          </div>
+          <div id="edit-todo-wrapper" class="hidden-edit-wrapper-todo">Form edit task
+            <form id="edit-todo-form" action="#">
+              <label for="title" class="edit-title-label">edit title</label>
+              <input
+                type="text"
+                name="title"
+                id="title"
+              />
+              <br />
+              <br />
+              <label for="description">edit description</label>
+              <input
+                type="text"
+                name="description"
+                id="description"
+              />
+              <br />
+              <br />
+              <label for="project">edit project</label>
+              <input
+                type="text"
+                name="project"
+                id="project"
+              />
+              <br />
+              <button type="submit">Edit</button>
+              <br />
+              <br />
+              <br />
+              <br />
+            </form>
           </div>
         </main>
       </div>

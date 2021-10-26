@@ -22,14 +22,14 @@ const handleProjectListModule = (() => {
 
   const getProjectByName = (name) => {
     const results = listProject.find(
-      (project) => project.title === name.toLowerCase()
+      (project) => project.title === name.toLowerCase(),
     );
     return results;
   };
 
   const getTodosByProjectName = (name) => {
     const results = listProject.find(
-      (project) => project.title === name.toLowerCase()
+      (project) => project.title === name.toLowerCase(),
     );
     return results.todos;
   };
@@ -46,7 +46,7 @@ const handleProjectListModule = (() => {
     const projectToDelete = getProjectByName(project);
 
     projectToDelete.todos = projectToDelete.todos.filter(
-      (item) => item.id !== todo.id
+      (item) => item.id !== todo.id,
     );
   };
 
@@ -61,7 +61,7 @@ const handleProjectListModule = (() => {
 
   const getAllProjectExceptDefaultProject = () => {
     const allProjectExceptInbox = listProject.filter(
-      (project) => !project.defaultProject
+      (project) => !project.defaultProject,
     );
     return allProjectExceptInbox;
   };
