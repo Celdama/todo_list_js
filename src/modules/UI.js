@@ -129,14 +129,16 @@ const UI = (() => {
 
   const deleteTodo = (todo) => {
     const { project, id } = todo;
-    todoListModule.deleteTodo(todo.id);
+
+    todoListModule.deleteTodo(id);
     projectListModule.deleteTodoInThisProject(project, id);
 
-    loadTodoList(todo.project);
+    loadTodoList(project);
   };
 
   const deleteProject = (project) => {
     const { id, title } = project;
+
     projectListModule.deleteProject(id, title);
     loadProjectList();
   };
