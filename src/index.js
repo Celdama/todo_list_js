@@ -52,9 +52,9 @@ handleProjectListModule.getAllProject();
 
 UI.loadTodoList();
 UI.loadProjectList();
-UI.addProjectUI();
+UI.addProject();
 UI.addTodo();
 UI.AddEventListenerToFetchTodoInProject();
-UI.hideAsideSide();
+UI.hideAside();
 UI.toggleClassOnSmallerScreen();
-UI.toggleDropdowProjectsList();
+UI.toggleDropdowProjectsListOnClick();

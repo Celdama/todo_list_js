@@ -316,25 +316,30 @@ const UI = (() => {
 
     projectName.forEach((project) => {
       project.addEventListener('click', () => {
-        loadTodoList(project.dataset.list);
+        const { list } = project.dataset;
+        loadTodoList(list);
       });
     });
   };
 
-  const addProjectUI = () => {
+  const addProject = () => {
     const addProjectForm = document.getElementById('add-project-form');
 
     addProjectForm.addEventListener('submit', (e) => {
       e.preventDefault();
       const newProjectTitle = getNewProjectTitle();
       const newProject = projectFactory(newProjectTitle);
+      const { title } = newProject;
       projectListModule.addProject(newProject);
       loadProjectList();
       AddEventListenerToFetchTodoInProject();
+      addProjectForm.reset();
+      toggleDropdowProjectsListAuto();
+      loadTodoList(title);
     });
   };
 
-  const hideAsideSide = () => {
+  const hideAside = () => {
     const hideBtn = document.getElementById('hide-aside');
     const asideInfo = document.getElementById('aside-informations');
     const mainInfo = document.getElementById('main-informations');
@@ -370,7 +375,20 @@ const UI = (() => {
     });
   };
 
-  const toggleDropdowProjectsList = () => {
+  const toggleDropdowProjectsListAuto = () => {
+    const chevronSVG = document.querySelector('.bi-chevron-right');
+    const projectsList = document.getElementById('display-projects-list');
+
+    const style = getComputedStyle(chevronSVG);
+    if (style.transform === 'matrix(1, 0, 0, 1, 0, 0)') {
+      chevronSVG.style.transform = 'rotate(90deg)';
+      chevronSVG.style.transition = 'transform .1s ease';
+      projectsList.classList.toggle('collapse');
+      projectsList.classList.toggle('not-collapse');
+    }
+  };
+
+  const toggleDropdowProjectsListOnClick = () => {
     const toggleBtn = document.querySelector('.dropdown-projects-list');
     const chevronSVG = document.querySelector('.bi-chevron-right');
     const projectsList = document.getElementById('display-projects-list');
@@ -392,11 +410,11 @@ const UI = (() => {
     loadTodoList,
     loadProjectList,
     addTodo,
-    addProjectUI,
+    addProject,
     AddEventListenerToFetchTodoInProject,
-    hideAsideSide,
+    hideAside,
     toggleClassOnSmallerScreen,
-    toggleDropdowProjectsList,
+    toggleDropdowProjectsListOnClick,
   };
 })();
 
