@@ -47,7 +47,7 @@ const UI = (() => {
   };
 
   const deleteTodo = (todo) => {
-    handleTodoListModule.deleteTodoWithID(todo.id);
+    handleTodoListModule.deleteTodo(todo.id);
     handleProjectListModule.deleteTodoFromProject(todo.project, todo);
 
     loadTodoList(todo.project);
@@ -187,7 +187,7 @@ const UI = (() => {
 
       const todoUpdatedInfo = getUpdateTodoInfo();
       const formId = editForm.getAttribute('data-id');
-      const updateThisTodo = handleTodoListModule.getTodoById(formId);
+      const updateThisTodo = handleTodoListModule.getTodo(formId);
 
       if (formId === updateThisTodo.id) {
         const todoUpdated = handleTodoListModule.updateTodo(updateThisTodo, todoUpdatedInfo);

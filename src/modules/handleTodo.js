@@ -1,12 +1,14 @@
 import { v4 as uuidv4 } from 'uuid';
-// import { handleProjectListModule } from './handleProject';
 
-const todoFactory = (title, description, project = 'inbox', priority) => ({
+// je garde cette fonction jusqu'à la fin de mon developpment, je l'utilise pour
+// créer les todos à la volée dans index.js (c'est ma première version de ma function
+// factory, une fois le projet terminé je la supprimerais.)
+const todoFactory = (title, description, project = 'inbox', priority = 'medium') => ({
   id: uuidv4(),
   title,
   description,
   project: project.toLowerCase(),
-  priority: priority || 'medium',
+  priority,
 });
 
 const todoFactory2 = (todo) => ({
@@ -18,63 +20,51 @@ const todoFactory2 = (todo) => ({
 });
 
 const handleTodoListModule = (() => {
-  let listTodo = [];
+  let todoList = [];
 
   const addTodo = (todo) => {
-    listTodo.push(todo);
+    todoList.push(todo);
   };
 
-  const deleteTodo = (todo) => {
-    // function inutile, mais je la garde pour le moment.
-    // j'utilise l'id via le dom pour delete
-    listTodo = listTodo.filter((item) => item.id !== todo.id);
-  };
-
-  const deleteTodoWithID = (id) => {
-    listTodo = listTodo.filter((item) => item.id !== id);
+  const deleteTodo = (id) => {
+    todoList = todoList.filter((item) => item.id !== id);
   };
 
   const deleteAllTodoFromDeletedProject = (projectName) => {
-    listTodo = listTodo.filter((item) => item.project !== projectName);
+    todoList = todoList.filter((item) => item.project !== projectName);
   };
 
   const getTodoList = () => {
-    console.table(listTodo);
-    return listTodo;
+    console.table(todoList);
+    return todoList;
   };
 
-  const getTodoId = (todo) => {
-    console.log(todo.id);
-  };
-
-  const getTodoById = (id) => {
-    const todo = listTodo.find((item) => item.id === id);
+  const getTodo = (id) => {
+    const todo = todoList.find((item) => item.id === id);
     return todo;
   };
 
-  const updateTodo = (todo, update) => {
-    const todoUpdate = Object.assign(todo, update);
-    return todoUpdate;
+  const updateTodo = (olderTodoVersion, updateTodoVersion) => {
+    const todoUpdated = Object.assign(olderTodoVersion, updateTodoVersion);
+    return todoUpdated;
   };
 
-  const updateTodoPriority = (todo, newPriority) => {
-    const updatedTodoPriority = {
-      priority: newPriority,
+  const updateTodoPriority = (todo, newPriorityValue) => {
+    const todoPriorityValueUpdated = {
+      priority: newPriorityValue,
     };
 
-    Object.assign(todo, updatedTodoPriority);
+    Object.assign(todo, todoPriorityValueUpdated);
   };
 
   return {
     addTodo,
+    getTodo,
+    updateTodo,
     deleteTodo,
     getTodoList,
-    getTodoId,
-    updateTodo,
     deleteAllTodoFromDeletedProject,
-    deleteTodoWithID,
     updateTodoPriority,
-    getTodoById,
   };
 })();
 
