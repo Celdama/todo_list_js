@@ -1,10 +1,7 @@
 import './style.css';
 import './style.scss';
 import { todoFactory, handleTodoListModule } from './modules/handleTodo';
-import {
-  projectFactory,
-  handleProjectListModule,
-} from './modules/handleProject';
+import { projectFactory, handleProjectListModule } from './modules/handleProject';
 import UI from './modules/UI';
 
 const newTodo = todoFactory(
@@ -38,7 +35,6 @@ handleProjectListModule.addProject(football);
 handleProjectListModule.addProject(inbox);
 handleProjectListModule.addProject(today);
 handleProjectListModule.addProject(upcoming);
-handleProjectListModule.showAllTodos();
 handleProjectListModule.addTodoToProject(newProject.title, todo3);
 handleProjectListModule.addTodoToProject(football.title, todo4);
 handleProjectListModule.addTodoToProject(newProject.title, todo3);
@@ -48,15 +44,11 @@ handleProjectListModule.addTodoToProject(newProject.title, newTodo);
 handleProjectListModule.addTodoToProject(newProject.title, todo3);
 handleProjectListModule.addTodoToProject(inbox.title, todo5);
 
-handleProjectListModule.showAllTodos();
 handleProjectListModule.getProjectByName('javAscRipt');
 
 handleTodoListModule.getTodoList();
 
 handleProjectListModule.getAllProject();
-
-handleProjectListModule.getAllProject();
-handleProjectListModule.showAllTodos();
 
 UI.loadTodoList();
 UI.loadProjectList();

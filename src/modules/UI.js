@@ -1,4 +1,4 @@
-import { todoFactory, handleTodoListModule, todoFactory2 } from './handleTodo';
+import { handleTodoListModule, todoFactory2 } from './handleTodo';
 import { projectFactory, handleProjectListModule } from './handleProject';
 import domElementFactory from '../utilities/domElementFactory';
 import appendDomElementToParent from '../utilities/appendDomElementToParent';
@@ -14,7 +14,7 @@ const UI = (() => {
     const displayTodoList = document.querySelector('.todo-list');
     displayTodoList.textContent = '';
 
-    const todoList = handleProjectListModule.getTodosByProjectName(name);
+    const todoList = handleProjectListModule.getTodoByProjectName(name);
 
     if (todoList.length === 0) {
       const emptyTodo = document.createElement('h2');
@@ -47,14 +47,16 @@ const UI = (() => {
   };
 
   const deleteTodo = (todo) => {
+    const { project, id } = todo;
     handleTodoListModule.deleteTodo(todo.id);
-    handleProjectListModule.deleteTodoFromProject(todo.project, todo);
+    handleProjectListModule.deleteTodoInThisProject(project, id);
 
     loadTodoList(todo.project);
   };
 
   const deleteProject = (project) => {
-    handleProjectListModule.deleteProject(project);
+    const { id, title } = project;
+    handleProjectListModule.deleteProject(id, title);
     loadProjectList();
   };
 
@@ -194,7 +196,7 @@ const UI = (() => {
 
         // this mean i have to moove todo in another folder project
         if (olderProject !== newProject) {
-          handleProjectListModule.deleteTodoFromProject(olderProject, updateThisTodo);
+          handleProjectListModule.deleteTodoInThisProject(olderProject, updateThisTodo.id);
           handleProjectListModule.addTodoToProject(todoUpdated.project, todoUpdated);
           loadTodoList(todoUpdated.project);
         } else {

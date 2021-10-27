@@ -26,6 +26,16 @@ const handleTodoListModule = (() => {
     todoList.push(todo);
   };
 
+  const getTodo = (id) => {
+    const todo = todoList.find((item) => item.id === id);
+    return todo;
+  };
+
+  const updateTodo = (olderTodoVersion, updateTodoVersion) => {
+    const todoUpdated = Object.assign(olderTodoVersion, updateTodoVersion);
+    return todoUpdated;
+  };
+
   const deleteTodo = (id) => {
     todoList = todoList.filter((item) => item.id !== id);
   };
@@ -37,16 +47,6 @@ const handleTodoListModule = (() => {
   const getTodoList = () => {
     console.table(todoList);
     return todoList;
-  };
-
-  const getTodo = (id) => {
-    const todo = todoList.find((item) => item.id === id);
-    return todo;
-  };
-
-  const updateTodo = (olderTodoVersion, updateTodoVersion) => {
-    const todoUpdated = Object.assign(olderTodoVersion, updateTodoVersion);
-    return todoUpdated;
   };
 
   const updateTodoPriority = (todo, newPriorityValue) => {
@@ -62,8 +62,8 @@ const handleTodoListModule = (() => {
     getTodo,
     updateTodo,
     deleteTodo,
-    getTodoList,
     deleteAllTodoFromDeletedProject,
+    getTodoList,
     updateTodoPriority,
   };
 })();

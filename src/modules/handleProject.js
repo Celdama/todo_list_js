@@ -2,36 +2,28 @@ import { v4 as uuidv4 } from 'uuid';
 import { handleTodoListModule } from './handleTodo';
 
 const projectFactory = (title, defaultProject) => {
-  const todos = [];
+  const todosListInThisProject = [];
 
   return {
     id: uuidv4(),
     title: title.toLowerCase(),
-    todos,
+    todos: todosListInThisProject,
     defaultProject: defaultProject || false,
   };
 };
 
 const handleProjectListModule = (() => {
-  const allTodos = handleTodoListModule.getTodoList();
-  let listProject = [];
+  let projectList = [];
 
   const addProject = (project) => {
-    listProject.push(project);
+    projectList.push(project);
   };
 
   const getProjectByName = (name) => {
-    const results = listProject.find(
+    const results = projectList.find(
       (project) => project.title === name.toLowerCase(),
     );
     return results;
-  };
-
-  const getTodosByProjectName = (name) => {
-    const results = listProject.find(
-      (project) => project.title === name.toLowerCase(),
-    );
-    return results.todos;
   };
 
   const addTodoToProject = (name, todo) => {
@@ -42,45 +34,50 @@ const handleProjectListModule = (() => {
     projectToAdd.todos.push(todo);
   };
 
-  const deleteTodoFromProject = (project, todo) => {
-    const projectToDelete = getProjectByName(project);
-
-    projectToDelete.todos = projectToDelete.todos.filter(
-      (item) => item.id !== todo.id,
-    );
-  };
-
-  const showAllTodos = () => {
-    console.table(allTodos);
-  };
-
+  // A supprimer une fois le dev terminé
   const getAllProject = () => {
-    console.log(listProject);
-    return listProject;
+    console.table(projectList);
+    return projectList;
   };
 
   const getAllProjectExceptDefaultProject = () => {
-    const allProjectExceptInbox = listProject.filter(
+    // default project = inbox, today, upcomming
+    const allProjectExceptDefault = projectList.filter(
       (project) => !project.defaultProject,
     );
-    return allProjectExceptInbox;
+
+    return allProjectExceptDefault;
   };
 
-  const deleteProject = (project) => {
-    listProject = listProject.filter((item) => item.id !== project.id);
+  const getTodoByProjectName = (name) => {
+    const results = projectList.find(
+      (project) => project.title === name.toLowerCase(),
+    );
+    return results.todos;
+  };
 
-    handleTodoListModule.deleteAllTodoFromDeletedProject(project.title);
+  const deleteTodoInThisProject = (project, todoId) => {
+    const todosParentProject = getProjectByName(project);
+
+    todosParentProject.todos = todosParentProject.todos.filter(
+      (item) => item.id !== todoId,
+    );
+  };
+
+  const deleteProject = (id, projectTitle) => {
+    projectList = projectList.filter((item) => item.id !== id);
+
+    handleTodoListModule.deleteAllTodoFromDeletedProject(projectTitle);
   };
 
   return {
     addProject,
+    getProjectByName,
+    addTodoToProject,
     getAllProject,
     getAllProjectExceptDefaultProject,
-    getProjectByName,
-    getTodosByProjectName,
-    showAllTodos,
-    addTodoToProject,
-    deleteTodoFromProject,
+    getTodoByProjectName,
+    deleteTodoInThisProject,
     deleteProject,
   };
 })();
