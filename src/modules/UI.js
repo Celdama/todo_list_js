@@ -116,14 +116,13 @@ const UI = (() => {
 
     const projects = projectListModule.getAllProjectExceptDefaultProject();
 
-    if (!projects) {
-      const emptyProject = document.createElement('h3');
-      emptyProject.textContent = 'No project';
-      projectList.appendChild(emptyProject);
+    if (projects.length === 0) {
+      const emptyProjectText = domElementFactory('p', 'You have no project', 'empty-project-text');
+      projectList.appendChild(emptyProjectText.el);
     } else {
       projects.forEach((project) => {
-        const appendProject = renderProjectItem(project);
-        projectList.appendChild(appendProject);
+        const projectAppended = renderProjectItem(project);
+        projectList.appendChild(projectAppended);
       });
     }
   };
