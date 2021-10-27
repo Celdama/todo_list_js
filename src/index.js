@@ -2,6 +2,7 @@ import './style.css';
 import './style.scss';
 import { todoFactory, handleTodoListModule } from './modules/handleTodo';
 import { projectFactory, handleProjectListModule } from './modules/handleProject';
+import animationsUI from './utilities/animations';
 import UI from './modules/UI';
 
 const newTodo = todoFactory(
@@ -55,6 +56,7 @@ UI.loadProjectList();
 UI.addProject();
 UI.addTodo();
 UI.AddEventListenerToFetchTodoInProject();
-UI.hideAside();
-UI.toggleClassOnSmallerScreen();
-UI.toggleDropdowProjectsListOnClick();
+animationsUI.hideAside();
+animationsUI.toggleClassOnSmallerScreen();
+// UI.toggleDropdowProjectsListOnClick();
+animationsUI.toggleDropdowProjectsListOnClick();
