@@ -1,3 +1,4 @@
+import { format, comparAsc, setDay } from 'date-fns';
 import domElementFactory from '../utilities/domElementFactory';
 import appendDomElementToParent from '../utilities/appendDomElementToParent';
 import { todoFactory2, handleTodoListModule as todoListModule } from './handleTodo';
@@ -8,8 +9,21 @@ const UI = (() => {
   const loadTodoList = (name = 'inbox') => {
     const todoCategory = document.getElementById('todo-category');
     const displayTodoList = document.querySelector('.todo-list');
+    const todoInfo = document.querySelector('.todo-info');
+    const formatDate = format(new Date(), 'ccc dd MMM');
+    const currentDate = domElementFactory('span', `${formatDate}`, 'current-date');
 
     todoCategory.textContent = name;
+
+    if (name === 'today') {
+      todoInfo.appendChild(currentDate.el);
+    } else {
+      const date = document.querySelector('.current-date');
+      if (date) {
+        todoInfo.removeChild(date);
+      }
+    }
+
     displayTodoList.textContent = '';
 
     const todoList = projectListModule.getTodoByProjectName(name);
