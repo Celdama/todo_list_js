@@ -88,21 +88,7 @@ const UI = (() => {
       rightSideOfTodoItem,
     );
 
-    // testListener();
-
     return todoItem.el;
-  };
-
-  const handleTodoItemEventListener = (todo, ...args) => {
-    args.forEach((btn) => {
-      btn.addEventListener('click', () => {
-        if (btn.classList.contains('edit-todo-btn')) {
-          updateTodo(todo);
-        } else if (btn.classList.contains('delete-todo-btn')) {
-          deleteTodo(todo);
-        }
-      });
-    });
   };
 
   const loadTodoList = (name = 'inbox') => {
@@ -190,7 +176,8 @@ const UI = (() => {
       </svg>
     `;
 
-    deleteProjectBtn.el.onclick = () => deleteProject(project);
+    // deleteProjectBtn.el.onclick = () => deleteProject(project);
+    handleProjectItemEventListener(project, deleteProjectBtn.el);
 
     appendDomElementToParent(projectInfo.el, circleColorProject, projectTitle);
     appendDomElementToParent(wrapperProject.el, projectInfo, deleteProjectBtn);
@@ -198,38 +185,61 @@ const UI = (() => {
     return wrapperProject.el;
   };
 
-  const addEventListenerToUpdateTodo = (editForm, wrapper) => {
+  const handleTodoItemEventListener = (todo, ...args) => {
+    args.forEach((btn) => {
+      btn.addEventListener('click', () => {
+        if (btn.classList.contains('edit-todo-btn')) {
+          updateTodo(todo);
+        } else if (btn.classList.contains('delete-todo-btn')) {
+          deleteTodo(todo);
+        }
+      });
+    });
+  };
+
+  const handleProjectItemEventListener = (project, ...args) => {
+    args.forEach((btn) => {
+      btn.addEventListener('click', () => {
+        if (btn.classList.contains('delete-project-btn')) {
+          deleteProject(project);
+        }
+      });
+    });
+  };
+
+  const addFormEventListenerToUpdateTodo = (editForm, wrapper) => {
     editForm.addEventListener('submit', (e) => {
       e.preventDefault();
       e.stopImmediatePropagation();
       // check if project value change
-      const projectInputValue = document.querySelector('.project-input');
-      let newProject = projectInputValue.value;
-      const olderProject = projectInputValue.placeholder;
+      const formProjectInputValue = document.querySelector('.project-input');
+      let newProject = formProjectInputValue.value;
+      const olderProject = formProjectInputValue.placeholder;
 
       if (!newProject) {
         newProject = olderProject;
       }
 
-      const todoUpdatedInfo = getUpdateTodoInfo();
       const formId = editForm.getAttribute('data-id');
-      const updateThisTodo = todoListModule.getTodo(formId);
 
-      if (formId === updateThisTodo.id) {
-        const todoUpdated = todoListModule.updateTodo(updateThisTodo, todoUpdatedInfo);
+      const originalTodo = todoListModule.getTodo(formId);
+      const updatedTodoInfo = getUpdateTodoInfo();
 
-        // this mean i have to moove todo in another folder project
-        if (olderProject !== newProject) {
-          projectListModule.deleteTodoInThisProject(olderProject, updateThisTodo.id);
-          projectListModule.addTodoToProject(todoUpdated.project, todoUpdated);
-          loadTodoList(todoUpdated.project);
-        } else {
-          loadTodoList(olderProject);
-        }
+      const updatedTodo = todoListModule.updateTodo(originalTodo, updatedTodoInfo);
 
-        wrapper.classList.toggle('hidden-edit-wrapper-todo');
-        wrapper.classList.toggle('visible-edit-wrapper-todo');
+      const { id } = originalTodo;
+      const { project } = updatedTodo;
+
+      // this mean i have to moove todo in another folder project
+      if (olderProject !== newProject) {
+        projectListModule.deleteTodoInThisProject(olderProject, id);
+        projectListModule.addTodoToProject(project, updatedTodo);
+        loadTodoList(project);
+      } else {
+        loadTodoList(olderProject);
       }
+
+      wrapper.classList.toggle('hidden');
       editForm.reset();
     });
   };
@@ -237,7 +247,9 @@ const UI = (() => {
   const getUpdateTodoInfo = () => {
     const updatedTodo = Array.from(
       document.querySelectorAll('#edit-todo-form input'),
-    ).reduce((acc, input) => ({ ...acc, [input.id]: input.value || input.placeholder }), {});
+    ).reduce((acc, input) => ({
+      ...acc, [input.id]: input.value || input.placeholder,
+    }), {});
 
     return updatedTodo;
   };
@@ -256,14 +268,14 @@ const UI = (() => {
 
   const updateTodo = (todo) => {
     const editTodoWrapper = document.getElementById('edit-todo-wrapper');
-    editTodoWrapper.classList.remove('hidden-edit-wrapper-todo');
-    editTodoWrapper.classList.add('visible-edit-wrapper-todo');
-
     const editTodoForm = document.getElementById('edit-todo-form');
+
+    editTodoWrapper.classList.toggle('hidden');
+
     editTodoForm.dataset.id = todo.id;
 
     fillPlaceHolderFormEditWithTodoData(todo);
-    addEventListenerToUpdateTodo(editTodoForm, editTodoWrapper);
+    addFormEventListenerToUpdateTodo(editTodoForm, editTodoWrapper);
   };
 
   const getTodoInfo = () => {

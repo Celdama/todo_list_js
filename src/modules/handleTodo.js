@@ -31,9 +31,9 @@ const handleTodoListModule = (() => {
     return todo;
   };
 
-  const updateTodo = (olderTodoVersion, updateTodoVersion) => {
-    const todoUpdated = Object.assign(olderTodoVersion, updateTodoVersion);
-    return todoUpdated;
+  const updateTodo = (originalTodo, updatedTodoInfo) => {
+    const updatedTodo = Object.assign(originalTodo, updatedTodoInfo);
+    return updatedTodo;
   };
 
   const deleteTodo = (id) => {
