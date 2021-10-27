@@ -1,28 +1,29 @@
 import domElementFactory from './domElementFactory';
 import appendDomElementToParent from './appendDomElementToParent';
-import { handleTodoListModule } from '../modules/handleTodo';
+import { handleTodoListModule as todoListModule } from '../modules/handleTodo';
 
-const editTodoPriorityUi = (todo, newPriorityValue) => {
-  handleTodoListModule.updateTodoPriority(todo, newPriorityValue);
+const editTodoPriority = (todo, newPriorityValue) => {
+  todoListModule.updateTodoPriority(todo, newPriorityValue);
 };
 
 const displayEditTodoPriorityPopUp = (popUp) => {
   const priorityPopUp = popUp;
-  if (popUp.el.style.display === 'none') {
-    priorityPopUp.el.style.display = 'inline';
-  } else {
-    priorityPopUp.el.style.display = 'none';
-  }
+  const popUpDisplay = priorityPopUp.style.display === 'none'
+    ? 'inline' : 'none';
+
+  priorityPopUp.style.display = popUpDisplay;
 };
 
 const createEditPriorityPopUp = (todo, reloadTodoFunctionFromUI) => {
   const priorityChoice = ['high', 'medium', 'low'];
   const popUp = domElementFactory('div', '', 'pop-up-priority');
+
   priorityChoice.forEach((choice) => {
-    const priorityBtn = domElementFactory('button', `${choice}`, 'priority-choice');
+    const priorityBtn = domElementFactory('button', `${choice}`, 'priority-choice-btn');
+
     priorityBtn.el.onclick = () => {
-      const newPriority = priorityBtn.el.textContent;
-      editTodoPriorityUi(todo, newPriority);
+      const prioritySelected = priorityBtn.el.textContent;
+      editTodoPriority(todo, prioritySelected);
       reloadTodoFunctionFromUI();
     };
     appendDomElementToParent(popUp.el, priorityBtn);

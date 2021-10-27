@@ -58,8 +58,9 @@ const UI = (() => {
 
     deleteBtn.el.onclick = () => deleteTodo(todo);
     const popUpPriority = createEditPriorityPopUp(todo, () => loadTodoList(todo.project));
-    priorityBtn.el.onclick = () => displayEditTodoPriorityPopUp(popUpPriority);
-    editBtn.el.onclick = (todo, () => updateTodo(todo));
+
+    priorityBtn.el.onclick = () => displayEditTodoPriorityPopUp(popUpPriority.el);
+    editBtn.el.onclick = (() => updateTodo(todo));
 
     appendDomElementToParent(doneWrapper.el, doneBtn);
     appendDomElementToParent(todoTitleWrapper.el, displayTodoTitle);
@@ -158,17 +159,20 @@ const UI = (() => {
       'delete-project-btn',
     );
     projectInfo.el.dataset.list = `${project.title}`;
+
     deleteProjectBtn.el.innerHTML = `
       <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" fill="currentColor" class="bi bi-x-lg delete-project" viewBox="0 0 16 16">
         <path fill-rule="evenodd" d="M13.854 2.146a.5.5 0 0 1 0 .708l-11 11a.5.5 0 0 1-.708-.708l11-11a.5.5 0 0 1 .708 0Z"/>
         <path fill-rule="evenodd" d="M2.146 2.146a.5.5 0 0 0 0 .708l11 11a.5.5 0 0 0 .708-.708l-11-11a.5.5 0 0 0-.708 0Z"/>
       </svg>
     `;
+
     circleColorProject.el.innerHTML = `
       <svg xmlns="http://www.w3.org/2000/svg" width="10" height="10" fill="#ff9933" class="bi bi-circle-fill" viewBox="0 0 16 16">
         <circle cx="8" cy="8" r="8"/>
       </svg>
     `;
+
     deleteProjectBtn.el.onclick = () => deleteProject(project);
 
     appendDomElementToParent(projectInfo.el, circleColorProject, projectTitle);
