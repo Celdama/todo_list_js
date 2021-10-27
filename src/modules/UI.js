@@ -8,6 +8,10 @@ const UI = (() => {
   console.log('UI loaded');
 
   const renderTodoItem = (todo) => {
+    const RED_FLAG_PRIORITY = '#db4c3f';
+    const BLUE_FLAG_PRIORITY = '#3f73d6';
+    const ORANGE_FLAG_PRIORITY = '#ff9933';
+
     const todoItem = domElementFactory('div', '', 'todo-item');
     const leftSideOfTodoItem = domElementFactory('div', '', 'left');
     const rightSideOfTodoItem = domElementFactory('div', '', 'right');
@@ -17,21 +21,21 @@ const UI = (() => {
     const doneWrapper = domElementFactory('div', '', 'done-wrapper');
     const todoTitleWrapper = domElementFactory('div', '', 'title-wrapper');
     const doneBtn = domElementFactory('button');
-    const editBtn = domElementFactory('button');
-    const deleteBtn = domElementFactory('button');
-    const priorityBtn = domElementFactory('button');
+    const editBtn = domElementFactory('button', '', 'edit-todo-btn');
+    const deleteBtn = domElementFactory('button', '', 'delete-todo-btn');
+    const priorityBtn = domElementFactory('button', '', 'edit-priority-btn');
     const displayTodoTitle = domElementFactory(
       'div',
       `${todo.title}`,
       'todo-title',
     );
 
-    let colorFlagPriority = '#ff9933';
+    let colorFlagPriority = ORANGE_FLAG_PRIORITY;
 
     if (todo.priority === 'high') {
-      colorFlagPriority = '#db4c3f';
+      colorFlagPriority = RED_FLAG_PRIORITY;
     } else if (todo.priority === 'low') {
-      colorFlagPriority = '#3f73d6';
+      colorFlagPriority = BLUE_FLAG_PRIORITY;
     }
 
     doneBtn.el.innerHTML = `
@@ -56,11 +60,10 @@ const UI = (() => {
       </svg>
     `;
 
-    deleteBtn.el.onclick = () => deleteTodo(todo);
     const popUpPriority = createEditPriorityPopUp(todo, () => loadTodoList(todo.project));
-
     priorityBtn.el.onclick = () => displayEditTodoPriorityPopUp(popUpPriority.el);
-    editBtn.el.onclick = (() => updateTodo(todo));
+
+    handleTodoItemEventListener(todo, editBtn.el, deleteBtn.el);
 
     appendDomElementToParent(doneWrapper.el, doneBtn);
     appendDomElementToParent(todoTitleWrapper.el, displayTodoTitle);
@@ -85,7 +88,21 @@ const UI = (() => {
       rightSideOfTodoItem,
     );
 
+    // testListener();
+
     return todoItem.el;
+  };
+
+  const handleTodoItemEventListener = (todo, ...args) => {
+    args.forEach((btn) => {
+      btn.addEventListener('click', () => {
+        if (btn.classList.contains('edit-todo-btn')) {
+          updateTodo(todo);
+        } else if (btn.classList.contains('delete-todo-btn')) {
+          deleteTodo(todo);
+        }
+      });
+    });
   };
 
   const loadTodoList = (name = 'inbox') => {
