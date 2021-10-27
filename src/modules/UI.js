@@ -1,98 +1,11 @@
-import { handleTodoListModule, todoFactory2 } from './handleTodo';
-import { projectFactory, handleProjectListModule } from './handleProject';
 import domElementFactory from '../utilities/domElementFactory';
 import appendDomElementToParent from '../utilities/appendDomElementToParent';
+import { todoFactory2, handleTodoListModule as todoListModule } from './handleTodo';
+import { projectFactory, handleProjectListModule as projectListModule } from './handleProject';
 import { displayEditTodoPriorityPopUp, createEditPriorityPopUp } from '../utilities/priorityPopUp';
 
 const UI = (() => {
   console.log('UI loaded');
-
-  const loadTodoList = (name = 'inbox') => {
-    const todoCategory = document.getElementById('todo-category');
-    todoCategory.textContent = name;
-
-    const displayTodoList = document.querySelector('.todo-list');
-    displayTodoList.textContent = '';
-
-    const todoList = handleProjectListModule.getTodoByProjectName(name);
-
-    if (todoList.length === 0) {
-      const emptyTodo = document.createElement('h2');
-      emptyTodo.textContent = 'empty todo for now';
-      displayTodoList.appendChild(emptyTodo);
-    } else {
-      todoList.forEach((todo) => {
-        const appendTodo = renderTodoItem(todo);
-        displayTodoList.appendChild(appendTodo);
-      });
-    }
-  };
-
-  const loadProjectList = () => {
-    const projectList = document.getElementById('display-projects-list');
-    projectList.textContent = '';
-
-    const projects = handleProjectListModule.getAllProjectExceptDefaultProject();
-
-    if (!projects) {
-      const emptyProject = document.createElement('h3');
-      emptyProject.textContent = 'No project';
-      projectList.appendChild(emptyProject);
-    } else {
-      projects.forEach((project) => {
-        const appendProject = renderProjectItem(project);
-        projectList.appendChild(appendProject);
-      });
-    }
-  };
-
-  const deleteTodo = (todo) => {
-    const { project, id } = todo;
-    handleTodoListModule.deleteTodo(todo.id);
-    handleProjectListModule.deleteTodoInThisProject(project, id);
-
-    loadTodoList(todo.project);
-  };
-
-  const deleteProject = (project) => {
-    const { id, title } = project;
-    handleProjectListModule.deleteProject(id, title);
-    loadProjectList();
-  };
-
-  const renderProjectItem = (project) => {
-    const wrapperProject = domElementFactory('div', '', 'project');
-    const projectInfo = domElementFactory('div', '', 'project-info');
-    const circleColorProject = domElementFactory('span', '', 'circle-color');
-    const projectTitle = domElementFactory(
-      'span',
-      `${project.title}`,
-      'project-name',
-    );
-    const deleteProjectBtn = domElementFactory(
-      'button',
-      '',
-      'delete-project-btn',
-    );
-    projectInfo.el.dataset.list = `${project.title}`;
-    deleteProjectBtn.el.innerHTML = `
-      <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" fill="currentColor" class="bi bi-x-lg delete-project" viewBox="0 0 16 16">
-        <path fill-rule="evenodd" d="M13.854 2.146a.5.5 0 0 1 0 .708l-11 11a.5.5 0 0 1-.708-.708l11-11a.5.5 0 0 1 .708 0Z"/>
-        <path fill-rule="evenodd" d="M2.146 2.146a.5.5 0 0 0 0 .708l11 11a.5.5 0 0 0 .708-.708l-11-11a.5.5 0 0 0-.708 0Z"/>
-      </svg>
-    `;
-    circleColorProject.el.innerHTML = `
-      <svg xmlns="http://www.w3.org/2000/svg" width="10" height="10" fill="#ff9933" class="bi bi-circle-fill" viewBox="0 0 16 16">
-        <circle cx="8" cy="8" r="8"/>
-      </svg>
-    `;
-    deleteProjectBtn.el.onclick = () => deleteProject(project);
-
-    appendDomElementToParent(projectInfo.el, circleColorProject, projectTitle);
-    appendDomElementToParent(wrapperProject.el, projectInfo, deleteProjectBtn);
-
-    return wrapperProject.el;
-  };
 
   const renderTodoItem = (todo) => {
     const todoItem = domElementFactory('div', '', 'todo-item');
@@ -174,6 +87,95 @@ const UI = (() => {
     return todoItem.el;
   };
 
+  const loadTodoList = (name = 'inbox') => {
+    const todoCategory = document.getElementById('todo-category');
+    const displayTodoList = document.querySelector('.todo-list');
+
+    todoCategory.textContent = name;
+    displayTodoList.textContent = '';
+
+    const todoList = projectListModule.getTodoByProjectName(name);
+
+    if (todoList.length === 0) {
+      const wrapperEmptyTodoList = domElementFactory('div', '', 'wrapper-empty-todo-list');
+      const emptyTodoText = domElementFactory('p', 'What tasks are on your mind ?', 'empty-todo-text');
+      const addTodoBtn = domElementFactory('button', 'add a task', 'add-todo-btn');
+      appendDomElementToParent(wrapperEmptyTodoList.el, emptyTodoText, addTodoBtn);
+      appendDomElementToParent(displayTodoList, wrapperEmptyTodoList);
+    } else {
+      todoList.forEach((todo) => {
+        const todoAppended = renderTodoItem(todo);
+        displayTodoList.appendChild(todoAppended);
+      });
+    }
+  };
+
+  const loadProjectList = () => {
+    const projectList = document.getElementById('display-projects-list');
+    projectList.textContent = '';
+
+    const projects = projectListModule.getAllProjectExceptDefaultProject();
+
+    if (!projects) {
+      const emptyProject = document.createElement('h3');
+      emptyProject.textContent = 'No project';
+      projectList.appendChild(emptyProject);
+    } else {
+      projects.forEach((project) => {
+        const appendProject = renderProjectItem(project);
+        projectList.appendChild(appendProject);
+      });
+    }
+  };
+
+  const deleteTodo = (todo) => {
+    const { project, id } = todo;
+    todoListModule.deleteTodo(todo.id);
+    projectListModule.deleteTodoInThisProject(project, id);
+
+    loadTodoList(todo.project);
+  };
+
+  const deleteProject = (project) => {
+    const { id, title } = project;
+    projectListModule.deleteProject(id, title);
+    loadProjectList();
+  };
+
+  const renderProjectItem = (project) => {
+    const wrapperProject = domElementFactory('div', '', 'project');
+    const projectInfo = domElementFactory('div', '', 'project-info');
+    const circleColorProject = domElementFactory('span', '', 'circle-color');
+    const projectTitle = domElementFactory(
+      'span',
+      `${project.title}`,
+      'project-name',
+    );
+    const deleteProjectBtn = domElementFactory(
+      'button',
+      '',
+      'delete-project-btn',
+    );
+    projectInfo.el.dataset.list = `${project.title}`;
+    deleteProjectBtn.el.innerHTML = `
+      <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" fill="currentColor" class="bi bi-x-lg delete-project" viewBox="0 0 16 16">
+        <path fill-rule="evenodd" d="M13.854 2.146a.5.5 0 0 1 0 .708l-11 11a.5.5 0 0 1-.708-.708l11-11a.5.5 0 0 1 .708 0Z"/>
+        <path fill-rule="evenodd" d="M2.146 2.146a.5.5 0 0 0 0 .708l11 11a.5.5 0 0 0 .708-.708l-11-11a.5.5 0 0 0-.708 0Z"/>
+      </svg>
+    `;
+    circleColorProject.el.innerHTML = `
+      <svg xmlns="http://www.w3.org/2000/svg" width="10" height="10" fill="#ff9933" class="bi bi-circle-fill" viewBox="0 0 16 16">
+        <circle cx="8" cy="8" r="8"/>
+      </svg>
+    `;
+    deleteProjectBtn.el.onclick = () => deleteProject(project);
+
+    appendDomElementToParent(projectInfo.el, circleColorProject, projectTitle);
+    appendDomElementToParent(wrapperProject.el, projectInfo, deleteProjectBtn);
+
+    return wrapperProject.el;
+  };
+
   const addEventListenerToUpdateTodo = (editForm, wrapper) => {
     editForm.addEventListener('submit', (e) => {
       e.preventDefault();
@@ -189,15 +191,15 @@ const UI = (() => {
 
       const todoUpdatedInfo = getUpdateTodoInfo();
       const formId = editForm.getAttribute('data-id');
-      const updateThisTodo = handleTodoListModule.getTodo(formId);
+      const updateThisTodo = todoListModule.getTodo(formId);
 
       if (formId === updateThisTodo.id) {
-        const todoUpdated = handleTodoListModule.updateTodo(updateThisTodo, todoUpdatedInfo);
+        const todoUpdated = todoListModule.updateTodo(updateThisTodo, todoUpdatedInfo);
 
         // this mean i have to moove todo in another folder project
         if (olderProject !== newProject) {
-          handleProjectListModule.deleteTodoInThisProject(olderProject, updateThisTodo.id);
-          handleProjectListModule.addTodoToProject(todoUpdated.project, todoUpdated);
+          projectListModule.deleteTodoInThisProject(olderProject, updateThisTodo.id);
+          projectListModule.addTodoToProject(todoUpdated.project, todoUpdated);
           loadTodoList(todoUpdated.project);
         } else {
           loadTodoList(olderProject);
@@ -264,8 +266,8 @@ const UI = (() => {
     addTodoForm.addEventListener('submit', (e) => {
       e.preventDefault();
       const newTodo = todoFactory2(getTodoInfo());
-      handleTodoListModule.addTodo(newTodo);
-      handleProjectListModule.addTodoToProject(newTodo.project, newTodo);
+      todoListModule.addTodo(newTodo);
+      projectListModule.addTodoToProject(newTodo.project, newTodo);
       loadTodoList(newTodo.project);
     });
   };
@@ -289,7 +291,7 @@ const UI = (() => {
       e.preventDefault();
       const newProjectTitle = getProjectToAddInfo();
       const newProject = projectFactory(newProjectTitle);
-      handleProjectListModule.addProject(newProject);
+      projectListModule.addProject(newProject);
       loadProjectList();
       AddEventListenerToFetchTodoInProject();
     });
