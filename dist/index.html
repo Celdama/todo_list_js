@@ -141,32 +141,41 @@
             <br />
             <h3>add todo</h3>
             <form id="add-todo-form" action="#">
-              <label for="title">title task</label>
-              <input
-                type="text"
-                placeholder="title task"
-                name="title"
-                id="title"
-              />
-
+              <span>
+                <label for="title">title task</label>
+                <input
+                  type="text"
+                  placeholder="title task"
+                  name="title"
+                  id="title"
+                />
+              </span>
               <br />
               <br />
-              <label for="description">description task</label>
-              <input
-                type="text"
-                placeholder="description task"
-                name="description"
-                id="description"
-              />
+              <span>
+                <label for="description">description task</label>
+                <input
+                  type="text"
+                  placeholder="description task"
+                  name="description"
+                  id="description"
+                />
+              </span>
               <br />
+              <span>
+                <label for="dueDate">Due Date</label>
+                <input type="date" name="dueDate" id="dueDate">
+              </span>
               <br />
-              <label for="project">project</label>
-              <input
-                type="text"
-                placeholder="project task"
-                name="project"
-                id="project"
-              />
+              <span>
+                <label for="project">project</label>
+                <input
+                  type="text"
+                  placeholder="project task"
+                  name="project"
+                  id="project"
+                />
+              </span>
               <br />
               <button type="submit">Add</button>
               <br />
@@ -197,30 +206,19 @@
             </div>
             <div class="todo-list"></div>
           </div>
-          <div id="edit-todo-wrapper" class="hidden">Form edit task
+          <div id="edit-todo-wrapper" class="hidden">
+            Form edit task
             <form id="edit-todo-form" action="#">
               <label for="title" class="edit-title-label">edit title</label>
-              <input
-                type="text"
-                name="title"
-                id="title"
-              />
+              <input type="text" name="title" id="title" />
               <br />
               <br />
               <label for="description">edit description</label>
-              <input
-                type="text"
-                name="description"
-                id="description"
-              />
+              <input type="text" name="description" id="description" />
               <br />
               <br />
               <label for="project">edit project</label>
-              <input
-                type="text"
-                name="project"
-                id="project"
-              />
+              <input type="text" name="project" id="project" />
               <br />
               <button type="submit">Edit</button>
               <br />

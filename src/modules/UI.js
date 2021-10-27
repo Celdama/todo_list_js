@@ -13,18 +13,19 @@ const UI = (() => {
     const formatDate = format(new Date(), 'ccc dd MMM');
     const currentDate = domElementFactory('span', `${formatDate}`, 'current-date');
 
-    todoCategory.textContent = name;
-
-    if (name === 'today') {
-      todoInfo.appendChild(currentDate.el);
-    } else {
-      const date = document.querySelector('.current-date');
-      if (date) {
-        todoInfo.removeChild(date);
-      }
-    }
-
     displayTodoList.textContent = '';
+    todoCategory.textContent = name;
+    const currenDayTodoList = todoListModule.getTodoOfCurrentDay();
+
+    if (name === 'today' && currenDayTodoList) {
+      todoInfo.appendChild(currentDate.el);
+      console.log('display today');
+      currenDayTodoList.forEach((todo) => {
+        const todoAppended = renderTodoItem(todo);
+        displayTodoList.appendChild(todoAppended);
+      });
+      return;
+    }
 
     const todoList = projectListModule.getTodoByProjectName(name);
 
@@ -338,8 +339,11 @@ const UI = (() => {
     addTodoForm.addEventListener('submit', (e) => {
       e.preventDefault();
       const newTodoInfo = getTodoInfo();
+      console.log('frommm here');
+      // console.log(newTodoInfo);
       const newTodo = todoFactory2(newTodoInfo);
       const { project } = newTodo;
+      console.log(newTodo);
       todoListModule.addTodo(newTodo);
       projectListModule.addTodoToProject(project, newTodo);
       loadTodoList(project);

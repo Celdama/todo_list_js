@@ -1,23 +1,36 @@
 import { v4 as uuidv4 } from 'uuid';
+import { format, compareAsc } from 'date-fns';
 
 // je garde cette fonction jusqu'à la fin de mon developpment, je l'utilise pour
 // créer les todos à la volée dans index.js (c'est ma première version de ma function
 // factory, une fois le projet terminé je la supprimerais.)
-const todoFactory = (title, description, project = 'inbox', priority = 'medium') => ({
-  id: uuidv4(),
-  title,
-  description,
-  project: project.toLowerCase(),
-  priority,
-});
+const todoFactory = (title, description, dueDate = new Date(), project = 'inbox', priority = 'medium') => {
+  const formatDueDate = format(new Date(dueDate), 'MM/dd/yyy');
+  const x = 3;
 
-const todoFactory2 = (todo) => ({
-  id: uuidv4(),
-  title: todo.title,
-  description: todo.description,
-  project: todo.project.toLowerCase() || 'inbox',
-  priority: todo.priority || 'medium',
-});
+  return {
+    id: uuidv4(),
+    title,
+    description,
+    dueDate: new Date(dueDate),
+    project: project.toLowerCase(),
+    priority,
+  };
+};
+
+const todoFactory2 = (todo) => {
+  const formatDueDate = format(new Date(todo.dueDate), 'dd/MM/yyy');
+  // console.log(test);
+
+  return {
+    id: uuidv4(),
+    title: todo.title,
+    description: todo.description,
+    dueDate: formatDueDate,
+    project: todo.project.toLowerCase() || 'inbox',
+    priority: todo.priority || 'medium',
+  };
+};
 
 const handleTodoListModule = (() => {
   let todoList = [];
@@ -57,6 +70,43 @@ const handleTodoListModule = (() => {
     Object.assign(todo, todoPriorityValueUpdated);
   };
 
+  const sortDueDateAscOrder = () => {
+    const sortAscTodoList = [...todoList];
+    sortAscTodoList.sort((a, b) => {
+      if (a.dueDate > b.dueDate) return 1;
+      if (a.dueDate < b.dueDate) return -1;
+      return 0;
+    });
+
+    return sortAscTodoList;
+  };
+
+  const sortDueDateDescOrder = () => {
+    const sortDescTodoList = [...todoList];
+
+    sortDescTodoList.sort((a, b) => {
+      if (a.dueDate > b.dueDate) return -1;
+      if (a.dueDate < b.dueDate) return 1;
+      return 0;
+    });
+
+    return sortDescTodoList;
+  };
+
+  const getTodoOfCurrentDay = () => {
+    const currentDay = format(new Date(), 'ccc dd MMM yyyy');
+    const todoOfCurrentDay = [];
+
+    todoList.forEach((todo) => {
+      const todoDueDate = format(new Date(todo.dueDate), 'ccc dd MMM yyyy');
+      if (currentDay === todoDueDate) {
+        todoOfCurrentDay.push(todo);
+      }
+    });
+
+    return todoOfCurrentDay;
+  };
+
   return {
     addTodo,
     getTodo,
@@ -65,6 +115,9 @@ const handleTodoListModule = (() => {
     deleteAllTodoFromDeletedProject,
     getTodoList,
     updateTodoPriority,
+    sortDueDateAscOrder,
+    sortDueDateDescOrder,
+    getTodoOfCurrentDay,
   };
 })();
 
