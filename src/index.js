@@ -53,7 +53,7 @@ handleProjectListModule.getAllProject();
 UI.loadTodoList();
 UI.loadProjectList();
 UI.addProjectUI();
-UI.addTodoUI();
+UI.addTodo();
 UI.AddEventListenerToFetchTodoInProject();
 UI.hideAsideSide();
 UI.toggleClassOnSmallerScreen();

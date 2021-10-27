@@ -286,7 +286,7 @@ const UI = (() => {
     return newTodo;
   };
 
-  const getProjectToAddInfo = () => {
+  const getNewProjectTitle = () => {
     const projectTitle = document.querySelector(
       '#add-project-form input',
     ).value;
@@ -294,15 +294,18 @@ const UI = (() => {
     return projectTitle.toLowerCase();
   };
 
-  const addTodoUI = () => {
+  const addTodo = () => {
     const addTodoForm = document.getElementById('add-todo-form');
 
     addTodoForm.addEventListener('submit', (e) => {
       e.preventDefault();
-      const newTodo = todoFactory2(getTodoInfo());
+      const newTodoInfo = getTodoInfo();
+      const newTodo = todoFactory2(newTodoInfo);
+      const { project } = newTodo;
       todoListModule.addTodo(newTodo);
-      projectListModule.addTodoToProject(newTodo.project, newTodo);
-      loadTodoList(newTodo.project);
+      projectListModule.addTodoToProject(project, newTodo);
+      loadTodoList(project);
+      addTodoForm.reset();
     });
   };
 
@@ -323,7 +326,7 @@ const UI = (() => {
 
     addProjectForm.addEventListener('submit', (e) => {
       e.preventDefault();
-      const newProjectTitle = getProjectToAddInfo();
+      const newProjectTitle = getNewProjectTitle();
       const newProject = projectFactory(newProjectTitle);
       projectListModule.addProject(newProject);
       loadProjectList();
@@ -388,7 +391,7 @@ const UI = (() => {
   return {
     loadTodoList,
     loadProjectList,
-    addTodoUI,
+    addTodo,
     addProjectUI,
     AddEventListenerToFetchTodoInProject,
     hideAsideSide,
