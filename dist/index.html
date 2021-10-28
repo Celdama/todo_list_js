@@ -136,7 +136,7 @@
                     </svg>
                     <span>Projects</span>
                   </button>
-                  <button class="add-project">
+                  <button id="display-add-project-form" class="add-project">
                     <svg
                       xmlns="http://www.w3.org/2000/svg"
                       width="16"
@@ -155,21 +155,6 @@
                 <div id="display-projects-list" class="collapse"></div>
               </li>
             </ul>
-
-
-            <h3>Projects</h3>
-            <div id="project-list"></div>
-            <form id="add-project-form" action="#">
-              <label for="title">Add new project</label>
-              <input
-                type="text"
-                name="title"
-                id="title"
-                placeholder="title project"
-              />
-              <br />
-              <button type="submit">Add</button>
-            </form>
           </div>
         </aside>
         <main id="main-informations">
@@ -204,7 +189,12 @@
         </main>
       </div>
       <div id="add-todo-wrapper" class="hidden">
-        <div class="add-todo-title">task</div>
+        <div class="add-todo-header">
+          <h5 class="add-todo-title">New Task</h5>
+          <button class='close-add-form-todo'>
+            <span>X</span>
+          </button>
+        </div>
         <div class="add-todo-content">
           <form id="add-todo-form" class="hidden-add-todo-form" action="#">
             <div class="form-content">
@@ -256,8 +246,32 @@
               </div>
             </div>
             <div class="add-todo-buttons">
-              <button id="close-add-form-todo">Close</button>
+              <button class="close-add-form-todo">Close</button>
               <button id="add-task" type="submit">Add Task</button>
+            </div>
+          </form>
+        </div>
+      </div>
+      <div id="add-project-wrapper" class="hidden">
+        <div class="add-project-header">
+          <h5 class="add-project-title">New Project</h5>
+          <button class='close-add-form-project'>
+            <span>X</span>
+          </button>
+        </div>
+        <div class="add-project-content">
+          <form id="add-project-form" action="#">
+            <label for="title">Name:</label>
+            <input
+              type="text"
+              name="title"
+              id="title"
+              maxlength="20"
+              required
+            />
+            <div class="add-project-buttons">
+              <button class="close-add-form-project">Close</button>
+              <button id="add-project" type="submit">Add Project</button>
             </div>
           </form>
         </div>

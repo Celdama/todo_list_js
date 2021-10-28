@@ -15,5 +15,9 @@
   #add-todo-wrapper{
     width: 600px !important;
   }
+
+  #add-project-wrapper {
+    width: 400px !important;
+  }
 }
 

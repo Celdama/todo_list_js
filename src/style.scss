@@ -284,20 +284,43 @@ html {
 
       }
       #add-todo-wrapper{
-          // display: none;
+          // display: block;
           position: fixed;
           width: 90%;
-          // height: 275px;
-          padding: 20px;
+          padding: 1rem;
           background-color: #fff;
           align-self: center;
           border-radius: 10px;
-          justify-self: center;
           z-index: 100;
-          box-shadow: rgba(0, 0, 0, 0.3) 0px 19px 38px, rgba(0, 0, 0, 0.22) 0px 15px 12px;
           top: 40%;
+          box-shadow: rgba(0, 0, 0, 0.3) 0px 19px 38px, rgba(0, 0, 0, 0.22) 0px 15px 12px;
+
+          .add-todo-header {
+            display: flex;
+            justify-content: space-between;
+            padding: 1rem;
+            font-size: 2.5rem;
+            width: 100%;
+            border-bottom: 1px solid #dee2e6;
+
+            .add-todo-title {
+              font-weight: 500;
+            }
+
+            button {
+              border: none;
+              background-color: #fff;
+              font-weight: bold;
+
+              &:hover {
+                cursor: pointer;
+              }
+            }
+          }
+
           .add-todo-content {
-            flex: 1 1 auto;
+            // flex: 1 1 auto;
+            padding: 1.5rem 1rem;
 
             form {
               display: flex;
@@ -306,6 +329,30 @@ html {
               .form-content {
                 display: flex;
                 flex-wrap: wrap;
+
+                label {
+                  padding-bottom: 8px;
+                  font-size: 1.6rem;
+                }
+
+                input {
+                  height: calc(1.5em + 0.75rem + 2px);
+                  border: 1px solid #ced4da;
+                  border-radius: 0.25rem;
+                  background-clip: padding-box;
+                  padding: 0.3rem;
+                }
+
+                textarea {
+                  border: 1px solid #ced4da;
+                  padding: 0.3rem;
+                }
+
+                select {
+                  background-color: #fff;
+                  border: 1px solid #ced4da;
+
+                }
 
                 .left-side {
                   flex: 0 0 50%;
@@ -332,7 +379,7 @@ html {
               }
               .add-todo-buttons {
                 align-self: flex-end;
-                #close-add-form-todo {
+                .close-add-form-todo {
                   background-color: #fff;
                   border: 1px solid $header-color;
                   color: $header-color;
@@ -341,6 +388,84 @@ html {
                 button {
                   justify-self: flex-end;
                   align-self: flex-end;
+                  padding: 9px 18px;
+                  background-color: $header-color;
+                  color: #fff;
+                  border: none;
+                  border-radius: 5px;
+
+                  &:hover {
+                    cursor: pointer;
+                  }
+                }
+              }
+            }
+          }
+        }
+        #add-project-wrapper {
+          position: fixed;
+          width: 90%;
+          padding: 1rem;
+          background-color: #fff;
+          align-self: center;
+          z-index: 100;
+          top: 40%;
+          box-shadow: rgba(0, 0, 0, 0.3) 0px 19px 38px, rgba(0, 0, 0, 0.22) 0px 15px 12px;
+          border-radius: 10px;
+
+          .add-project-header {
+            display: flex;
+            justify-content: space-between;
+            padding: 1rem;
+            font-size: 2.5rem;
+            width: 100%;
+            border-bottom: 1px solid #dee2e6;
+
+            .add-project-title {
+              font-weight: 500;
+            }
+
+            button {
+              border: none;
+              background-color: #fff;
+              font-weight: bold;
+
+              &:hover {
+                cursor: pointer;
+              }
+            }
+          }
+
+          .add-project-content {
+            padding: 1.5rem 1rem;
+
+            form {
+              display: flex;
+              flex-direction: column;
+
+              label {
+                padding-bottom: 8px;
+                font-size: 1.6rem;
+              }
+
+              input {
+                height: calc(1.5em + 0.75rem + 2px);
+                border: 1px solid #ced4da;
+                border-radius: 0.25rem;
+                background-clip: padding-box;
+                padding: 0.3rem;
+              }
+              .add-project-buttons {
+                // padding: 1.5rem 1rem 0rem 1rem;
+                padding-top: 1.5rem;
+                align-self: flex-end;
+                .close-add-form-project {
+                      background-color: #fff;
+                      border: 1px solid $header-color;
+                      color: $header-color;
+                }
+                button {
+                  justify-self: flex-end;
                   padding: 9px 18px;
                   background-color: $header-color;
                   color: #fff;

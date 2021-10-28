@@ -17,20 +17,43 @@ const UI = (() => {
   };
 
   const displayAddTodoForm = (auto) => {
-    const closeAddForm = document.getElementById('close-add-form-todo');
-    const displayAddFormBtn = document.getElementById('add-todo-btn');
+    const closeAddTodoFormBtns = Array.from(document.querySelectorAll('.close-add-form-todo'));
+    const displayAddTodoFormBtn = document.getElementById('add-todo-btn');
     const addTodoFormWrapper = document.getElementById('add-todo-wrapper');
     if (auto) {
       addTodoFormWrapper.classList.toggle('hidden');
       return;
     }
 
-    displayAddFormBtn.addEventListener('click', () => {
+    displayAddTodoFormBtn.addEventListener('click', () => {
       addTodoFormWrapper.classList.toggle('hidden');
     });
 
-    closeAddForm.addEventListener('click', () => {
-      addTodoFormWrapper.classList.toggle('hidden');
+    closeAddTodoFormBtns.forEach((btn) => {
+      btn.addEventListener('click', () => {
+        addTodoFormWrapper.classList.toggle('hidden');
+      });
+    });
+  };
+
+  const displayAddProjectForm = (auto) => {
+    const closeAddProjectFormBtns = Array.from(document.querySelectorAll('.close-add-form-project'));
+    const displayAddProjectFormBtn = document.getElementById('display-add-project-form');
+    const addProjectFormWrapper = document.getElementById('add-project-wrapper');
+
+    if (auto) {
+      addProjectFormWrapper.classList.toggle('hidden');
+      return;
+    }
+
+    displayAddProjectFormBtn.addEventListener('click', () => {
+      addProjectFormWrapper.classList.toggle('hidden');
+    });
+
+    closeAddProjectFormBtns.forEach((btn) => {
+      btn.addEventListener('click', () => {
+        addProjectFormWrapper.classList.toggle('hidden');
+      });
     });
   };
 
@@ -427,6 +450,7 @@ const UI = (() => {
       addProjectForm.reset();
       toggleDropdowProjectsListAuto();
       loadTodoList(title);
+      displayAddProjectForm(true);
     });
   };
 
@@ -437,6 +461,7 @@ const UI = (() => {
     addTodo,
     addProject,
     displayAddTodoForm,
+    displayAddProjectForm,
   };
 })();
 
