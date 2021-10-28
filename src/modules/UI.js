@@ -1,4 +1,4 @@
-import { format, comparAsc, setDay } from 'date-fns';
+import { format } from 'date-fns';
 import domElementFactory from '../utilities/domElementFactory';
 import appendDomElementToParent from '../utilities/appendDomElementToParent';
 import { todoFactory2, handleTodoListModule as todoListModule } from './handleTodo';
@@ -32,10 +32,28 @@ const UI = (() => {
     return currentMonthTodoList;
   };
 
+  const displayEmptyTodoListMessage = (parentElement, todoCategory) => {
+    let message = null;
+    switch (todoCategory) {
+      case 'today':
+        message = 'no task for today';
+        break;
+      case 'upcoming':
+        message = 'no task for this month';
+        break;
+      default:
+        message = 'What tasks are on your mind ?';
+    }
+    const wrapperEmptyTodoList = domElementFactory('div', '', 'wrapper-empty-todo-list');
+    const emptyTodoText = domElementFactory('p', `${message}`, 'empty-todo-text');
+    const addTodoBtn = domElementFactory('button', 'add a task', 'add-todo-btn');
+    appendDomElementToParent(wrapperEmptyTodoList.el, emptyTodoText, addTodoBtn);
+    appendDomElementToParent(parentElement, wrapperEmptyTodoList);
+  };
+
   const loadTodoList = (name = 'inbox') => {
     const todoCategory = document.getElementById('todo-category');
     const displayTodoList = document.querySelector('.todo-list');
-    const todoInfo = document.querySelector('.todo-info');
     const currentDate = document.querySelector('.current-date');
 
     displayTodoList.textContent = '';
@@ -43,36 +61,31 @@ const UI = (() => {
 
     let todoList = projectListModule.getTodoByProjectName(name);
 
-    if (name === 'today') {
-      todoList = loadCurrentDayTodoList();
-      if (todoList.length === 0) {
-        displayEmptyTodoListMessage(displayTodoList, name);
-        return;
-      }
-      renderTodoList(displayTodoList, todoList);
-    } else if (name === 'upcoming') {
-      todoList = loadCurrentMonthTodoList();
-      if (todoList.length === 0) {
-        displayEmptyTodoListMessage(displayTodoList, name);
-        return;
-      }
-      renderTodoList(displayTodoList, todoList);
-    } else if (todoList.length === 0) {
-      displayEmptyTodoListMessage(displayTodoList, name);
-      currentDate.textContent = '';
-    } else {
-      renderTodoList(displayTodoList, todoList);
-      currentDate.textContent = '';
+    switch (name) {
+      case 'today':
+        todoList = loadCurrentDayTodoList();
+        if (todoList.length === 0) {
+          displayEmptyTodoListMessage(displayTodoList, name);
+          return;
+        }
+        renderTodoList(displayTodoList, todoList);
+        break;
+      case 'upcoming':
+        todoList = loadCurrentMonthTodoList();
+        if (todoList.length === 0) {
+          displayEmptyTodoListMessage(displayTodoList, name);
+          return;
+        }
+        renderTodoList(displayTodoList, todoList);
+        break;
+      default:
+        if (todoList.length === 0) {
+          displayEmptyTodoListMessage(displayTodoList, name);
+          currentDate.textContent = '';
+        }
+        renderTodoList(displayTodoList, todoList);
+        currentDate.textContent = '';
     }
-  };
-
-  const displayEmptyTodoListMessage = (parentElement, todoCategory) => {
-    const message = todoCategory === 'today' ? 'no task for today' : 'What tasks are on your mind ?';
-    const wrapperEmptyTodoList = domElementFactory('div', '', 'wrapper-empty-todo-list');
-    const emptyTodoText = domElementFactory('p', `${message}`, 'empty-todo-text');
-    const addTodoBtn = domElementFactory('button', 'add a task', 'add-todo-btn');
-    appendDomElementToParent(wrapperEmptyTodoList.el, emptyTodoText, addTodoBtn);
-    appendDomElementToParent(parentElement, wrapperEmptyTodoList);
   };
 
   const renderTodoItem = (todo) => {
@@ -234,10 +247,15 @@ const UI = (() => {
     todoListModule.deleteTodo(id);
     projectListModule.deleteTodoInThisProject(project, id);
 
-    if (categoryTitle === 'today') {
-      loadTodoList(categoryTitle);
-    } else {
-      loadTodoList(project);
+    switch (categoryTitle) {
+      case 'today':
+        loadTodoList(categoryTitle);
+        break;
+      case 'upcoming':
+        loadTodoList(categoryTitle);
+        break;
+      default:
+        loadTodoList(project);
     }
   };
 
