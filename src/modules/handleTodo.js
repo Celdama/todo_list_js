@@ -1,5 +1,5 @@
 import { v4 as uuidv4 } from 'uuid';
-import { format, compareAsc } from 'date-fns';
+import { format, addWeeks, isThisMonth } from 'date-fns';
 
 // je garde cette fonction jusqu'à la fin de mon developpment, je l'utilise pour
 // créer les todos à la volée dans index.js (c'est ma première version de ma function
@@ -18,19 +18,14 @@ const todoFactory = (title, description, dueDate = new Date(), project = 'inbox'
   };
 };
 
-const todoFactory2 = (todo) => {
-  // const formatDueDate = format(new Date(todo.dueDate), 'dd/MM/yyy');
-  console.log('1');
-
-  return {
-    id: uuidv4(),
-    title: todo.title,
-    description: todo.description,
-    dueDate: todo.dueDate,
-    project: todo.project.toLowerCase() || 'inbox',
-    priority: todo.priority || 'medium',
-  };
-};
+const todoFactory2 = (todo) => ({
+  id: uuidv4(),
+  title: todo.title,
+  description: todo.description,
+  dueDate: todo.dueDate,
+  project: todo.project.toLowerCase() || 'inbox',
+  priority: todo.priority || 'medium',
+});
 
 const handleTodoListModule = (() => {
   let todoList = [];
@@ -107,6 +102,20 @@ const handleTodoListModule = (() => {
     return todoOfCurrentDay;
   };
 
+  const getTodoOfCurrentMonth = () => {
+    console.log('weeeeeeek');
+    const todoOfCurrentMonth = [];
+
+    todoList.forEach((todo) => {
+      const result = isThisMonth(new Date(todo.dueDate));
+      if (result) {
+        todoOfCurrentMonth.push(todo);
+      }
+    });
+    console.log(todoOfCurrentMonth);
+    return todoOfCurrentMonth;
+  };
+
   return {
     addTodo,
     getTodo,
@@ -118,6 +127,7 @@ const handleTodoListModule = (() => {
     sortDueDateAscOrder,
     sortDueDateDescOrder,
     getTodoOfCurrentDay,
+    getTodoOfCurrentMonth,
   };
 })();
 

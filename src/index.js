@@ -20,7 +20,7 @@ const todo3 = todoFactory(
   'high',
 );
 const todo4 = todoFactory('watch barcelona', 'league des champiosn', new Date('November 30, 2023'), 'football');
-const todo5 = todoFactory('another todo', 'its cool');
+const todo5 = todoFactory('another todo', 'its cool', new Date('October, 31, 2021'));
 const todo6 = todoFactory('today of today', 'supercoo');
 
 handleTodoListModule.addTodo(newTodo);
@@ -69,3 +69,4 @@ animationsUI.toggleDropdowProjectsListOnClick();
 handleTodoListModule.sortDueDateDescOrder();
 handleTodoListModule.getTodoList();
 handleTodoListModule.getTodoOfCurrentDay();
+handleTodoListModule.getTodoOfCurrentMonth();
