@@ -103,7 +103,6 @@ const handleTodoListModule = (() => {
   };
 
   const getTodoOfCurrentMonth = () => {
-    console.log('weeeeeeek');
     const todoOfCurrentMonth = [];
 
     todoList.forEach((todo) => {
@@ -112,7 +111,6 @@ const handleTodoListModule = (() => {
         todoOfCurrentMonth.push(todo);
       }
     });
-    console.log(todoOfCurrentMonth);
     return todoOfCurrentMonth;
   };
 

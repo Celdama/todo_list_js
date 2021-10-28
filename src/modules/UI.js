@@ -22,6 +22,16 @@ const UI = (() => {
     });
   };
 
+  const loadCurrentMonthTodoList = () => {
+    const currentDate = document.querySelector('.current-date');
+    const formatMonth = format(new Date(), 'MMMM');
+    currentDate.textContent = `${formatMonth}`;
+
+    const currentMonthTodoList = todoListModule.getTodoOfCurrentMonth();
+
+    return currentMonthTodoList;
+  };
+
   const loadTodoList = (name = 'inbox') => {
     const todoCategory = document.getElementById('todo-category');
     const displayTodoList = document.querySelector('.todo-list');
@@ -35,6 +45,13 @@ const UI = (() => {
 
     if (name === 'today') {
       todoList = loadCurrentDayTodoList();
+      if (todoList.length === 0) {
+        displayEmptyTodoListMessage(displayTodoList, name);
+        return;
+      }
+      renderTodoList(displayTodoList, todoList);
+    } else if (name === 'upcoming') {
+      todoList = loadCurrentMonthTodoList();
       if (todoList.length === 0) {
         displayEmptyTodoListMessage(displayTodoList, name);
         return;
