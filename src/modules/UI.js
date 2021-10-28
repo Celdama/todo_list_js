@@ -16,7 +16,7 @@ const UI = (() => {
     displayTodoList.textContent = '';
     todoCategory.textContent = name;
     const currenDayTodoList = todoListModule.getTodoOfCurrentDay();
-
+    // CE QUI SE PASSE ICI POUR TODAY DOIT ETRE FAIT EN DEHORS DE CETTE FONCTION
     if (name === 'today' && currenDayTodoList) {
       todoInfo.appendChild(currentDate.el);
       console.log('display today');
