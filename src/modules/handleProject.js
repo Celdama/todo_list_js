@@ -49,6 +49,14 @@ const handleProjectListModule = (() => {
     return allProjectExceptDefault;
   };
 
+  const getAllProjectExceptTodayAndUpcomming = () => {
+    const allProjectExceptTodayAndUpcomming = projectList.filter(
+      (project) => project.title !== 'today' && project.title !== 'upcoming',
+    );
+
+    return allProjectExceptTodayAndUpcomming;
+  };
+
   const getTodoByProjectName = (name) => {
     const results = projectList.find(
       (project) => project.title === name.toLowerCase(),
@@ -79,6 +87,7 @@ const handleProjectListModule = (() => {
     getTodoByProjectName,
     deleteTodoInThisProject,
     deleteProject,
+    getAllProjectExceptTodayAndUpcomming,
   };
 })();
 

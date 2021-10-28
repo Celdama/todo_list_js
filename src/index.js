@@ -72,3 +72,5 @@ handleTodoListModule.sortDueDateDescOrder();
 handleTodoListModule.getTodoList();
 handleTodoListModule.getTodoOfCurrentDay();
 handleTodoListModule.getTodoOfCurrentMonth();
+
+handleProjectListModule.getAllProjectExceptTodayAndUpcomming();

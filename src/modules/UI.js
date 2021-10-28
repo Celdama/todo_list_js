@@ -20,6 +20,9 @@ const UI = (() => {
     const closeAddTodoFormBtns = Array.from(document.querySelectorAll('.close-add-form-todo'));
     const displayAddTodoFormBtn = document.getElementById('add-todo-btn');
     const addTodoFormWrapper = document.getElementById('add-todo-wrapper');
+
+    displayProjectListInSelectChoice();
+
     if (auto) {
       addTodoFormWrapper.classList.toggle('hidden');
       return;
@@ -33,6 +36,23 @@ const UI = (() => {
       btn.addEventListener('click', () => {
         addTodoFormWrapper.classList.toggle('hidden');
       });
+    });
+  };
+
+  const displayProjectListInSelectChoice = () => {
+    const select = document.getElementById('project-select');
+    const projectList = projectListModule.getAllProjectExceptTodayAndUpcomming();
+    select.textContent = '';
+
+    projectList.forEach((project) => {
+      const option = domElementFactory('option', `${project.title}`, '');
+      option.el.value = `${project.title}`;
+
+      if (project.title === 'inbox') {
+        option.el.setAttribute('selected', true);
+      }
+
+      select.appendChild(option.el);
     });
   };
 
@@ -376,11 +396,16 @@ const UI = (() => {
 
     const desc = document.querySelector('#add-todo-form textarea');
 
-    const prioritySelect = document.querySelector('#add-todo-form select');
+    const prioritySelect = document.querySelector('#add-todo-form #priority');
     const priorityValue = prioritySelect.options[prioritySelect.selectedIndex].value;
 
     newTodo.description = desc.value;
     newTodo.priority = priorityValue;
+
+    const projectSelect = document.querySelector('#add-todo-form #project-select');
+    const projectValue = projectSelect.options[projectSelect.selectedIndex].value;
+
+    newTodo.project = projectValue;
 
     return newTodo;
   };
@@ -451,6 +476,7 @@ const UI = (() => {
       toggleDropdowProjectsListAuto();
       loadTodoList(title);
       displayAddProjectForm(true);
+      displayProjectListInSelectChoice();
     });
   };
 
