@@ -6,40 +6,46 @@ import { projectFactory, handleProjectListModule as projectListModule } from './
 import { displayEditTodoPriorityPopUp, createEditPriorityPopUp } from '../utilities/priorityPopUp';
 
 const UI = (() => {
+  const loadCurrentDayTodoList = () => {
+    const currentDate = document.querySelector('.current-date');
+    const formatDate = format(new Date(), 'ccc dd MMM');
+    const currentDayTodoList = todoListModule.getTodoOfCurrentDay();
+    currentDate.textContent = `${formatDate}`;
+
+    return currentDayTodoList;
+  };
+
+  const renderTodoList = (display, list) => {
+    list.forEach((todo) => {
+      const todoAppended = renderTodoItem(todo);
+      display.appendChild(todoAppended);
+    });
+  };
+
   const loadTodoList = (name = 'inbox') => {
     const todoCategory = document.getElementById('todo-category');
     const displayTodoList = document.querySelector('.todo-list');
     const todoInfo = document.querySelector('.todo-info');
-    const formatDate = format(new Date(), 'ccc dd MMM');
-    const currentDate = domElementFactory('span', `${formatDate}`, 'current-date');
+    const currentDate = document.querySelector('.current-date');
 
     displayTodoList.textContent = '';
     todoCategory.textContent = name;
-    const currenDayTodoList = todoListModule.getTodoOfCurrentDay();
 
-    if (name === 'today' && currenDayTodoList) {
-      todoInfo.appendChild(currentDate.el);
-      console.log('display today');
-      currenDayTodoList.forEach((todo) => {
-        const todoAppended = renderTodoItem(todo);
-        displayTodoList.appendChild(todoAppended);
-      });
-      return;
-    }
+    let todoList = projectListModule.getTodoByProjectName(name);
 
-    const todoList = projectListModule.getTodoByProjectName(name);
-
-    if (todoList.length === 0) {
+    if (name === 'today') {
+      todoList = loadCurrentDayTodoList();
+      renderTodoList(displayTodoList, todoList);
+    } else if (todoList.length === 0) {
       const wrapperEmptyTodoList = domElementFactory('div', '', 'wrapper-empty-todo-list');
       const emptyTodoText = domElementFactory('p', 'What tasks are on your mind ?', 'empty-todo-text');
       const addTodoBtn = domElementFactory('button', 'add a task', 'add-todo-btn');
       appendDomElementToParent(wrapperEmptyTodoList.el, emptyTodoText, addTodoBtn);
       appendDomElementToParent(displayTodoList, wrapperEmptyTodoList);
+      currentDate.textContent = '';
     } else {
-      todoList.forEach((todo) => {
-        const todoAppended = renderTodoItem(todo);
-        displayTodoList.appendChild(todoAppended);
-      });
+      renderTodoList(displayTodoList, todoList);
+      currentDate.textContent = '';
     }
   };
 
