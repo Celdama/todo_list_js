@@ -11,4 +11,9 @@
   .full-main {
     left: 140px;
   }
+
+  #add-todo-wrapper{
+    width: 600px !important;
+  }
 }
+

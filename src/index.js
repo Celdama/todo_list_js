@@ -61,6 +61,7 @@ UI.loadProjectList();
 UI.addProject();
 UI.addTodo();
 UI.AddEventListenerToFetchTodoInProject();
+UI.displayAddTodoForm();
 animationsUI.hideAside();
 animationsUI.toggleClassOnSmallerScreen();
 animationsUI.toggleDropdowProjectsListOnClick();

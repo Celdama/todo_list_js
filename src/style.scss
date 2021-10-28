@@ -7,6 +7,7 @@ html {
   overflow-y: hidden;
 
   body {
+
     #content {
       display: flex;
       flex-direction: column;
@@ -15,8 +16,25 @@ html {
 
       header {
         display: flex;
+        justify-content: space-between;
         background-color: $header-color;
         padding: 1rem 1.8rem;
+
+        .left-side {
+          display: flex;
+        }
+
+        .right-side {
+          display: flex;
+          align-items: center;
+          justify-content: space-between;
+          width: 80px;
+          img {
+            height: 28px;
+            width: 28px;
+            border-radius: 14px;
+          }
+        }
 
         button {
           border: none;
@@ -112,6 +130,10 @@ html {
                     }
                   }
 
+                  // #add-todo-form {
+                  //   display: none;
+                  // }
+
                   .add-project {
                     width: 10%;
                     display: flex;
@@ -174,6 +196,11 @@ html {
                   }
                 }
               }
+            }
+            #add-todo-form {
+              // display: none;
+              position: absolute;
+              left: 50%;
             }
           }
         }
@@ -254,13 +281,81 @@ html {
             }
           }
         }
-        #edit-todo-wrapper{
-          // display: none;
-          // display: ;
 
-
-        }
       }
+      #add-todo-wrapper{
+          // display: none;
+          position: fixed;
+          width: 90%;
+          // height: 275px;
+          padding: 20px;
+          background-color: #fff;
+          align-self: center;
+          border-radius: 10px;
+          justify-self: center;
+          z-index: 100;
+          box-shadow: rgba(0, 0, 0, 0.3) 0px 19px 38px, rgba(0, 0, 0, 0.22) 0px 15px 12px;
+          top: 40%;
+          .add-todo-content {
+            flex: 1 1 auto;
+
+            form {
+              display: flex;
+              flex-direction: column;
+
+              .form-content {
+                display: flex;
+                flex-wrap: wrap;
+
+                .left-side {
+                  flex: 0 0 50%;
+                  max-width: 50%;
+                  padding-right: 20px;
+
+                  div {
+                    display: flex;
+                    flex-direction: column;
+                    margin-bottom: 10px;
+                  }
+                }
+                .right-side {
+                  flex: 0 0 50%;
+                  max-width: 50%;
+
+                  div {
+                    display: flex;
+                    flex-direction: column;
+                    margin-bottom: 10px;
+
+                  }
+                }
+              }
+              .add-todo-buttons {
+                align-self: flex-end;
+                #close-add-form-todo {
+                  background-color: #fff;
+                  border: 1px solid $header-color;
+                  color: $header-color;
+                }
+
+                button {
+                  justify-self: flex-end;
+                  align-self: flex-end;
+                  padding: 9px 18px;
+                  background-color: $header-color;
+                  color: #fff;
+                  border: none;
+                  border-radius: 5px;
+
+                  &:hover {
+                    cursor: pointer;
+                  }
+                }
+              }
+            }
+          }
+        }
     }
   }
 }
+

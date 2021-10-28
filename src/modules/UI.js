@@ -16,6 +16,24 @@ const UI = (() => {
     return currentDayTodoList;
   };
 
+  const displayAddTodoForm = (auto) => {
+    const closeAddForm = document.getElementById('close-add-form-todo');
+    const displayAddFormBtn = document.getElementById('add-todo-btn');
+    const addTodoFormWrapper = document.getElementById('add-todo-wrapper');
+    if (auto) {
+      addTodoFormWrapper.classList.toggle('hidden');
+      return;
+    }
+
+    displayAddFormBtn.addEventListener('click', () => {
+      addTodoFormWrapper.classList.toggle('hidden');
+    });
+
+    closeAddForm.addEventListener('click', () => {
+      addTodoFormWrapper.classList.toggle('hidden');
+    });
+  };
+
   const renderTodoList = (display, list) => {
     list.forEach((todo) => {
       const todoAppended = renderTodoItem(todo);
@@ -333,6 +351,14 @@ const UI = (() => {
       document.querySelectorAll('#add-todo-form input'),
     ).reduce((acc, input) => ({ ...acc, [input.id]: input.value }), {});
 
+    const desc = document.querySelector('#add-todo-form textarea');
+
+    const prioritySelect = document.querySelector('#add-todo-form select');
+    const priorityValue = prioritySelect.options[prioritySelect.selectedIndex].value;
+
+    newTodo.description = desc.value;
+    newTodo.priority = priorityValue;
+
     return newTodo;
   };
 
@@ -376,8 +402,6 @@ const UI = (() => {
     addTodoForm.addEventListener('submit', (e) => {
       e.preventDefault();
       const newTodoInfo = getTodoInfo();
-      console.log('frommm here');
-      // console.log(newTodoInfo);
       const newTodo = todoFactory2(newTodoInfo);
       const { project } = newTodo;
       console.log(newTodo);
@@ -385,6 +409,7 @@ const UI = (() => {
       projectListModule.addTodoToProject(project, newTodo);
       loadTodoList(project);
       addTodoForm.reset();
+      displayAddTodoForm(true);
     });
   };
 
@@ -411,6 +436,7 @@ const UI = (() => {
     AddEventListenerToFetchTodoInProject,
     addTodo,
     addProject,
+    displayAddTodoForm,
   };
 })();
 
