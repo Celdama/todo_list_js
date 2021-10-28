@@ -35,18 +35,27 @@ const UI = (() => {
 
     if (name === 'today') {
       todoList = loadCurrentDayTodoList();
+      if (todoList.length === 0) {
+        displayEmptyTodoListMessage(displayTodoList, name);
+        return;
+      }
       renderTodoList(displayTodoList, todoList);
     } else if (todoList.length === 0) {
-      const wrapperEmptyTodoList = domElementFactory('div', '', 'wrapper-empty-todo-list');
-      const emptyTodoText = domElementFactory('p', 'What tasks are on your mind ?', 'empty-todo-text');
-      const addTodoBtn = domElementFactory('button', 'add a task', 'add-todo-btn');
-      appendDomElementToParent(wrapperEmptyTodoList.el, emptyTodoText, addTodoBtn);
-      appendDomElementToParent(displayTodoList, wrapperEmptyTodoList);
+      displayEmptyTodoListMessage(displayTodoList, name);
       currentDate.textContent = '';
     } else {
       renderTodoList(displayTodoList, todoList);
       currentDate.textContent = '';
     }
+  };
+
+  const displayEmptyTodoListMessage = (parentElement, todoCategory) => {
+    const message = todoCategory === 'today' ? 'no task for today' : 'What tasks are on your mind ?';
+    const wrapperEmptyTodoList = domElementFactory('div', '', 'wrapper-empty-todo-list');
+    const emptyTodoText = domElementFactory('p', `${message}`, 'empty-todo-text');
+    const addTodoBtn = domElementFactory('button', 'add a task', 'add-todo-btn');
+    appendDomElementToParent(wrapperEmptyTodoList.el, emptyTodoText, addTodoBtn);
+    appendDomElementToParent(parentElement, wrapperEmptyTodoList);
   };
 
   const renderTodoItem = (todo) => {
