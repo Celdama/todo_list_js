@@ -50,6 +50,8 @@ const handleTodoListModule = (() => {
 
   const deleteAllTodoFromDeletedProject = (projectName) => {
     todoList = todoList.filter((item) => item.project !== projectName);
+    console.log(todoList);
+    console.log('adter d');
   };
 
   const getTodoList = () => {
