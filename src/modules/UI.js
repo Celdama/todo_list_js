@@ -201,12 +201,18 @@ const UI = (() => {
   };
 
   const deleteTodo = (todo) => {
+    const todoCategory = document.getElementById('todo-category');
+    const categoryTitle = todoCategory.textContent;
     const { project, id } = todo;
 
     todoListModule.deleteTodo(id);
     projectListModule.deleteTodoInThisProject(project, id);
 
-    loadTodoList(project);
+    if (categoryTitle === 'today') {
+      loadTodoList(categoryTitle);
+    } else {
+      loadTodoList(project);
+    }
   };
 
   const deleteProject = (project) => {
