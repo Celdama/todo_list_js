@@ -299,6 +299,7 @@ const UI = (() => {
     projectListModule.deleteProject(id, title);
     loadProjectList();
     loadTodoList();
+    displayProjectListInSelectChoice();
   };
 
   const handleTodoItemEventListener = (todo, ...args) => {
