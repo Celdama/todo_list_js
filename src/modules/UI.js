@@ -289,6 +289,9 @@ const UI = (() => {
   };
 
   const addFormEventListenerToUpdateTodo = (editForm, wrapper) => {
+    const todoCategory = document.getElementById('todo-category');
+    const categoryTitle = todoCategory.textContent;
+
     editForm.addEventListener('submit', (e) => {
       e.preventDefault();
       e.stopImmediatePropagation();
@@ -316,6 +319,10 @@ const UI = (() => {
         projectListModule.deleteTodoInThisProject(olderProject, id);
         projectListModule.addTodoToProject(project, updatedTodo);
         loadTodoList(project);
+      } else if (categoryTitle === 'upcoming') {
+        loadTodoList(categoryTitle);
+      } else if (categoryTitle === 'today') {
+        loadTodoList(categoryTitle);
       } else {
         loadTodoList(olderProject);
       }
