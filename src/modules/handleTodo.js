@@ -19,14 +19,14 @@ const todoFactory = (title, description, dueDate = new Date(), project = 'inbox'
 };
 
 const todoFactory2 = (todo) => {
-  const formatDueDate = format(new Date(todo.dueDate), 'dd/MM/yyy');
-  // console.log(test);
+  // const formatDueDate = format(new Date(todo.dueDate), 'dd/MM/yyy');
+  console.log('1');
 
   return {
     id: uuidv4(),
     title: todo.title,
     description: todo.description,
-    dueDate: formatDueDate,
+    dueDate: todo.dueDate,
     project: todo.project.toLowerCase() || 'inbox',
     priority: todo.priority || 'medium',
   };
