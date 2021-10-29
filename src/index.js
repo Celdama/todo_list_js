@@ -60,6 +60,7 @@ UI.loadTodoList();
 UI.loadProjectList();
 UI.addProject();
 UI.addTodo();
+UI.loadInboxTodoListWithHomeIcon();
 UI.AddEventListenerToFetchTodoInProject();
 UI.displayAddTodoForm();
 UI.displayAddProjectForm();

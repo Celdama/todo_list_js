@@ -70,7 +70,6 @@ const UI = (() => {
       if (project.title === userChoice) {
         option.el.setAttribute('selected', true);
         option.el.setAttribute('initial', `${project.title}`);
-        // option.el.value.placeholder = userChoice;
       }
 
       select.appendChild(option.el);
@@ -169,6 +168,13 @@ const UI = (() => {
         renderTodoList(displayTodoList, todoList);
         currentDate.textContent = '';
     }
+  };
+
+  const loadInboxTodoListWithHomeIcon = () => {
+    const homeBtn = document.getElementById('home-btn');
+    homeBtn.addEventListener('click', () => {
+      loadTodoList();
+    });
   };
 
   const renderTodoItem = (todo) => {
@@ -280,8 +286,8 @@ const UI = (() => {
       input.value = '';
       input.placeholder = data[input.id];
       if (input.type === 'date') {
-        const month = getMonth(new Date(`${data.dueDate}`)) + 1;
-        const day = getDate(new Date(`${data.dueDate}`));
+        const month = getMonth(new Date(`${data.dueDate}`));
+        const day = getDate(new Date(`${data.dueDate}`)) + 1;
         const year = getYear(new Date(`${data.dueDate}`));
         input.valueAsDate = new Date(`${year}`, `${month}`, `${day}`);
       }
@@ -359,7 +365,6 @@ const UI = (() => {
   };
 
   const addFormEventListenerToUpdateTodo = (editForm, wrapper) => {
-    console.log(editForm);
     const todoCategory = document.getElementById('todo-category');
     const categoryTitle = todoCategory.textContent;
 
@@ -519,6 +524,7 @@ const UI = (() => {
 
   return {
     loadTodoList,
+    loadInboxTodoListWithHomeIcon,
     loadProjectList,
     AddEventListenerToFetchTodoInProject,
     addTodo,

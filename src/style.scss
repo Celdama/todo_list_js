@@ -245,17 +245,29 @@ html {
                   display: flex;
 
                   .priority-wrapper {
-                    // outline: 1px solid red;
                     position: relative;
 
                     .pop-up-priority {
                       // display: none;
-                      border: 1px solid green;
+                      border: 1px solid #ced4da;
                       padding: 10px;
-                      width: 100px;
+                      width: 140px;
                       position: absolute;
-                      background-color: paleturquoise;
+                      background-color: #fff;
                       right: 38px;
+                      border-radius: 5px;
+
+                      .priority-choice-btn {
+                        // outline: 1px solid black;
+                        border: none;
+                        width: 100%;
+                        margin: 2px 0;
+                      }
+
+                      .priority-choice-btn[data-selected=true] {
+                        color: #fff;
+                        background-color: $header-color;
+                      }
                     }
                   }
                   button {

@@ -14,7 +14,7 @@ const todoFactory = (title, description, dueDate = new Date(), project = 'inbox'
     description,
     dueDate: new Date(dueDate),
     project: project.toLowerCase(),
-    priority,
+    priority: priority.toLowerCase(),
   };
 };
 
@@ -24,7 +24,7 @@ const todoFactory2 = (todo) => ({
   description: todo.description,
   dueDate: todo.dueDate,
   project: todo.project.toLowerCase() || 'inbox',
-  priority: todo.priority || 'medium',
+  priority: todo.priority.toLowerCase() || 'medium',
 });
 
 const handleTodoListModule = (() => {
