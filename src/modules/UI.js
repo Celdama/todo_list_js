@@ -117,6 +117,10 @@ const UI = (() => {
   const displayEmptyTodoListMessage = (parentElement, todoCategory) => {
     let message = null;
     switch (todoCategory) {
+      case 'complete':
+        console.log('"dispal');
+        message = 'no completed task';
+        break;
       case 'today':
         message = 'no task for today';
         break;
@@ -129,7 +133,11 @@ const UI = (() => {
     const wrapperEmptyTodoList = domElementFactory('div', '', 'wrapper-empty-todo-list');
     const emptyTodoText = domElementFactory('p', `${message}`, 'empty-todo-text');
     const addTodoBtn = domElementFactory('button', 'add a task', 'add-todo-btn');
-    appendDomElementToParent(wrapperEmptyTodoList.el, emptyTodoText, addTodoBtn);
+    if (todoCategory === 'complete') {
+      appendDomElementToParent(wrapperEmptyTodoList.el, emptyTodoText);
+    } else {
+      appendDomElementToParent(wrapperEmptyTodoList.el, emptyTodoText, addTodoBtn);
+    }
     appendDomElementToParent(parentElement, wrapperEmptyTodoList);
   };
 
@@ -141,9 +149,25 @@ const UI = (() => {
     displayTodoList.textContent = '';
     todoCategory.textContent = name;
 
-    let todoList = projectListModule.getTodoByProjectName(name);
+    let todoList = null;
+
+    if (name !== 'complete') {
+      todoList = projectListModule.getTodoByProjectName(name);
+    }
 
     switch (name) {
+      case 'complete':
+        todoList = todoListModule.getCompleteTodoList();
+        if (todoList.length === 0) {
+          displayEmptyTodoListMessage(displayTodoList, name);
+          return;
+        }
+        // a changer cette fonction
+        // je ne veux pas display les todo comme quand elles sont pas complete
+        renderTodoList(displayTodoList, todoList);
+        console.log('completeeddd');
+        console.log(todoList);
+        break;
       case 'today':
         todoList = loadCurrentDayTodoList();
         if (todoList.length === 0) {
@@ -170,11 +194,30 @@ const UI = (() => {
     }
   };
 
+  const displayCompleteTodo = () => {
+    const completedTodoBtn = document.querySelector('.completed-todo');
+    completedTodoBtn.addEventListener('click', () => {
+      console.log(completedTodoBtn);
+      loadTodoList('complete');
+    });
+  };
+
   const loadInboxTodoListWithHomeIcon = () => {
     const homeBtn = document.getElementById('home-btn');
     homeBtn.addEventListener('click', () => {
       loadTodoList();
     });
+  };
+
+  const completeTodo = (todo) => {
+    const { id, project } = todo;
+    todoListModule.setCompleteTodo(todo);
+    todoListModule.deleteTodo(id);
+    projectListModule.deleteTodoInThisProject(project, id);
+
+    setTimeout(() => {
+      loadTodoList(project);
+    }, 1000);
   };
 
   const renderTodoItem = (todo) => {
@@ -190,7 +233,8 @@ const UI = (() => {
     const deleteWrapper = domElementFactory('div', '', 'delete-wrapper');
     const doneWrapper = domElementFactory('div', '', 'done-wrapper');
     const todoTitleWrapper = domElementFactory('div', '', 'title-wrapper');
-    const doneBtn = domElementFactory('button');
+    // const doneBtn = domElementFactory('button');
+    const doneBtn = domElementFactory('input', '', 'done-todo-btn');
     const editBtn = domElementFactory('button', '', 'edit-todo-btn');
     const deleteBtn = domElementFactory('button', '', 'delete-todo-btn');
     const priorityBtn = domElementFactory('button', '', 'edit-priority-btn');
@@ -208,7 +252,12 @@ const UI = (() => {
       colorFlagPriority = BLUE_FLAG_PRIORITY;
     }
 
-    doneBtn.el.innerHTML = `${icons.completeTodo()}`;
+    // doneBtn.el.innerHTML = `${icons.completeTodo()}`;
+    // doneBtn.el.innerHTML = `
+    //   <input type="checkbox" name="" id="">
+    // `;
+    doneBtn.el.type = 'checkbox';
+    doneBtn.el.onclick = () => completeTodo(todo);
     editBtn.el.innerHTML = `${icons.editTodo()}`;
     priorityBtn.el.innerHTML = `${icons.priorityTodo(colorFlagPriority)}`;
     deleteBtn.el.innerHTML = `${icons.deleteTodo()}`;
@@ -531,6 +580,7 @@ const UI = (() => {
     addProject,
     displayAddTodoForm,
     displayAddProjectForm,
+    displayCompleteTodo,
   };
 })();
 

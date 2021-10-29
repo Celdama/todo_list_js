@@ -64,6 +64,7 @@ UI.loadInboxTodoListWithHomeIcon();
 UI.AddEventListenerToFetchTodoInProject();
 UI.displayAddTodoForm();
 UI.displayAddProjectForm();
+UI.displayCompleteTodo();
 animationsUI.hideAside();
 animationsUI.toggleClassOnSmallerScreen();
 animationsUI.toggleDropdowProjectsListOnClick();

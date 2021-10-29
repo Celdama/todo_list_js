@@ -41,7 +41,6 @@ const handleProjectListModule = (() => {
   };
 
   const getAllProjectExceptDefaultProject = () => {
-    // default project = inbox, today, upcomming
     const allProjectExceptDefault = projectList.filter(
       (project) => !project.defaultProject,
     );

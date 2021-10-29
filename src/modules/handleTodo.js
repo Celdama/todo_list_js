@@ -4,7 +4,7 @@ import { format, addWeeks, isThisMonth } from 'date-fns';
 // je garde cette fonction jusqu'à la fin de mon developpment, je l'utilise pour
 // créer les todos à la volée dans index.js (c'est ma première version de ma function
 // factory, une fois le projet terminé je la supprimerais.)
-const todoFactory = (title, description, dueDate = new Date(), project = 'inbox', priority = 'medium') => {
+const todoFactory = (title, description, dueDate = new Date(), project = 'inbox', priority = 'medium', isComplete = false) => {
   const formatDueDate = format(new Date(dueDate), 'MM/dd/yyy');
   const x = 3;
 
@@ -15,6 +15,7 @@ const todoFactory = (title, description, dueDate = new Date(), project = 'inbox'
     dueDate: new Date(dueDate),
     project: project.toLowerCase(),
     priority: priority.toLowerCase(),
+    isComplete,
   };
 };
 
@@ -25,14 +26,29 @@ const todoFactory2 = (todo) => ({
   dueDate: todo.dueDate,
   project: todo.project.toLowerCase() || 'inbox',
   priority: todo.priority.toLowerCase() || 'medium',
+  isComplete: todo.isComplete || false,
 });
 
 const handleTodoListModule = (() => {
   let todoList = [];
+  const completedTodo = [];
 
   const addTodo = (todo) => {
     todoList.push(todo);
   };
+
+  const setCompleteTodo = (todo) => {
+    const todoCompleteValueUpdated = {
+      isComplete: true,
+    };
+
+    Object.assign(todo, todoCompleteValueUpdated);
+    completedTodo.push(todo);
+
+    return todo;
+  };
+
+  const getCompleteTodoList = () => completedTodo;
 
   const getTodo = (id) => {
     const todo = todoList.find((item) => item.id === id);
@@ -122,8 +138,10 @@ const handleTodoListModule = (() => {
     addTodo,
     getTodo,
     updateTodo,
+    setCompleteTodo,
     deleteTodo,
     deleteAllTodoFromDeletedProject,
+    getCompleteTodoList,
     getTodoList,
     updateTodoPriority,
     sortDueDateAscOrder,
