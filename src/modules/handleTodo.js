@@ -36,6 +36,8 @@ const handleTodoListModule = (() => {
 
   const getTodo = (id) => {
     const todo = todoList.find((item) => item.id === id);
+    // console.log('from getodo');
+    // console.log(todo);
     return todo;
   };
 

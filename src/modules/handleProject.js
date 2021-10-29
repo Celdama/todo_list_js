@@ -65,11 +65,17 @@ const handleProjectListModule = (() => {
   };
 
   const deleteTodoInThisProject = (project, todoId) => {
+    // console.log('from delete');
+    // console.log(project);
+    // console.log(todoId);
     const todosParentProject = getProjectByName(project);
-
+    // console.log(todosParentProject);
+    // console.log('--------');
     todosParentProject.todos = todosParentProject.todos.filter(
       (item) => item.id !== todoId,
     );
+
+    // console.log(todosParentProject);
   };
 
   const deleteProject = (id, projectTitle) => {

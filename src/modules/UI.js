@@ -58,6 +58,25 @@ const UI = (() => {
     });
   };
 
+  const displayProjectListInEditFormSelectChoice = (userChoice) => {
+    const select = document.getElementById('edit-project-select');
+    const projectList = projectListModule.getAllProjectExceptTodayAndUpcomming();
+    select.textContent = '';
+
+    projectList.forEach((project) => {
+      const option = domElementFactory('option', `${project.title}`, '');
+      option.el.value = `${project.title}`;
+
+      if (project.title === userChoice) {
+        option.el.setAttribute('selected', true);
+        option.el.setAttribute('initial', `${project.title}`);
+        // option.el.value.placeholder = userChoice;
+      }
+
+      select.appendChild(option.el);
+    });
+  };
+
   const displayAddProjectForm = (auto) => {
     const closeAddProjectFormBtns = Array.from(document.querySelectorAll('.close-add-form-project'));
     const displayAddProjectFormBtn = document.getElementById('display-add-project-form');
@@ -248,9 +267,8 @@ const UI = (() => {
 
   const fillPlaceHolderFormEditWithTodoData = (data) => {
     const desc = document.querySelector('#edit-todo-form textarea');
-    console.log(desc);
-    console.log('from here');
-    console.log(data);
+    displayProjectListInEditFormSelectChoice(data.project);
+
     const inputEditTodo = Array.from(
       document.querySelectorAll('#edit-todo-form input'),
     );
@@ -328,37 +346,43 @@ const UI = (() => {
     });
   };
 
-  const getUpdateTodoInfo = () => {
+  const getUpdateTodoInfo = (projectInfo) => {
     const updatedTodo = Array.from(
       document.querySelectorAll('#edit-todo-form input'),
     ).reduce((acc, input) => ({
       ...acc, [input.id]: input.value || input.placeholder,
     }), {});
 
+    updatedTodo.project = projectInfo;
+
     return updatedTodo;
   };
 
   const addFormEventListenerToUpdateTodo = (editForm, wrapper) => {
+    console.log(editForm);
     const todoCategory = document.getElementById('todo-category');
     const categoryTitle = todoCategory.textContent;
 
     editForm.addEventListener('submit', (e) => {
       e.preventDefault();
       e.stopImmediatePropagation();
-      // check if project value change
-      const formProjectInputValue = document.querySelector('.project-input');
-      let newProject = formProjectInputValue.value;
-      const olderProject = formProjectInputValue.placeholder;
 
-      if (!newProject) {
-        newProject = olderProject;
-      }
+      const selectProjectValue = document.querySelector('#edit-project-select option:checked');
+      const allOptions = Array.from(document.querySelectorAll('#edit-project-select option'));
+
+      const newProject = selectProjectValue.value;
+      let olderProject = null;
+
+      allOptions.forEach((option) => {
+        if (option.attributes.initial) {
+          olderProject = option.attributes.initial.value;
+        }
+      });
 
       const formId = editForm.getAttribute('data-id');
 
       const originalTodo = todoListModule.getTodo(formId);
-      const updatedTodoInfo = getUpdateTodoInfo();
-
+      const updatedTodoInfo = getUpdateTodoInfo(newProject);
       const updatedTodo = todoListModule.updateTodo(originalTodo, updatedTodoInfo);
 
       const { id } = originalTodo;
