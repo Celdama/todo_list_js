@@ -12,7 +12,7 @@
     left: 140px;
   }
 
-  #add-todo-wrapper{
+  #add-todo-wrapper, #edit-todo-wrapper {
     width: 600px !important;
   }
 

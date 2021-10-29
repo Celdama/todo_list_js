@@ -1,4 +1,6 @@
-import { format } from 'date-fns';
+import {
+  format, getMonth, getDate, getYear,
+} from 'date-fns';
 import domElementFactory from '../utilities/domElementFactory';
 import appendDomElementToParent from '../utilities/appendDomElementToParent';
 import { todoFactory2, handleTodoListModule as todoListModule } from './handleTodo';
@@ -245,14 +247,26 @@ const UI = (() => {
   };
 
   const fillPlaceHolderFormEditWithTodoData = (data) => {
+    const desc = document.querySelector('#edit-todo-form textarea');
+    console.log(desc);
+    console.log('from here');
+    console.log(data);
     const inputEditTodo = Array.from(
       document.querySelectorAll('#edit-todo-form input'),
     );
+
+    desc.placeholder = data.description;
 
     inputEditTodo.forEach((input) => {
       input.classList.add(`${input.id}-input`);
       input.value = '';
       input.placeholder = data[input.id];
+      if (input.type === 'date') {
+        const month = getMonth(new Date(`${data.dueDate}`)) + 1;
+        const day = getDate(new Date(`${data.dueDate}`));
+        const year = getYear(new Date(`${data.dueDate}`));
+        input.valueAsDate = new Date(`${year}`, `${month}`, `${day}`);
+      }
     });
   };
 
@@ -355,9 +369,7 @@ const UI = (() => {
         projectListModule.deleteTodoInThisProject(olderProject, id);
         projectListModule.addTodoToProject(project, updatedTodo);
         loadTodoList(project);
-      } else if (categoryTitle === 'upcoming') {
-        loadTodoList(categoryTitle);
-      } else if (categoryTitle === 'today') {
+      } else if (categoryTitle === 'upcoming' || categoryTitle === 'today') {
         loadTodoList(categoryTitle);
       } else {
         loadTodoList(olderProject);

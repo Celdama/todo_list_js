@@ -225,12 +225,6 @@ html {
                 padding: 1rem 0;
                 border-bottom: 1px solid #f0f0f0;
                 color: #808080;
-                // background-color: paleturquoise;
-
-                // button {
-                //   display: flex;
-                //   flex-direction: row;
-                // }
 
                 .left {
                   display: flex;
@@ -284,7 +278,6 @@ html {
 
       }
       #add-todo-wrapper{
-          // display: block;
           position: fixed;
           width: 90%;
           padding: 1rem;
@@ -292,8 +285,8 @@ html {
           align-self: center;
           border-radius: 10px;
           z-index: 100;
-          top: 40%;
-          box-shadow: rgba(0, 0, 0, 0.3) 0px 19px 38px, rgba(0, 0, 0, 0.22) 0px 15px 12px;
+          top: 30%;
+          box-shadow: $wrapper-box-shadow;
 
           .add-todo-header {
             display: flex;
@@ -409,8 +402,8 @@ html {
           background-color: #fff;
           align-self: center;
           z-index: 100;
-          top: 40%;
-          box-shadow: rgba(0, 0, 0, 0.3) 0px 19px 38px, rgba(0, 0, 0, 0.22) 0px 15px 12px;
+          top: 30%;
+          box-shadow: $wrapper-box-shadow;
           border-radius: 10px;
 
           .add-project-header {
@@ -466,6 +459,134 @@ html {
                 }
                 button {
                   justify-self: flex-end;
+                  padding: 9px 18px;
+                  background-color: $header-color;
+                  color: #fff;
+                  border: none;
+                  border-radius: 5px;
+
+                  &:hover {
+                    cursor: pointer;
+                  }
+                }
+              }
+            }
+          }
+
+        }
+        #edit-todo-wrapper {
+          position: fixed;
+          background-color: #fff;
+          width: 90%;
+          padding: 1rem;
+          align-self: center;
+          border-radius: 10px;
+          z-index: 100;
+          top: 30%;
+          box-shadow: $wrapper-box-shadow;
+
+          .edit-todo-header {
+            display: flex;
+            justify-content: space-between;
+            padding: 1rem;
+            font-size: 2.5rem;
+            width: 100%;
+            border-bottom: 1px solid #dee2e6;
+
+            .edit-todo-title {
+              font-weight: 500;
+            }
+
+            button {
+              border: none;
+              background-color: #fff;
+              font-weight: bold;
+
+              &:hover {
+                cursor: pointer;
+              }
+            }
+          }
+
+          .edit-todo-content {
+            padding: 1.5rem 1rem;
+
+            form {
+              display: flex;
+              flex-direction: column;
+
+              .form-content {
+                display: none;
+                display: flex;
+                flex-wrap: wrap;
+
+                label {
+                  padding-bottom: 8px;
+                  font-size: 1.6rem;
+                }
+
+                input {
+                  height: calc(1.5em + 0.75rem + 2px);
+                  border: 1px solid #ced4da;
+                  border-radius: 0.25rem;
+                  background-clip: padding-box;
+                  padding: 0.3rem;
+
+                  &:focus {
+                    outline: 2px solid $header-color;
+                    box-shadow: 0 0 2px #719ECE;
+                  }
+                }
+
+
+
+                select {
+                  background-color: #fff;
+                  border: 1px solid #ced4da;
+                }
+
+                .left-side {
+                  flex: 0 0 50%;
+                  max-width: 50%;
+                  padding-right: 20px;
+
+                textarea {
+                  border: 1px solid #ced4da;
+                  padding: 0.3rem;
+
+                  &:focus {
+                    outline: 2px solid $header-color;
+                    box-shadow: 0 0 2px #719ECE;
+                  }
+                }
+
+                  div {
+                    display: flex;
+                    flex-direction: column;
+                    margin-bottom: 10px;
+                  }
+                }
+                .right-side {
+                  flex: 0 0 50%;
+                  max-width: 50%;
+
+                  div {
+                    display: flex;
+                    flex-direction: column;
+                    margin-bottom: 10px;
+                  }
+                }
+              }
+              .edit-todo-buttons {
+                align-self: flex-end;
+                .close-edit-form-todo {
+                  background-color: #fff;
+                  border: 1px solid $header-color;
+                  color: $header-color;
+                }
+                button {
+                  justify-self: flex-end;
+                  align-self: flex-end;
                   padding: 9px 18px;
                   background-color: $header-color;
                   color: #fff;
