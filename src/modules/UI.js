@@ -104,6 +104,40 @@ const UI = (() => {
     });
   };
 
+  const renderCompleteTodoItem = (todo) => {
+    console.log(todo);
+    const completeTodoItem = domElementFactory('div', '', 'complete-todo-item');
+    const leftSide = domElementFactory('div', '', 'left');
+    const rightSide = domElementFactory('div', '', 'right');
+    const completeTodoTitleDiv = domElementFactory('div', 'Title: ', 'complete-todo-title');
+    const completeTodoTitle = domElementFactory('span', `${todo.title}`, '');
+    const completeTodoDescDiv = domElementFactory('div', 'Description: ', 'complete-todo-desc');
+    const completeTodoDesc = domElementFactory('span', `${todo.description}`, '');
+    const completeTodoPriorityDiv = domElementFactory('div', 'Priority: ', 'complete-todo-priority');
+    const completeTodoPriority = domElementFactory('span', `${todo.priority}`, '');
+    const completeTodoProjectDiv = domElementFactory('div', 'Project: ', 'complete-todo-project');
+    const completeTodoProject = domElementFactory('span', `${todo.project}`, '');
+
+    appendDomElementToParent(completeTodoTitleDiv.el, completeTodoTitle);
+    appendDomElementToParent(completeTodoDescDiv.el, completeTodoDesc);
+    appendDomElementToParent(completeTodoPriorityDiv.el, completeTodoPriority);
+    appendDomElementToParent(completeTodoProjectDiv.el, completeTodoProject);
+
+    appendDomElementToParent(leftSide.el, completeTodoTitleDiv, completeTodoDescDiv);
+    appendDomElementToParent(rightSide.el, completeTodoPriorityDiv, completeTodoProjectDiv);
+
+    appendDomElementToParent(completeTodoItem.el, leftSide, rightSide);
+    return completeTodoItem.el;
+  };
+
+  const renderCompletedTodoList = (display, list) => {
+    console.log('render');
+    list.forEach((todo) => {
+      const completeTodoAppended = renderCompleteTodoItem(todo);
+      display.appendChild(completeTodoAppended);
+    });
+  };
+
   const loadCurrentMonthTodoList = () => {
     const currentDate = document.querySelector('.current-date');
     const formatMonth = format(new Date(), 'MMMM');
@@ -147,7 +181,11 @@ const UI = (() => {
     const currentDate = document.querySelector('.current-date');
 
     displayTodoList.textContent = '';
-    todoCategory.textContent = name;
+    if (name === 'complete') {
+      todoCategory.textContent = `${name}d Tasks`;
+    } else {
+      todoCategory.textContent = name;
+    }
 
     let todoList = null;
 
@@ -164,7 +202,8 @@ const UI = (() => {
         }
         // a changer cette fonction
         // je ne veux pas display les todo comme quand elles sont pas complete
-        renderTodoList(displayTodoList, todoList);
+        // renderTodoList(displayTodoList, todoList);
+        renderCompletedTodoList(displayTodoList, todoList);
         console.log('completeeddd');
         console.log(todoList);
         break;
