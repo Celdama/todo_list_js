@@ -1,5 +1,5 @@
 import { format, getMonth, getDate, getYear } from 'date-fns';
-import handleEventListener from '../utilities/handleEventListener';
+import handleEventListenerModule from '../utilities/handleEventListener';
 import domElementFactory from '../utilities/domElementFactory';
 import appendDomElementToParent from '../utilities/appendDomElementToParent';
 import {
@@ -47,7 +47,7 @@ const UI = (() => {
   };
 
   const displayAddTodoForm = (hiddeFormOnSubmit) => {
-    const { listenerToHideForm } = handleEventListener;
+    const { listenerToHideForm } = handleEventListenerModule;
     const closeAddTodoFormBtns = Array.from(
       document.querySelectorAll('.close-add-form-todo')
     );
@@ -94,7 +94,7 @@ const UI = (() => {
   };
 
   const displayAddProjectForm = (hiddeFormOnSubmit) => {
-    const { listenerToHideForm } = handleEventListener;
+    const { listenerToHideForm } = handleEventListenerModule;
     const closeAddProjectFormBtns = Array.from(
       document.querySelectorAll('.close-add-form-project')
     );
@@ -127,8 +127,8 @@ const UI = (() => {
     });
   };
 
-  const renderCompleteTodoItem = (todo) => {
-    console.log(todo);
+  const renderCompletedTodoItem = (todo) => {
+    const { title, description, priority, project } = todo;
     const completeTodoItem = domElementFactory('div', '', 'complete-todo-item');
     const leftSide = domElementFactory('div', '', 'left');
     const rightSide = domElementFactory('div', '', 'right');
@@ -137,37 +137,25 @@ const UI = (() => {
       'Title: ',
       'complete-todo-title'
     );
-    const completeTodoTitle = domElementFactory('span', `${todo.title}`, '');
+    const completeTodoTitle = domElementFactory('span', `${title}`, '');
     const completeTodoDescDiv = domElementFactory(
       'div',
       'Description: ',
       'complete-todo-desc'
     );
-    const completeTodoDesc = domElementFactory(
-      'span',
-      `${todo.description}`,
-      ''
-    );
+    const completeTodoDesc = domElementFactory('span', `${description}`, '');
     const completeTodoPriorityDiv = domElementFactory(
       'div',
       'Priority: ',
       'complete-todo-priority'
     );
-    const completeTodoPriority = domElementFactory(
-      'span',
-      `${todo.priority}`,
-      ''
-    );
+    const completeTodoPriority = domElementFactory('span', `${priority}`, '');
     const completeTodoProjectDiv = domElementFactory(
       'div',
       'Project: ',
       'complete-todo-project'
     );
-    const completeTodoProject = domElementFactory(
-      'span',
-      `${todo.project}`,
-      ''
-    );
+    const completeTodoProject = domElementFactory('span', `${project}`, '');
 
     appendDomElementToParent(completeTodoTitleDiv.el, completeTodoTitle);
     appendDomElementToParent(completeTodoDescDiv.el, completeTodoDesc);
@@ -190,9 +178,8 @@ const UI = (() => {
   };
 
   const renderCompletedTodoList = (display, list) => {
-    console.log('render');
     list.forEach((todo) => {
-      const completeTodoAppended = renderCompleteTodoItem(todo);
+      const completeTodoAppended = renderCompletedTodoItem(todo);
       display.appendChild(completeTodoAppended);
     });
   };
@@ -208,10 +195,10 @@ const UI = (() => {
   };
 
   const displayEmptyTodoListMessage = (parentElement, todoCategory) => {
-    let message = null;
+    let message = '';
+
     switch (todoCategory) {
       case 'complete':
-        console.log('"dispal');
         message = 'no completed task';
         break;
       case 'today':
@@ -223,6 +210,7 @@ const UI = (() => {
       default:
         message = 'What tasks are on your mind ?';
     }
+
     const wrapperEmptyTodoList = domElementFactory(
       'div',
       '',
@@ -238,6 +226,7 @@ const UI = (() => {
       'add a task',
       'add-todo-btn'
     );
+
     if (todoCategory === 'complete') {
       appendDomElementToParent(wrapperEmptyTodoList.el, emptyTodoText);
     } else {
@@ -256,6 +245,7 @@ const UI = (() => {
     const currentDate = document.querySelector('.current-date');
 
     displayTodoList.textContent = '';
+
     if (name === 'complete') {
       todoCategory.textContent = `${name}d Tasks`;
     } else {
@@ -275,12 +265,7 @@ const UI = (() => {
           displayEmptyTodoListMessage(displayTodoList, name);
           return;
         }
-        // a changer cette fonction
-        // je ne veux pas display les todo comme quand elles sont pas complete
-        // renderTodoList(displayTodoList, todoList);
         renderCompletedTodoList(displayTodoList, todoList);
-        console.log('completeeddd');
-        console.log(todoList);
         break;
       case 'today':
         todoList = loadCurrentDayTodoList();
@@ -309,18 +294,16 @@ const UI = (() => {
   };
 
   const displayCompleteTodo = () => {
+    const { listenerToLoadTodoList } = handleEventListenerModule;
     const completedTodoBtn = document.querySelector('.completed-todo');
-    completedTodoBtn.addEventListener('click', () => {
-      console.log(completedTodoBtn);
-      loadTodoList('complete');
-    });
+
+    listenerToLoadTodoList(completedTodoBtn, () => loadTodoList('complete'));
   };
 
   const loadInboxTodoListWithHomeIcon = () => {
+    const { listenerToLoadTodoList } = handleEventListenerModule;
     const homeBtn = document.getElementById('home-btn');
-    homeBtn.addEventListener('click', () => {
-      loadTodoList();
-    });
+    listenerToLoadTodoList(homeBtn, () => loadTodoList());
   };
 
   const completeTodo = (todo) => {

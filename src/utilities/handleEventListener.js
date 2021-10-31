@@ -1,4 +1,4 @@
-const handleEventListener = (() => {
+const handleEventListenerModule = (() => {
   const listenerToHideForm = (wrapperForm, ...args) => {
     args.forEach((btn) => {
       btn.addEventListener('click', () => {
@@ -7,9 +7,16 @@ const handleEventListener = (() => {
     });
   };
 
+  const listenerToLoadTodoList = (btn, action) => {
+    btn.addEventListener('click', () => {
+      action();
+    });
+  };
+
   return {
     listenerToHideForm,
+    listenerToLoadTodoList,
   };
 })();
 
-export default handleEventListener;
+export default handleEventListenerModule;
