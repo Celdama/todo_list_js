@@ -13,12 +13,6 @@ const handleEventListenerModule = (() => {
     });
   };
 
-  const listenerToDisplayEditTodoPriority = (btn, action) => {
-    btn.addEventListener('click', () => {
-      action();
-    });
-  };
-
   const listenerToInteractWithTodoItem = (todo, buttons, actions) => {
     const [updateTodo, deleteTodo, completeTodo, displayPriorityPopUp] = [
       ...actions,
@@ -42,7 +36,6 @@ const handleEventListenerModule = (() => {
   return {
     listenerToHideForm,
     listenerToLoadTodoList,
-    listenerToDisplayEditTodoPriority,
     listenerToInteractWithTodoItem,
   };
 })();
