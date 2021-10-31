@@ -357,7 +357,13 @@ const UI = (() => {
       loadTodoList(project)
     );
 
-    const buttons = [editBtn.el, deleteBtn.el, priorityBtn.el, doneBtn.el];
+    const interactButtons = [
+      editBtn.el,
+      deleteBtn.el,
+      priorityBtn.el,
+      doneBtn.el,
+    ];
+
     const interactActions = [
       updateTodo,
       deleteTodo,
@@ -365,7 +371,7 @@ const UI = (() => {
       () => displayEditTodoPriorityPopUp(popUpPriority.el),
     ];
 
-    listenerToInteractWithTodoItem(todo, buttons, interactActions);
+    listenerToInteractWithTodoItem(todo, interactButtons, interactActions);
 
     appendDomElementToParent(doneWrapper.el, doneBtn);
     appendDomElementToParent(todoTitleWrapper.el, displayTodoTitle);
