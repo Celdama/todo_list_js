@@ -47,12 +47,13 @@ const UI = (() => {
   };
 
   const displayAddTodoForm = (hiddeFormOnSubmit) => {
-    const { listenerToHideForm } = handleEventListenerModule;
     const closeAddTodoFormBtns = Array.from(
       document.querySelectorAll('.close-add-form-todo')
     );
     const displayAddTodoFormBtn = document.querySelector('#add-todo-btn');
     const addTodoFormWrapper = document.querySelector('#add-todo-wrapper');
+
+    const { listenerToHideForm } = handleEventListenerModule;
 
     displayProjectListInSelectChoice();
 
@@ -94,7 +95,6 @@ const UI = (() => {
   };
 
   const displayAddProjectForm = (hiddeFormOnSubmit) => {
-    const { listenerToHideForm } = handleEventListenerModule;
     const closeAddProjectFormBtns = Array.from(
       document.querySelectorAll('.close-add-form-project')
     );
@@ -109,6 +109,7 @@ const UI = (() => {
       addProjectFormWrapper.classList.toggle('hidden');
       return;
     }
+    const { listenerToHideForm } = handleEventListenerModule;
 
     const [crossBtn, closeBtn] = [...closeAddProjectFormBtns];
 
@@ -294,16 +295,16 @@ const UI = (() => {
   };
 
   const displayCompleteTodo = () => {
-    const { listenerToLoadTodoList } = handleEventListenerModule;
     const completedTodoBtn = document.querySelector('.completed-todo');
+    const { listenerToLoadTodoList } = handleEventListenerModule;
 
     listenerToLoadTodoList(completedTodoBtn, () => loadTodoList('complete'));
   };
 
   const loadInboxTodoListWithHomeIcon = () => {
-    const { listenerToLoadTodoList } = handleEventListenerModule;
     const homeBtn = document.getElementById('home-btn');
-    listenerToLoadTodoList(homeBtn, () => loadTodoList());
+    const { listenerToLoadTodoList } = handleEventListenerModule;
+    listenerToLoadTodoList(homeBtn, loadTodoList);
   };
 
   const completeTodo = (todo) => {
@@ -322,6 +323,9 @@ const UI = (() => {
     const BLUE_FLAG_PRIORITY = '#3f73d6';
     const ORANGE_FLAG_PRIORITY = '#ff9933';
 
+    const { listenerToInteractWithTodoItem } = handleEventListenerModule;
+
+    const { title, project, priority } = todo;
     const todoItem = domElementFactory('div', '', 'todo-item');
     const leftSideOfTodoItem = domElementFactory('div', '', 'left');
     const rightSideOfTodoItem = domElementFactory('div', '', 'right');
@@ -330,42 +334,38 @@ const UI = (() => {
     const deleteWrapper = domElementFactory('div', '', 'delete-wrapper');
     const doneWrapper = domElementFactory('div', '', 'done-wrapper');
     const todoTitleWrapper = domElementFactory('div', '', 'title-wrapper');
-    // const doneBtn = domElementFactory('button');
     const doneBtn = domElementFactory('input', '', 'done-todo-btn');
     const editBtn = domElementFactory('button', '', 'edit-todo-btn');
     const deleteBtn = domElementFactory('button', '', 'delete-todo-btn');
     const priorityBtn = domElementFactory('button', '', 'edit-priority-btn');
-    const displayTodoTitle = domElementFactory(
-      'div',
-      `${todo.title}`,
-      'todo-title'
-    );
+    const displayTodoTitle = domElementFactory('div', `${title}`, 'todo-title');
 
     let colorFlagPriority = ORANGE_FLAG_PRIORITY;
 
-    if (todo.priority === 'high') {
+    if (priority === 'high') {
       colorFlagPriority = RED_FLAG_PRIORITY;
-    } else if (todo.priority === 'low') {
+    } else if (priority === 'low') {
       colorFlagPriority = BLUE_FLAG_PRIORITY;
     }
 
-    // doneBtn.el.innerHTML = `${icons.completeTodo()}`;
-    // doneBtn.el.innerHTML = `
-    //   <input type="checkbox" name="" id="">
-    // `;
     doneBtn.el.type = 'checkbox';
-    doneBtn.el.onclick = () => completeTodo(todo);
     editBtn.el.innerHTML = `${icons.editTodo()}`;
     priorityBtn.el.innerHTML = `${icons.priorityTodo(colorFlagPriority)}`;
     deleteBtn.el.innerHTML = `${icons.deleteTodo()}`;
 
     const popUpPriority = createEditPriorityPopUp(todo, () =>
-      loadTodoList(todo.project)
+      loadTodoList(project)
     );
-    priorityBtn.el.onclick = () =>
-      displayEditTodoPriorityPopUp(popUpPriority.el);
 
-    handleTodoItemEventListener(todo, editBtn.el, deleteBtn.el);
+    const buttons = [editBtn.el, deleteBtn.el, priorityBtn.el, doneBtn.el];
+    const interactActions = [
+      updateTodo,
+      deleteTodo,
+      completeTodo,
+      () => displayEditTodoPriorityPopUp(popUpPriority.el),
+    ];
+
+    listenerToInteractWithTodoItem(todo, buttons, interactActions);
 
     appendDomElementToParent(doneWrapper.el, doneBtn);
     appendDomElementToParent(todoTitleWrapper.el, displayTodoTitle);
@@ -493,17 +493,17 @@ const UI = (() => {
     displayProjectListInSelectChoice();
   };
 
-  const handleTodoItemEventListener = (todo, ...args) => {
-    args.forEach((btn) => {
-      btn.addEventListener('click', () => {
-        if (btn.classList.contains('edit-todo-btn')) {
-          updateTodo(todo);
-        } else if (btn.classList.contains('delete-todo-btn')) {
-          deleteTodo(todo);
-        }
-      });
-    });
-  };
+  // const handleTodoItemEventListener = (todo, ...args) => {
+  //   args.forEach((btn) => {
+  //     btn.addEventListener('click', () => {
+  //       if (btn.classList.contains('edit-todo-btn')) {
+  //         updateTodo(todo);
+  //       } else if (btn.classList.contains('delete-todo-btn')) {
+  //         deleteTodo(todo);
+  //       }
+  //     });
+  //   });
+  // };
 
   const getUpdateTodoInfo = (projectInfo) => {
     const updatedTodo = Array.from(
