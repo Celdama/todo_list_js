@@ -1,4 +1,5 @@
 import { format, getMonth, getDate, getYear } from 'date-fns';
+import handleEventListener from '../utilities/handleEventListener';
 import domElementFactory from '../utilities/domElementFactory';
 import appendDomElementToParent from '../utilities/appendDomElementToParent';
 import {
@@ -74,46 +75,48 @@ const UI = (() => {
     const select = document.getElementById('edit-project-select');
     const projectList =
       projectListModule.getAllProjectExceptTodayAndUpcomming();
+
     select.textContent = '';
 
     projectList.forEach((project) => {
-      const option = domElementFactory('option', `${project.title}`, '');
-      option.el.value = `${project.title}`;
+      const { title } = project;
+      const option = domElementFactory('option', `${title}`, '');
 
-      if (project.title === userChoice) {
+      option.el.value = `${title}`;
+
+      if (title === userChoice) {
         option.el.setAttribute('selected', true);
-        option.el.setAttribute('initial', `${project.title}`);
+        option.el.setAttribute('initial', `${title}`);
       }
 
       select.appendChild(option.el);
     });
   };
 
-  const displayAddProjectForm = (auto) => {
+  const displayAddProjectForm = (hiddeFormOnSubmit) => {
     const closeAddProjectFormBtns = Array.from(
       document.querySelectorAll('.close-add-form-project')
     );
-    const displayAddProjectFormBtn = document.getElementById(
-      'display-add-project-form'
+    const displayAddProjectFormBtn = document.querySelector(
+      '#display-add-project-form'
     );
-    const addProjectFormWrapper = document.getElementById(
-      'add-project-wrapper'
+    const addProjectFormWrapper = document.querySelector(
+      '#add-project-wrapper'
     );
 
-    if (auto) {
+    if (hiddeFormOnSubmit) {
       addProjectFormWrapper.classList.toggle('hidden');
       return;
     }
 
-    displayAddProjectFormBtn.addEventListener('click', () => {
-      addProjectFormWrapper.classList.toggle('hidden');
-    });
+    const [crossBtn, closeBtn] = [...closeAddProjectFormBtns];
 
-    closeAddProjectFormBtns.forEach((btn) => {
-      btn.addEventListener('click', () => {
-        addProjectFormWrapper.classList.toggle('hidden');
-      });
-    });
+    handleEventListener.listenerOnProjectFormBtn(
+      addProjectFormWrapper,
+      displayAddProjectFormBtn,
+      crossBtn,
+      closeBtn
+    );
   };
 
   const renderTodoList = (display, list) => {
