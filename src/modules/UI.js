@@ -47,6 +47,7 @@ const UI = (() => {
   };
 
   const displayAddTodoForm = (hiddeFormOnSubmit) => {
+    const { listenerToHideForm } = handleEventListener;
     const closeAddTodoFormBtns = Array.from(
       document.querySelectorAll('.close-add-form-todo')
     );
@@ -60,15 +61,14 @@ const UI = (() => {
       return;
     }
 
-    displayAddTodoFormBtn.addEventListener('click', () => {
-      addTodoFormWrapper.classList.toggle('hidden');
-    });
+    const [crossBtn, closeBtn] = [...closeAddTodoFormBtns];
 
-    closeAddTodoFormBtns.forEach((btn) => {
-      btn.addEventListener('click', () => {
-        addTodoFormWrapper.classList.toggle('hidden');
-      });
-    });
+    listenerToHideForm(
+      addTodoFormWrapper,
+      displayAddTodoFormBtn,
+      crossBtn,
+      closeBtn
+    );
   };
 
   const displayProjectListInEditFormSelectChoice = (userChoice) => {
@@ -94,6 +94,7 @@ const UI = (() => {
   };
 
   const displayAddProjectForm = (hiddeFormOnSubmit) => {
+    const { listenerToHideForm } = handleEventListener;
     const closeAddProjectFormBtns = Array.from(
       document.querySelectorAll('.close-add-form-project')
     );
@@ -111,7 +112,7 @@ const UI = (() => {
 
     const [crossBtn, closeBtn] = [...closeAddProjectFormBtns];
 
-    handleEventListener.listenerOnProjectFormBtn(
+    listenerToHideForm(
       addProjectFormWrapper,
       displayAddProjectFormBtn,
       crossBtn,
