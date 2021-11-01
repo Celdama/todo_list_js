@@ -4,7 +4,14 @@ import { format, addWeeks, isThisMonth } from 'date-fns';
 // je garde cette fonction jusqu'à la fin de mon developpment, je l'utilise pour
 // créer les todos à la volée dans index.js (c'est ma première version de ma function
 // factory, une fois le projet terminé je la supprimerais.)
-const todoFactory = (title, description, dueDate = new Date(), project = 'inbox', priority = 'medium', isComplete = false) => {
+const todoFactory = (
+  title,
+  description,
+  dueDate = new Date(),
+  project = 'inbox',
+  priority = 'medium',
+  isComplete = false
+) => {
   const formatDueDate = format(new Date(dueDate), 'MM/dd/yyy');
   const x = 3;
 
@@ -62,7 +69,7 @@ const handleTodoListModule = (() => {
     return updatedTodo;
   };
 
-  const deleteTodo = (id) => {
+  const deleteThisTodo = (id) => {
     todoList = todoList.filter((item) => item.id !== id);
   };
 
@@ -139,7 +146,7 @@ const handleTodoListModule = (() => {
     getTodo,
     updateTodo,
     setCompleteTodo,
-    deleteTodo,
+    deleteThisTodo,
     deleteAllTodoFromDeletedProject,
     getCompleteTodoList,
     getTodoList,

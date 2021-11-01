@@ -18,18 +18,19 @@ import icons from '../utilities/iconsSVG';
 
 const UI = (() => {
   const loadCurrentDayTodoList = () => {
+    const { getTodoOfCurrentDay } = todoListModule;
     const currentDate = document.querySelector('.current-date');
     const formatDate = format(new Date(), 'ccc dd MMM');
-    const currentDayTodoList = todoListModule.getTodoOfCurrentDay();
+    const currentDayTodoList = getTodoOfCurrentDay();
     currentDate.textContent = `${formatDate}`;
 
     return currentDayTodoList;
   };
 
   const displayProjectListInSelectChoice = () => {
+    const { getAllProjectExceptTodayAndUpcomming } = projectListModule;
     const select = document.querySelector('#project-select');
-    const projectList =
-      projectListModule.getAllProjectExceptTodayAndUpcomming();
+    const projectList = getAllProjectExceptTodayAndUpcomming();
 
     select.textContent = '';
 
@@ -47,13 +48,13 @@ const UI = (() => {
   };
 
   const displayAddTodoForm = (hiddeFormOnSubmit) => {
+    const { listenerToHideForm } = handleEventListenerModule;
+
     const closeAddTodoFormBtns = Array.from(
       document.querySelectorAll('.close-add-form-todo')
     );
     const displayAddTodoFormBtn = document.querySelector('#add-todo-btn');
     const addTodoFormWrapper = document.querySelector('#add-todo-wrapper');
-
-    const { listenerToHideForm } = handleEventListenerModule;
 
     displayProjectListInSelectChoice();
 
@@ -73,9 +74,9 @@ const UI = (() => {
   };
 
   const displayProjectListInEditFormSelectChoice = (userChoice) => {
+    const { getAllProjectExceptTodayAndUpcomming } = projectListModule;
     const select = document.getElementById('edit-project-select');
-    const projectList =
-      projectListModule.getAllProjectExceptTodayAndUpcomming();
+    const projectList = getAllProjectExceptTodayAndUpcomming();
 
     select.textContent = '';
 
@@ -95,6 +96,7 @@ const UI = (() => {
   };
 
   const displayAddProjectForm = (hiddeFormOnSubmit) => {
+    const { listenerToHideForm } = handleEventListenerModule;
     const closeAddProjectFormBtns = Array.from(
       document.querySelectorAll('.close-add-form-project')
     );
@@ -109,7 +111,6 @@ const UI = (() => {
       addProjectFormWrapper.classList.toggle('hidden');
       return;
     }
-    const { listenerToHideForm } = handleEventListenerModule;
 
     const [crossBtn, closeBtn] = [...closeAddProjectFormBtns];
 
@@ -186,11 +187,12 @@ const UI = (() => {
   };
 
   const loadCurrentMonthTodoList = () => {
+    const { getTodoOfCurrentMonth } = todoListModule;
     const currentDate = document.querySelector('.current-date');
     const formatMonth = format(new Date(), 'MMMM');
     currentDate.textContent = `${formatMonth}`;
 
-    const currentMonthTodoList = todoListModule.getTodoOfCurrentMonth();
+    const currentMonthTodoList = getTodoOfCurrentMonth();
 
     return currentMonthTodoList;
   };
@@ -241,6 +243,7 @@ const UI = (() => {
   };
 
   const loadTodoList = (name = 'inbox') => {
+    const { getTodoByProjectName } = projectListModule;
     const todoCategory = document.getElementById('todo-category');
     const displayTodoList = document.querySelector('.todo-list');
     const currentDate = document.querySelector('.current-date');
@@ -256,7 +259,7 @@ const UI = (() => {
     let todoList = null;
 
     if (name !== 'complete') {
-      todoList = projectListModule.getTodoByProjectName(name);
+      todoList = getTodoByProjectName(name);
     }
 
     switch (name) {
@@ -295,23 +298,25 @@ const UI = (() => {
   };
 
   const displayCompleteTodo = () => {
-    const completedTodoBtn = document.querySelector('.completed-todo');
     const { listenerToLoadTodoList } = handleEventListenerModule;
+    const completedTodoBtn = document.querySelector('.completed-todo');
 
     listenerToLoadTodoList(completedTodoBtn, () => loadTodoList('complete'));
   };
 
   const loadInboxTodoListWithHomeIcon = () => {
-    const homeBtn = document.getElementById('home-btn');
     const { listenerToLoadTodoList } = handleEventListenerModule;
+    const homeBtn = document.getElementById('home-btn');
     listenerToLoadTodoList(homeBtn, loadTodoList);
   };
 
   const completeTodo = (todo) => {
+    const { setCompleteTodo, deleteThisTodo } = todoListModule;
+    const { deleteTodoInThisProject } = projectListModule;
     const { id, project } = todo;
-    todoListModule.setCompleteTodo(todo);
-    todoListModule.deleteTodo(id);
-    projectListModule.deleteTodoInThisProject(project, id);
+    setCompleteTodo(todo);
+    deleteThisTodo(id);
+    deleteTodoInThisProject(project, id);
 
     setTimeout(() => {
       loadTodoList(project);
@@ -324,6 +329,7 @@ const UI = (() => {
     const ORANGE_FLAG_PRIORITY = '#ff9933';
 
     const { listenerToInteractWithTodoItem } = handleEventListenerModule;
+    const { editTodoSVG, priorityTodoSVG, deleteTodoSVG } = icons;
 
     const { title, project, priority } = todo;
     const todoItem = domElementFactory('div', '', 'todo-item');
@@ -349,9 +355,9 @@ const UI = (() => {
     }
 
     doneBtn.el.type = 'checkbox';
-    editBtn.el.innerHTML = `${icons.editTodo()}`;
-    priorityBtn.el.innerHTML = `${icons.priorityTodo(colorFlagPriority)}`;
-    deleteBtn.el.innerHTML = `${icons.deleteTodo()}`;
+    editBtn.el.innerHTML = `${editTodoSVG()}`;
+    priorityBtn.el.innerHTML = `${priorityTodoSVG(colorFlagPriority)}`;
+    deleteBtn.el.innerHTML = `${deleteTodoSVG()}`;
 
     const popUpPriority = createEditPriorityPopUp(todo, () =>
       loadTodoList(project)
@@ -403,6 +409,7 @@ const UI = (() => {
 
   const renderProjectItem = (project) => {
     const { listenerToInteractWithProjectItem } = handleEventListenerModule;
+    const { deleteProjectSVG, circleColorProjectSVG } = icons;
     const wrapperProject = domElementFactory('div', '', 'project');
     const projectInfo = domElementFactory('div', '', 'project-info');
     const circleColorProject = domElementFactory('span', '', 'circle-color');
@@ -418,8 +425,8 @@ const UI = (() => {
     );
     projectInfo.el.dataset.list = `${project.title}`;
 
-    deleteProjectBtn.el.innerHTML = `${icons.deleteProject()}`;
-    circleColorProject.el.innerHTML = `${icons.circleColorProject()}`;
+    deleteProjectBtn.el.innerHTML = `${deleteProjectSVG()}`;
+    circleColorProject.el.innerHTML = `${circleColorProjectSVG()}`;
 
     listenerToInteractWithProjectItem(
       project,
@@ -434,33 +441,39 @@ const UI = (() => {
   };
 
   const fillPlaceHolderFormEditWithTodoData = (data) => {
+    const { description, project } = data;
     const desc = document.querySelector('#edit-todo-form textarea');
-    displayProjectListInEditFormSelectChoice(data.project);
+    displayProjectListInEditFormSelectChoice(project);
 
     const inputEditTodo = Array.from(
       document.querySelectorAll('#edit-todo-form input')
     );
 
-    desc.placeholder = data.description;
+    desc.placeholder = description;
 
     inputEditTodo.forEach((input) => {
-      input.classList.add(`${input.id}-input`);
+      const { id, type } = input;
+      input.classList.add(`${id}-input`);
       input.value = '';
       input.placeholder = data[input.id];
-      if (input.type === 'date') {
-        const month = getMonth(new Date(`${data.dueDate}`));
-        const day = getDate(new Date(`${data.dueDate}`)) + 1;
-        const year = getYear(new Date(`${data.dueDate}`));
+      if (type === 'date') {
+        const { dueDate } = data;
+        const month = getMonth(new Date(`${dueDate}`));
+        const day = getDate(new Date(`${dueDate}`)) + 1;
+        const year = getYear(new Date(`${dueDate}`));
         input.valueAsDate = new Date(`${year}`, `${month}`, `${day}`);
       }
     });
   };
 
+  // HERE
+
   const loadProjectList = () => {
+    const { getAllProjectExceptDefaultProject } = projectListModule;
     const projectList = document.getElementById('display-projects-list');
     projectList.textContent = '';
 
-    const projects = projectListModule.getAllProjectExceptDefaultProject();
+    const projects = getAllProjectExceptDefaultProject();
 
     if (projects.length === 0) {
       const emptyProjectText = domElementFactory(
@@ -478,12 +491,14 @@ const UI = (() => {
   };
 
   const deleteTodo = (todo) => {
+    const { deleteThisTodo } = todoListModule;
+    const { deleteTodoInThisProject } = projectListModule;
     const todoCategory = document.getElementById('todo-category');
     const categoryTitle = todoCategory.textContent;
     const { project, id } = todo;
 
-    todoListModule.deleteTodo(id);
-    projectListModule.deleteTodoInThisProject(project, id);
+    deleteThisTodo(id);
+    deleteTodoInThisProject(project, id);
 
     switch (categoryTitle) {
       case 'today':
@@ -498,9 +513,10 @@ const UI = (() => {
   };
 
   const deleteProject = (project) => {
+    const { deleteThisProject } = projectListModule;
     const { id, title } = project;
 
-    projectListModule.deleteProject(id, title);
+    deleteThisProject(id, title);
     loadProjectList();
     loadTodoList();
     displayProjectListInSelectChoice();
@@ -517,12 +533,17 @@ const UI = (() => {
       {}
     );
 
+    const descriptionTodo = document.querySelector('#edit-todo-form textarea');
+
+    updatedTodo.description =
+      descriptionTodo.value || descriptionTodo.placeholder;
     updatedTodo.project = projectInfo;
 
     return updatedTodo;
   };
 
   const addFormEventListenerToUpdateTodo = (editForm, wrapper) => {
+    const { getTodo, updateTodo } = todoListModule;
     const todoCategory = document.getElementById('todo-category');
     const categoryTitle = todoCategory.textContent;
 
@@ -548,12 +569,9 @@ const UI = (() => {
 
       const formId = editForm.getAttribute('data-id');
 
-      const originalTodo = todoListModule.getTodo(formId);
+      const originalTodo = getTodo(formId);
       const updatedTodoInfo = getUpdateTodoInfo(newProject);
-      const updatedTodo = todoListModule.updateTodo(
-        originalTodo,
-        updatedTodoInfo
-      );
+      const updatedTodo = updateTodo(originalTodo, updatedTodoInfo);
 
       const { id } = originalTodo;
       const { project } = updatedTodo;

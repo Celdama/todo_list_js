@@ -37,7 +37,6 @@ const handleEventListenerModule = (() => {
     button.addEventListener('click', () => {
       if (button.classList.contains('delete-project-btn')) {
         actions(project);
-        console.log('project deleted');
       }
     });
   };
