@@ -534,9 +534,9 @@ const UI = (() => {
     );
 
     const descriptionTodo = document.querySelector('#edit-todo-form textarea');
+    const { value, placeholder } = descriptionTodo;
 
-    updatedTodo.description =
-      descriptionTodo.value || descriptionTodo.placeholder;
+    updatedTodo.description = value || placeholder;
     updatedTodo.project = projectInfo;
 
     return updatedTodo;
@@ -544,6 +544,7 @@ const UI = (() => {
 
   const addFormEventListenerToUpdateTodo = (editForm, wrapper) => {
     const { getTodo, updateTodo } = todoListModule;
+    const { deleteTodoInThisProject, addTodoToProject } = projectListModule;
     const todoCategory = document.getElementById('todo-category');
     const categoryTitle = todoCategory.textContent;
 
@@ -578,8 +579,8 @@ const UI = (() => {
 
       // this mean i have to moove todo in another folder project
       if (olderProject !== newProject) {
-        projectListModule.deleteTodoInThisProject(olderProject, id);
-        projectListModule.addTodoToProject(project, updatedTodo);
+        deleteTodoInThisProject(olderProject, id);
+        addTodoToProject(project, updatedTodo);
         loadTodoList(project);
       } else if (categoryTitle === 'upcoming' || categoryTitle === 'today') {
         loadTodoList(categoryTitle);
@@ -593,12 +594,13 @@ const UI = (() => {
   };
 
   const updateTodo = (todo) => {
-    const editTodoWrapper = document.getElementById('edit-todo-wrapper');
-    const editTodoForm = document.getElementById('edit-todo-form');
+    const { id } = todo;
+    const editTodoWrapper = document.querySelector('#edit-todo-wrapper');
+    const editTodoForm = document.querySelector('#edit-todo-form');
 
     editTodoWrapper.classList.toggle('hidden');
 
-    editTodoForm.dataset.id = todo.id;
+    editTodoForm.dataset.id = id;
 
     fillPlaceHolderFormEditWithTodoData(todo);
     addFormEventListenerToUpdateTodo(editTodoForm, editTodoWrapper);
@@ -664,6 +666,7 @@ const UI = (() => {
   };
 
   const addTodo = () => {
+    const { addTodoToProject } = projectListModule;
     const addTodoForm = document.getElementById('add-todo-form');
 
     addTodoForm.addEventListener('submit', (e) => {
@@ -672,8 +675,9 @@ const UI = (() => {
       const newTodo = todoFactory2(newTodoInfo);
       const { project } = newTodo;
       console.log(newTodo);
+      // A LA FIN DESTRUCTURER CETTE FONCTION ET LA RENOMMER EN AddNewTodo()
       todoListModule.addTodo(newTodo);
-      projectListModule.addTodoToProject(project, newTodo);
+      addTodoToProject(project, newTodo);
       loadTodoList(project);
       addTodoForm.reset();
       displayAddTodoForm(true);
@@ -688,6 +692,7 @@ const UI = (() => {
       const newProjectTitle = getNewProjectTitle();
       const newProject = projectFactory(newProjectTitle);
       const { title } = newProject;
+      // IDEM DESTRUCTURER A LA fIN ET RENOMMER EN AddNewProject()
       projectListModule.addProject(newProject);
       loadProjectList();
       AddEventListenerToFetchTodoInProject();
