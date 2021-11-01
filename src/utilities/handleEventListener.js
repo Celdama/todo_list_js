@@ -33,10 +33,20 @@ const handleEventListenerModule = (() => {
     });
   };
 
+  const listenerToInteractWithProjectItem = (project, button, actions) => {
+    button.addEventListener('click', () => {
+      if (button.classList.contains('delete-project-btn')) {
+        actions(project);
+        console.log('project deleted');
+      }
+    });
+  };
+
   return {
     listenerToHideForm,
     listenerToLoadTodoList,
     listenerToInteractWithTodoItem,
+    listenerToInteractWithProjectItem,
   };
 })();
 

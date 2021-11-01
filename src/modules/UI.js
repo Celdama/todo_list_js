@@ -399,7 +399,10 @@ const UI = (() => {
     return todoItem.el;
   };
 
+  // ARRIVER ICI POUR LE REFACTOR
+
   const renderProjectItem = (project) => {
+    const { listenerToInteractWithProjectItem } = handleEventListenerModule;
     const wrapperProject = domElementFactory('div', '', 'project');
     const projectInfo = domElementFactory('div', '', 'project-info');
     const circleColorProject = domElementFactory('span', '', 'circle-color');
@@ -418,7 +421,11 @@ const UI = (() => {
     deleteProjectBtn.el.innerHTML = `${icons.deleteProject()}`;
     circleColorProject.el.innerHTML = `${icons.circleColorProject()}`;
 
-    handleProjectItemEventListener(project, deleteProjectBtn.el);
+    listenerToInteractWithProjectItem(
+      project,
+      deleteProjectBtn.el,
+      deleteProject
+    );
 
     appendDomElementToParent(projectInfo.el, circleColorProject, projectTitle);
     appendDomElementToParent(wrapperProject.el, projectInfo, deleteProjectBtn);
@@ -499,18 +506,6 @@ const UI = (() => {
     displayProjectListInSelectChoice();
   };
 
-  // const handleTodoItemEventListener = (todo, ...args) => {
-  //   args.forEach((btn) => {
-  //     btn.addEventListener('click', () => {
-  //       if (btn.classList.contains('edit-todo-btn')) {
-  //         updateTodo(todo);
-  //       } else if (btn.classList.contains('delete-todo-btn')) {
-  //         deleteTodo(todo);
-  //       }
-  //     });
-  //   });
-  // };
-
   const getUpdateTodoInfo = (projectInfo) => {
     const updatedTodo = Array.from(
       document.querySelectorAll('#edit-todo-form input')
@@ -589,16 +584,6 @@ const UI = (() => {
 
     fillPlaceHolderFormEditWithTodoData(todo);
     addFormEventListenerToUpdateTodo(editTodoForm, editTodoWrapper);
-  };
-
-  const handleProjectItemEventListener = (project, ...args) => {
-    args.forEach((btn) => {
-      btn.addEventListener('click', () => {
-        if (btn.classList.contains('delete-project-btn')) {
-          deleteProject(project);
-        }
-      });
-    });
   };
 
   const getTodoInfo = () => {
