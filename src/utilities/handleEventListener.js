@@ -1,5 +1,5 @@
 const handleEventListenerModule = (() => {
-  const listenerToHideForm = (wrapperForm, ...args) => {
+  const listenerToToggleDisplayForm = (wrapperForm, ...args) => {
     args.forEach((btn) => {
       btn.addEventListener('click', () => {
         wrapperForm.classList.toggle('hidden');
@@ -42,7 +42,7 @@ const handleEventListenerModule = (() => {
   };
 
   return {
-    listenerToHideForm,
+    listenerToToggleDisplayForm,
     listenerToLoadTodoList,
     listenerToInteractWithTodoItem,
     listenerToInteractWithProjectItem,

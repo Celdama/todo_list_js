@@ -315,6 +315,23 @@ html {
                   max-width: 50%;
                 }
               }
+
+              .wrapper-empty-todo-list {
+                padding: 3rem 0;
+
+                button {
+                  margin-top: 3rem;
+                  padding: 9px 18px;
+                  background-color: $header-color;
+                  color: #fff;
+                  border: none;
+                  border-radius: 5px;
+
+                  &:hover {
+                    cursor: pointer;
+                  }
+                }
+              }
             }
           }
         }

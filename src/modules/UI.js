@@ -47,7 +47,7 @@ const UI = (() => {
   };
 
   const displayAddTodoForm = (hiddeFormOnSubmit) => {
-    const { listenerToHideForm } = handleEventListenerModule;
+    const { listenerToToggleDisplayForm } = handleEventListenerModule;
 
     const closeAddTodoFormBtns = Array.from(
       document.querySelectorAll('.close-add-form-todo'),
@@ -64,7 +64,7 @@ const UI = (() => {
 
     const [crossBtn, closeBtn] = [...closeAddTodoFormBtns];
 
-    listenerToHideForm(
+    listenerToToggleDisplayForm(
       addTodoFormWrapper,
       displayAddTodoFormBtn,
       crossBtn,
@@ -95,7 +95,7 @@ const UI = (() => {
   };
 
   const displayAddProjectForm = (hiddeFormOnSubmit) => {
-    const { listenerToHideForm } = handleEventListenerModule;
+    const { listenerToToggleDisplayForm } = handleEventListenerModule;
     const closeAddProjectFormBtns = Array.from(
       document.querySelectorAll('.close-add-form-project'),
     );
@@ -113,7 +113,7 @@ const UI = (() => {
 
     const [crossBtn, closeBtn] = [...closeAddProjectFormBtns];
 
-    listenerToHideForm(
+    listenerToToggleDisplayForm(
       addProjectFormWrapper,
       displayAddProjectFormBtn,
       crossBtn,
@@ -199,17 +199,19 @@ const UI = (() => {
   };
 
   const displayEmptyTodoListMessage = (parentElement, todoCategory) => {
+    const { listenerToToggleDisplayForm } = handleEventListenerModule;
+    const addTodoFormWrapper = document.querySelector('#add-todo-wrapper');
     let message = '';
 
     switch (todoCategory) {
       case 'complete':
-        message = 'no completed task';
+        message = 'No tasks completed yet.';
         break;
       case 'today':
-        message = 'no task for today';
+        message = 'No tasks for today';
         break;
       case 'upcoming':
-        message = 'no task for this month';
+        message = 'No task for this month';
         break;
       default:
         message = 'What tasks are on your mind ?';
@@ -230,6 +232,8 @@ const UI = (() => {
       'add a task',
       'add-todo-btn',
     );
+
+    listenerToToggleDisplayForm(addTodoFormWrapper, addTodoBtn.el);
 
     if (todoCategory === 'complete') {
       appendDomElementToParent(wrapperEmptyTodoList.el, emptyTodoText);
