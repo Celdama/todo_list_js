@@ -49,6 +49,7 @@ const animationsUI = (() => {
     hideBtn.addEventListener('click', () => {
       asideInfo.classList.toggle('show-aside');
       asideInfo.classList.toggle('hide-aside');
+      mainInfo.classList.toggle('skrink-main');
       mainInfo.classList.toggle('full-main');
     });
   };

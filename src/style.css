@@ -1,17 +1,16 @@
 @media only screen and (max-width: 815px) {
-  main {
-    width: 100%;
-    position: absolute;
-    margin-left: 0px;
+  #main-informations {
+    width: 100% !important;
     left: 0px !important;
+
+  }
+
+  .display-todo-list {
+    padding: 6rem 2rem !important;
   }
 }
 
 @media only screen and (min-width: 815px) {
-  .full-main {
-    left: 140px;
-  }
-
   #add-todo-wrapper, #edit-todo-wrapper {
     width: 600px !important;
   }
