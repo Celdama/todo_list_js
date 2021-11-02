@@ -56,6 +56,7 @@ handleTodoListModule.getTodoList();
 
 handleProjectListModule.getAllProject();
 
+UI.displayAvatar();
 UI.loadTodoList();
 UI.loadProjectList();
 UI.addProject();

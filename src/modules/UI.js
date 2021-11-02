@@ -1,22 +1,21 @@
-import { format, getMonth, getDate, getYear } from 'date-fns';
+import {
+  format, getMonth, getDate, getYear,
+} from 'date-fns';
 import handleEventListenerModule from '../utilities/handleEventListener';
 import domElementFactory from '../utilities/domElementFactory';
 import appendDomElementToParent from '../utilities/appendDomElementToParent';
-import {
-  todoFactory2,
-  handleTodoListModule as todoListModule,
-} from './handleTodo';
-import {
-  projectFactory,
-  handleProjectListModule as projectListModule,
-} from './handleProject';
-import {
-  displayEditTodoPriorityPopUp,
-  createEditPriorityPopUp,
-} from '../utilities/priorityPopUp';
+import { todoFactory2, handleTodoListModule as todoListModule } from './handleTodo';
+import { projectFactory, handleProjectListModule as projectListModule } from './handleProject';
+import { displayEditTodoPriorityPopUp, createEditPriorityPopUp } from '../utilities/priorityPopUp';
 import icons from '../utilities/iconsSVG';
+import Avatar from '../images/avatar.png';
 
 const UI = (() => {
+  const displayAvatar = () => {
+    const avatar = document.querySelector('.completed-todo');
+    avatar.src = Avatar;
+  };
+
   const loadCurrentDayTodoList = () => {
     const { getTodoOfCurrentDay } = todoListModule;
     const currentDate = document.querySelector('.current-date');
@@ -51,7 +50,7 @@ const UI = (() => {
     const { listenerToHideForm } = handleEventListenerModule;
 
     const closeAddTodoFormBtns = Array.from(
-      document.querySelectorAll('.close-add-form-todo')
+      document.querySelectorAll('.close-add-form-todo'),
     );
     const displayAddTodoFormBtn = document.querySelector('#add-todo-btn');
     const addTodoFormWrapper = document.querySelector('#add-todo-wrapper');
@@ -69,7 +68,7 @@ const UI = (() => {
       addTodoFormWrapper,
       displayAddTodoFormBtn,
       crossBtn,
-      closeBtn
+      closeBtn,
     );
   };
 
@@ -98,13 +97,13 @@ const UI = (() => {
   const displayAddProjectForm = (hiddeFormOnSubmit) => {
     const { listenerToHideForm } = handleEventListenerModule;
     const closeAddProjectFormBtns = Array.from(
-      document.querySelectorAll('.close-add-form-project')
+      document.querySelectorAll('.close-add-form-project'),
     );
     const displayAddProjectFormBtn = document.querySelector(
-      '#display-add-project-form'
+      '#display-add-project-form',
     );
     const addProjectFormWrapper = document.querySelector(
-      '#add-project-wrapper'
+      '#add-project-wrapper',
     );
 
     if (hiddeFormOnSubmit) {
@@ -118,7 +117,7 @@ const UI = (() => {
       addProjectFormWrapper,
       displayAddProjectFormBtn,
       crossBtn,
-      closeBtn
+      closeBtn,
     );
   };
 
@@ -130,32 +129,34 @@ const UI = (() => {
   };
 
   const renderCompletedTodoItem = (todo) => {
-    const { title, description, priority, project } = todo;
+    const {
+      title, description, priority, project,
+    } = todo;
     const completeTodoItem = domElementFactory('div', '', 'complete-todo-item');
     const leftSide = domElementFactory('div', '', 'left');
     const rightSide = domElementFactory('div', '', 'right');
     const completeTodoTitleDiv = domElementFactory(
       'div',
       'Title: ',
-      'complete-todo-title'
+      'complete-todo-title',
     );
     const completeTodoTitle = domElementFactory('span', `${title}`, '');
     const completeTodoDescDiv = domElementFactory(
       'div',
       'Description: ',
-      'complete-todo-desc'
+      'complete-todo-desc',
     );
     const completeTodoDesc = domElementFactory('span', `${description}`, '');
     const completeTodoPriorityDiv = domElementFactory(
       'div',
       'Priority: ',
-      'complete-todo-priority'
+      'complete-todo-priority',
     );
     const completeTodoPriority = domElementFactory('span', `${priority}`, '');
     const completeTodoProjectDiv = domElementFactory(
       'div',
       'Project: ',
-      'complete-todo-project'
+      'complete-todo-project',
     );
     const completeTodoProject = domElementFactory('span', `${project}`, '');
 
@@ -167,12 +168,12 @@ const UI = (() => {
     appendDomElementToParent(
       leftSide.el,
       completeTodoTitleDiv,
-      completeTodoDescDiv
+      completeTodoDescDiv,
     );
     appendDomElementToParent(
       rightSide.el,
       completeTodoPriorityDiv,
-      completeTodoProjectDiv
+      completeTodoProjectDiv,
     );
 
     appendDomElementToParent(completeTodoItem.el, leftSide, rightSide);
@@ -217,17 +218,17 @@ const UI = (() => {
     const wrapperEmptyTodoList = domElementFactory(
       'div',
       '',
-      'wrapper-empty-todo-list'
+      'wrapper-empty-todo-list',
     );
     const emptyTodoText = domElementFactory(
       'p',
       `${message}`,
-      'empty-todo-text'
+      'empty-todo-text',
     );
     const addTodoBtn = domElementFactory(
       'button',
       'add a task',
-      'add-todo-btn'
+      'add-todo-btn',
     );
 
     if (todoCategory === 'complete') {
@@ -236,7 +237,7 @@ const UI = (() => {
       appendDomElementToParent(
         wrapperEmptyTodoList.el,
         emptyTodoText,
-        addTodoBtn
+        addTodoBtn,
       );
     }
     appendDomElementToParent(parentElement, wrapperEmptyTodoList);
@@ -359,9 +360,7 @@ const UI = (() => {
     priorityBtn.el.innerHTML = `${priorityTodoSVG(colorFlagPriority)}`;
     deleteBtn.el.innerHTML = `${deleteTodoSVG()}`;
 
-    const popUpPriority = createEditPriorityPopUp(todo, () =>
-      loadTodoList(project)
-    );
+    const popUpPriority = createEditPriorityPopUp(todo, () => loadTodoList(project));
 
     const interactButtons = [
       editBtn.el,
@@ -384,7 +383,7 @@ const UI = (() => {
     appendDomElementToParent(
       leftSideOfTodoItem.el,
       doneWrapper,
-      todoTitleWrapper
+      todoTitleWrapper,
     );
     appendDomElementToParent(editWrapper.el, editBtn);
     appendDomElementToParent(priorityWrapper.el, priorityBtn, popUpPriority);
@@ -393,13 +392,13 @@ const UI = (() => {
       rightSideOfTodoItem.el,
       editWrapper,
       priorityWrapper,
-      deleteWrapper
+      deleteWrapper,
     );
 
     appendDomElementToParent(
       todoItem.el,
       leftSideOfTodoItem,
-      rightSideOfTodoItem
+      rightSideOfTodoItem,
     );
 
     return todoItem.el;
@@ -416,12 +415,12 @@ const UI = (() => {
     const projectTitle = domElementFactory(
       'span',
       `${project.title}`,
-      'project-name'
+      'project-name',
     );
     const deleteProjectBtn = domElementFactory(
       'button',
       '',
-      'delete-project-btn'
+      'delete-project-btn',
     );
     projectInfo.el.dataset.list = `${project.title}`;
 
@@ -431,7 +430,7 @@ const UI = (() => {
     listenerToInteractWithProjectItem(
       project,
       deleteProjectBtn.el,
-      deleteProject
+      deleteProject,
     );
 
     appendDomElementToParent(projectInfo.el, circleColorProject, projectTitle);
@@ -446,7 +445,7 @@ const UI = (() => {
     displayProjectListInEditFormSelectChoice(project);
 
     const inputEditTodo = Array.from(
-      document.querySelectorAll('#edit-todo-form input')
+      document.querySelectorAll('#edit-todo-form input'),
     );
 
     desc.placeholder = description;
@@ -479,7 +478,7 @@ const UI = (() => {
       const emptyProjectText = domElementFactory(
         'p',
         'You have no project',
-        'empty-project-text'
+        'empty-project-text',
       );
       projectList.appendChild(emptyProjectText.el);
     } else {
@@ -524,13 +523,13 @@ const UI = (() => {
 
   const getUpdateTodoInfo = (projectInfo) => {
     const updatedTodo = Array.from(
-      document.querySelectorAll('#edit-todo-form input')
+      document.querySelectorAll('#edit-todo-form input'),
     ).reduce(
       (acc, input) => ({
         ...acc,
         [input.id]: input.value || input.placeholder,
       }),
-      {}
+      {},
     );
 
     const descriptionTodo = document.querySelector('#edit-todo-form textarea');
@@ -553,10 +552,10 @@ const UI = (() => {
       e.stopImmediatePropagation();
 
       const selectProjectValue = document.querySelector(
-        '#edit-project-select option:checked'
+        '#edit-project-select option:checked',
       );
       const allOptions = Array.from(
-        document.querySelectorAll('#edit-project-select option')
+        document.querySelectorAll('#edit-project-select option'),
       );
 
       const newProject = selectProjectValue.value;
@@ -608,23 +607,21 @@ const UI = (() => {
 
   const getTodoInfo = () => {
     const newTodo = Array.from(
-      document.querySelectorAll('#add-todo-form input')
+      document.querySelectorAll('#add-todo-form input'),
     ).reduce((acc, input) => ({ ...acc, [input.id]: input.value }), {});
 
     const desc = document.querySelector('#add-todo-form textarea');
 
     const prioritySelect = document.querySelector('#add-todo-form #priority');
-    const priorityValue =
-      prioritySelect.options[prioritySelect.selectedIndex].value;
+    const priorityValue = prioritySelect.options[prioritySelect.selectedIndex].value;
 
     newTodo.description = desc.value;
     newTodo.priority = priorityValue;
 
     const projectSelect = document.querySelector(
-      '#add-todo-form #project-select'
+      '#add-todo-form #project-select',
     );
-    const projectValue =
-      projectSelect.options[projectSelect.selectedIndex].value;
+    const projectValue = projectSelect.options[projectSelect.selectedIndex].value;
 
     newTodo.project = projectValue;
 
@@ -633,7 +630,7 @@ const UI = (() => {
 
   const getNewProjectTitle = () => {
     const projectTitle = document.querySelector(
-      '#add-project-form input'
+      '#add-project-form input',
     ).value;
 
     return projectTitle.toLowerCase();
@@ -641,7 +638,7 @@ const UI = (() => {
 
   const AddEventListenerToFetchTodoInProject = () => {
     const projectName = document.querySelectorAll(
-      '.display-main-list, .project-info'
+      '.display-main-list, .project-info',
     );
 
     projectName.forEach((project) => {
@@ -705,6 +702,7 @@ const UI = (() => {
   };
 
   return {
+    displayAvatar,
     loadTodoList,
     loadInboxTodoListWithHomeIcon,
     loadProjectList,
