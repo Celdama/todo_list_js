@@ -21,7 +21,7 @@ const handleProjectListModule = (() => {
 
   const getProjectByName = (name) => {
     const results = projectList.find(
-      (project) => project.title === name.toLowerCase()
+      (project) => project.title === name.toLowerCase(),
     );
     return results;
   };
@@ -42,7 +42,7 @@ const handleProjectListModule = (() => {
 
   const getAllProjectExceptDefaultProject = () => {
     const allProjectExceptDefault = projectList.filter(
-      (project) => !project.defaultProject
+      (project) => !project.defaultProject,
     );
 
     return allProjectExceptDefault;
@@ -50,7 +50,7 @@ const handleProjectListModule = (() => {
 
   const getAllProjectExceptTodayAndUpcomming = () => {
     const allProjectExceptTodayAndUpcomming = projectList.filter(
-      (project) => project.title !== 'today' && project.title !== 'upcoming'
+      (project) => project.title !== 'today' && project.title !== 'upcoming',
     );
 
     return allProjectExceptTodayAndUpcomming;
@@ -58,7 +58,7 @@ const handleProjectListModule = (() => {
 
   const getTodoByProjectName = (name) => {
     const results = projectList.find(
-      (project) => project.title === name.toLowerCase()
+      (project) => project.title === name.toLowerCase(),
     );
     return results.todos;
   };
@@ -66,7 +66,7 @@ const handleProjectListModule = (() => {
   const deleteTodoInThisProject = (project, todoId) => {
     const todosParentProject = getProjectByName(project);
     todosParentProject.todos = todosParentProject.todos.filter(
-      (item) => item.id !== todoId
+      (item) => item.id !== todoId,
     );
   };
 
