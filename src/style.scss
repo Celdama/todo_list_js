@@ -395,17 +395,35 @@ html {
                   border-radius: 0.25rem;
                   background-clip: padding-box;
                   padding: 0.3rem;
+
+                  &:focus {
+                    outline: 2px solid $header-color;
+                    box-shadow: 0 0 2px #719ECE;
+                  }
                 }
 
                 textarea {
                   border: 1px solid #ced4da;
                   padding: 0.3rem;
+                  border-radius: 0.25rem;
+
+
+                  &:focus {
+                    outline: 2px solid $header-color;
+                    box-shadow: 0 0 2px #719ECE;
+                  }
                 }
 
                 select {
                   background-color: #fff;
                   border: 1px solid #ced4da;
+                  border-radius: 0.25rem;
 
+
+                  &:focus {
+                    outline: 2px solid $header-color;
+                    box-shadow: 0 0 2px #719ECE;
+                  }
                 }
 
                 .left-side {
@@ -508,6 +526,12 @@ html {
                 border-radius: 0.25rem;
                 background-clip: padding-box;
                 padding: 0.3rem;
+
+
+                &:focus {
+                  outline: 2px solid $header-color;
+                  box-shadow: 0 0 2px #719ECE;
+                }
               }
               .add-project-buttons {
                 // padding: 1.5rem 1rem 0rem 1rem;
@@ -604,6 +628,13 @@ html {
                 select {
                   background-color: #fff;
                   border: 1px solid #ced4da;
+                  border-radius: 0.25rem;
+
+
+                  &:focus {
+                    outline: 2px solid $header-color;
+                    box-shadow: 0 0 2px #719ECE;
+                  }
                 }
 
                 .left-side {
