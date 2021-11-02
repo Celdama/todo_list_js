@@ -319,13 +319,48 @@ const UI = (() => {
     const { setCompleteTodo, deleteThisTodo } = todoListModule;
     const { deleteTodoInThisProject } = projectListModule;
     const { id, project } = todo;
-    setCompleteTodo(todo);
-    deleteThisTodo(id);
-    deleteTodoInThisProject(project, id);
+    const todoItem = document.querySelector(`[data-todo-id='${todo.id}']`);
+    const doneTodoBtn = todoItem.childNodes[0].childNodes[0].childNodes[0];
+    const undoCompleteTodoBtn = document.querySelector('.undo-complete-task');
+    const wrapperUndo = document.querySelector('#undo-complete-wrapper');
+    wrapperUndo.classList.add('show-undo-complete-wrapper');
+    wrapperUndo.classList.remove('hide-undo-complete-wrapper');
+    let undo = false;
+    setTimeout(() => {
+      if (!undo) {
+        todoItem.style.display = 'none';
+      }
+    }, 600);
+
+    undoCompleteTodoBtn.addEventListener('click', () => {
+      undo = true;
+      todoItem.style.display = 'flex';
+      doneTodoBtn.checked = false;
+      wrapperUndo.classList.remove('show-undo-complete-wrapper');
+      wrapperUndo.classList.add('hide-undo-complete-wrapper');
+    });
 
     setTimeout(() => {
+      if (undo) {
+        return;
+      }
+      setCompleteTodo(todo);
+      deleteThisTodo(id);
+      deleteTodoInThisProject(project, id);
       loadTodoList(project);
-    }, 1000);
+      wrapperUndo.classList.remove('show-undo-complete-wrapper');
+      wrapperUndo.classList.add('hide-undo-complete-wrapper');
+    }, 3000);
+  };
+
+  const undoCompleteTodo = (todo) => {
+    const { setCompleteTodo, getCompleteTodoList } = todoListModule;
+    const undoCompleteTodoBtn = document.querySelector('.undo-complete-task');
+
+    undoCompleteTodoBtn.addEventListener('click', () => {
+      const undoTodo = setCompleteTodo(todo);
+      console.log(getCompleteTodoList());
+    });
   };
 
   const renderTodoItem = (todo) => {
@@ -359,6 +394,7 @@ const UI = (() => {
       colorFlagPriority = BLUE_FLAG_PRIORITY;
     }
 
+    todoItem.el.dataset.todoId = `${todo.id}`;
     doneBtn.el.type = 'checkbox';
     editBtn.el.innerHTML = `${editTodoSVG()}`;
     priorityBtn.el.innerHTML = `${priorityTodoSVG(colorFlagPriority)}`;
@@ -716,6 +752,7 @@ const UI = (() => {
     displayAddTodoForm,
     displayAddProjectForm,
     displayCompleteTodo,
+    undoCompleteTodo,
   };
 })();
 

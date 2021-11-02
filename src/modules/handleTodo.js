@@ -46,11 +46,13 @@ const handleTodoListModule = (() => {
 
   const setCompleteTodo = (todo) => {
     const todoCompleteValueUpdated = {
-      isComplete: true,
+      isComplete: !todo.isComplete,
     };
 
     Object.assign(todo, todoCompleteValueUpdated);
-    completedTodo.push(todo);
+    if (todo.isComplete) {
+      completedTodo.push(todo);
+    }
 
     return todo;
   };

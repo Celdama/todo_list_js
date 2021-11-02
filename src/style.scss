@@ -693,6 +693,38 @@ html {
             }
           }
         }
+        #undo-complete-wrapper {
+          display: flex;
+          justify-content: space-between;
+          align-items: center;
+          position: fixed;
+          width: 20%;
+          padding: 1rem;
+          align-self: center;
+          font-size: 1.4rem;
+          z-index: 100;
+          background-color: #fff;
+          top: 94%;
+          border: 1px solid rgba(0,0,0,.1);
+          border-radius: 0.25rem;
+          box-shadow: 0 0.25rem 0.75rem rgb(0 0 0 / 10%);
+          transition: transform 0.2s ease;
+
+
+          button {
+            text-transform: capitalize;
+            color: red;
+            font-weight: bold;
+            border: none;
+            background-color: transparent;
+            padding: .3rem .6rem;
+
+            &:hover {
+              cursor: pointer;
+              background-color: $aside-color-hover;
+            }
+          }
+        }
     }
   }
 }
