@@ -30,9 +30,13 @@ html {
           justify-content: space-between;
           width: 80px;
           img {
-            height: 28px;
-            width: 28px;
-            border-radius: 14px;
+            height: 30px;
+            width: 30px;
+            border-radius: 15px;
+
+            &:hover {
+              cursor: pointer;
+            }
           }
         }
 
