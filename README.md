@@ -2,7 +2,7 @@
 
 The first "big" application in my github. A todo liste application. Todo lists are a staple in beginning webdev tutorials because they can be very simple. There is, however, a lot of room for improvement and many features that can be added.
 
-# Description
+## Description
 
 This application had to meet several requirements, which are the following:
 
@@ -34,4 +34,29 @@ The application is functional, you can go to the online version and add your own
 
 As far as CSS is concerned, I decided to use [Sass](https://sass-lang.com/) for the first time, I really appreciated the fact that you have to define your CSS according to the organization of your HTML file, even if I have the impression that sometimes it forces me to have some code to apply in my CSS file. I will take the time to read the documentation, there is certainly one thing, or several, that I did wrong. But it's a very encouraging first since I had decided not to use bootstrap or anything else, but to do everything alone.
 
-Last small package used, [uuid](https://www.npmjs.com/package/uuid) to generate unique ids for each todo and so be able to find them exactly when I have to modify or delete them.
+Last small package used, [uuid](https://www.npmjs.com/package/uuid) to generate unique ids for each todo and so be able to find them exactly when I have to modify or delete them, same for project item.
+
+I will update this readme for every change made to this project from now on. I'll come back to it, in the meantime I'm moving on. I can't wait to tackle React, but it was important before that to practice enough in vanilla JS.
+
+I also need to refactor the code once again.
+
+# Deployed Link
+
+You can go this [link](https://todo-list-js-gs1ekjjw1-celdama.vercel.app/), to test it online.
+
+# Install
+
+If you want to test this app, you can clone the local repo and run it in your browser.
+
+```bash
+# git clone https://github.com/Celdama/todo_list_js.git
+# cd todo_list_js
+# npm install
+# npx webpack --watch
+# open the index.html file in dist folder in your browser
+```
+
+## Technology Stack
+![HTML](https://img.shields.io/badge/-HTML-red)
+![CSS](https://img.shields.io/badge/-CSS-blue)
+![JS](https://img.shields.io/badge/-JavaScript-yellow)
