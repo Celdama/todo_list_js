@@ -40,6 +40,8 @@ I will update this readme for every change made to this project from now on. I'l
 
 I also need to refactor the code once again.
 
+![apercu de ma todo app](src/images/todo.png)
+
 ## Deployed Link
 
 You can go this [link](https://todo-list-js-gs1ekjjw1-celdama.vercel.app/), to test it online.
