@@ -40,11 +40,11 @@ I will update this readme for every change made to this project from now on. I'l
 
 I also need to refactor the code once again.
 
-# Deployed Link
+## Deployed Link
 
 You can go this [link](https://todo-list-js-gs1ekjjw1-celdama.vercel.app/), to test it online.
 
-# Install
+## Install
 
 If you want to test this app, you can clone the local repo and run it in your browser.
 
@@ -60,3 +60,18 @@ If you want to test this app, you can clone the local repo and run it in your br
 ![HTML](https://img.shields.io/badge/-HTML-red)
 ![CSS](https://img.shields.io/badge/-CSS-blue)
 ![JS](https://img.shields.io/badge/-JavaScript-yellow)
+
+## JavaScript Used
+
+- DOM Manipulation
+- Control Structure
+- Function expression
+- Factory Function
+- Module Pattern
+- import / export
+- Object Event
+- Event Listener
+- Destructuring
+- Object Date
+- localStorage
+- Method filter, find, sort, assign, push...
