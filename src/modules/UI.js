@@ -327,7 +327,7 @@ const UI = (() => {
   };
 
   const completeTodo = (todo) => {
-    const { setCompleteTodo, deleteThisTodo } = todoListModule;
+    const { toggleCompleteTodoState, deleteThisTodo } = todoListModule;
     const { deleteTodoInThisProject } = projectListModule;
     const { id, project } = todo;
     const todoItem = document.querySelector(`[data-todo-id='${todo.id}']`);
@@ -355,7 +355,7 @@ const UI = (() => {
       if (undo) {
         return;
       }
-      setCompleteTodo(todo);
+      toggleCompleteTodoState(todo);
       deleteThisTodo(id);
       deleteTodoInThisProject(project, id);
       loadTodoList(project);
