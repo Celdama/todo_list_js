@@ -29,3 +29,9 @@ This application had to meet several requirements, which are the following:
 - since i have already use webpack, adding external libraries to take a little more in hand webpack and its operation, as weel as the use of libraries with npm : i used the [date-fns](https://date-fns.org/) library for formatting and manipulating dates and times.
 
 All these instructions have been respected. I met a lot of difficulties during this project that forced me to go out of my comfort zone to find a solution. Indeed, the first complication was to manage each todo item according to the project to which it belongs, whether it is for the creation of todo, the modification of the project of a todo as well as the saving of each todo item in the good project.
+
+The application is functional, you can go to the online version and add your own tasks and projects and have this data persist until you change your browser. There are still 2 or 3 small details to code, like making the application fully responsive or allowing the user to open a preview of the data of a todo.
+
+As far as CSS is concerned, I decided to use [Sass](https://sass-lang.com/) for the first time, I really appreciated the fact that you have to define your CSS according to the organization of your HTML file, even if I have the impression that sometimes it forces me to have some code to apply in my CSS file. I will take the time to read the documentation, there is certainly one thing, or several, that I did wrong. But it's a very encouraging first since I had decided not to use bootstrap or anything else, but to do everything alone.
+
+Last small package used, [uuid](https://www.npmjs.com/package/uuid) to generate unique ids for each todo and so be able to find them exactly when I have to modify or delete them.
