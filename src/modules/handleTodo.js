@@ -1,32 +1,8 @@
 import { v4 as uuidv4 } from 'uuid';
-import { format, addWeeks, isThisMonth } from 'date-fns';
+import { format, isThisMonth } from 'date-fns';
+import { handleProjectListModule } from './handleProject';
 
-// je garde cette fonction jusqu'à la fin de mon developpment, je l'utilise pour
-// créer les todos à la volée dans index.js (c'est ma première version de ma function
-// factory, une fois le projet terminé je la supprimerais.)
-const todoFactory = (
-  title,
-  description,
-  dueDate = new Date(),
-  project = 'inbox',
-  priority = 'medium',
-  isComplete = false,
-) => {
-  const formatDueDate = format(new Date(dueDate), 'MM/dd/yyy');
-  const x = 3;
-
-  return {
-    id: uuidv4(),
-    title,
-    description,
-    dueDate: new Date(dueDate),
-    project: project.toLowerCase(),
-    priority: priority.toLowerCase(),
-    isComplete,
-  };
-};
-
-const todoFactory2 = (todo) => ({
+const todoFactory = (todo) => ({
   id: uuidv4(),
   title: todo.title,
   description: todo.description,
@@ -40,11 +16,33 @@ const handleTodoListModule = (() => {
   let todoList = [];
   const completedTodo = [];
 
-  const addTodo = (todo) => {
+  const addNewTodo = (todo) => {
     todoList.push(todo);
+    saveTodoListInLocalStorage();
   };
 
-  const setCompleteTodo = (todo) => {
+  const saveTodoListInLocalStorage = () => {
+    localStorage.setItem('todoListInLocalStorage', JSON.stringify(todoList));
+  };
+
+  const saveCompletedTodoInLocalStorage = () => {
+    localStorage.setItem('completedTodoInLocalStorage', JSON.stringify(completedTodo));
+  };
+
+  const retrieveTodoListFromLocalStorage = () => {
+    todoList = localStorage.getItem('todoListInLocalStorage');
+    todoList = JSON.parse(todoList);
+
+    if (todoList === null) {
+      todoList = [];
+    }
+
+    todoList.forEach((todo) => {
+      handleProjectListModule.addTodoToProject(todo.project, todo);
+    });
+  };
+
+  const toggleCompleteTodoState = (todo) => {
     const todoCompleteValueUpdated = {
       isComplete: !todo.isComplete,
     };
@@ -54,6 +52,8 @@ const handleTodoListModule = (() => {
       completedTodo.push(todo);
     }
 
+    saveCompletedTodoInLocalStorage();
+
     return todo;
   };
 
@@ -61,37 +61,39 @@ const handleTodoListModule = (() => {
 
   const getTodo = (id) => {
     const todo = todoList.find((item) => item.id === id);
-    // console.log('from getodo');
-    // console.log(todo);
+
     return todo;
   };
 
   const updateTodo = (originalTodo, updatedTodoInfo) => {
     const updatedTodo = Object.assign(originalTodo, updatedTodoInfo);
+    saveTodoListInLocalStorage();
+
     return updatedTodo;
   };
 
   const deleteThisTodo = (id) => {
     todoList = todoList.filter((item) => item.id !== id);
+    saveTodoListInLocalStorage();
   };
 
   const deleteAllTodoFromDeletedProject = (projectName) => {
     todoList = todoList.filter((item) => item.project !== projectName);
-    console.log(todoList);
-    console.log('adter d');
+    saveTodoListInLocalStorage();
   };
 
-  const getTodoList = () => {
-    console.table(todoList);
-    return todoList;
-  };
+  const getTodoList = () => todoList;
 
   const updateTodoPriority = (todo, newPriorityValue) => {
     const todoPriorityValueUpdated = {
       priority: newPriorityValue,
     };
 
-    Object.assign(todo, todoPriorityValueUpdated);
+    const updatedTodo = todoList.find((item) => item.id === todo.id);
+    Object.assign(updatedTodo, todoPriorityValueUpdated);
+    handleProjectListModule.updateTodoInProject(todo.project, updatedTodo);
+
+    saveTodoListInLocalStorage();
   };
 
   const sortDueDateAscOrder = () => {
@@ -143,11 +145,15 @@ const handleTodoListModule = (() => {
     return todoOfCurrentMonth;
   };
 
+  const initTodoListFromLocalStorage = () => {
+    retrieveTodoListFromLocalStorage();
+  };
+
   return {
-    addTodo,
+    addNewTodo,
     getTodo,
     updateTodo,
-    setCompleteTodo,
+    toggleCompleteTodoState,
     deleteThisTodo,
     deleteAllTodoFromDeletedProject,
     getCompleteTodoList,
@@ -157,7 +163,8 @@ const handleTodoListModule = (() => {
     sortDueDateDescOrder,
     getTodoOfCurrentDay,
     getTodoOfCurrentMonth,
+    initTodoListFromLocalStorage,
   };
 })();
 
-export { todoFactory, todoFactory2, handleTodoListModule };
+export { todoFactory, handleTodoListModule };

@@ -5,6 +5,7 @@ module.exports = {
   entry: './src/index.js',
   devtool: 'inline-source-map',
   output: {
+    hashFunction: 'xxhash64',
     filename: 'main.js',
     path: path.resolve(__dirname, 'dist'),
   },

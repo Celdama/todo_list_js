@@ -4,13 +4,23 @@ import {
 import handleEventListenerModule from '../utilities/handleEventListener';
 import domElementFactory from '../utilities/domElementFactory';
 import appendDomElementToParent from '../utilities/appendDomElementToParent';
-import { todoFactory2, handleTodoListModule as todoListModule } from './handleTodo';
+import { todoFactory, handleTodoListModule as todoListModule } from './handleTodo';
 import { projectFactory, handleProjectListModule as projectListModule } from './handleProject';
 import { displayEditTodoPriorityPopUp, createEditPriorityPopUp } from '../utilities/priorityPopUp';
 import icons from '../utilities/iconsSVG';
 import Avatar from '../images/avatar.png';
+import FavIcon from '../images/favIcon.png';
+import animationsUI from '../utilities/animations';
 
 const UI = (() => {
+  const setFavicons = () => {
+    const headTitle = document.querySelector('head');
+    const setFavicon = document.createElement('link');
+    setFavicon.setAttribute('rel', 'shortcut icon');
+    setFavicon.setAttribute('href', FavIcon);
+    headTitle.appendChild(setFavicon);
+  };
+
   const displayAvatar = () => {
     const avatar = document.querySelector('.completed-todo');
     avatar.src = Avatar;
@@ -26,7 +36,7 @@ const UI = (() => {
     return currentDayTodoList;
   };
 
-  const displayProjectListInSelectChoice = () => {
+  const displayProjectListInSelectChoice = (defaultChoice = 'inbox') => {
     const { getAllProjectExceptTodayAndUpcomming } = projectListModule;
     const select = document.querySelector('#project-select');
     const projectList = getAllProjectExceptTodayAndUpcomming();
@@ -38,7 +48,7 @@ const UI = (() => {
       const option = domElementFactory('option', `${title}`, '');
       option.el.value = `${title}`;
 
-      if (title === 'inbox') {
+      if (title === defaultChoice) {
         option.el.setAttribute('selected', true);
       }
 
@@ -54,8 +64,9 @@ const UI = (() => {
     );
     const displayAddTodoFormBtn = document.querySelector('#add-todo-btn');
     const addTodoFormWrapper = document.querySelector('#add-todo-wrapper');
+    const todoCategory = document.querySelector('#todo-category');
 
-    displayProjectListInSelectChoice();
+    displayProjectListInSelectChoice(todoCategory.textContent);
 
     if (hiddeFormOnSubmit) {
       addTodoFormWrapper.classList.toggle('hidden');
@@ -354,12 +365,11 @@ const UI = (() => {
   };
 
   const undoCompleteTodo = (todo) => {
-    const { setCompleteTodo, getCompleteTodoList } = todoListModule;
+    const { toggleCompleteTodoState } = todoListModule;
     const undoCompleteTodoBtn = document.querySelector('.undo-complete-task');
 
     undoCompleteTodoBtn.addEventListener('click', () => {
-      const undoTodo = setCompleteTodo(todo);
-      console.log(getCompleteTodoList());
+      toggleCompleteTodoState(todo);
     });
   };
 
@@ -505,8 +515,6 @@ const UI = (() => {
     });
   };
 
-  // HERE
-
   const loadProjectList = () => {
     const { getAllProjectExceptDefaultProject } = projectListModule;
     const projectList = document.getElementById('display-projects-list');
@@ -551,14 +559,32 @@ const UI = (() => {
     }
   };
 
+  const AddEventListenerToFetchTodoInProject = () => {
+    const projectName = document.querySelectorAll(
+      '.display-main-list, .project-info',
+    );
+
+    projectName.forEach((project) => {
+      project.addEventListener('click', () => {
+        const { list } = project.dataset;
+
+        displayProjectListInSelectChoice(list);
+        loadTodoList(list);
+      });
+    });
+  };
+
   const deleteProject = (project) => {
     const { deleteThisProject } = projectListModule;
+    const { deleteAllTodoFromDeletedProject } = todoListModule;
     const { id, title } = project;
 
     deleteThisProject(id, title);
+    deleteAllTodoFromDeletedProject(title);
     loadProjectList();
     loadTodoList();
     displayProjectListInSelectChoice();
+    AddEventListenerToFetchTodoInProject();
   };
 
   const getUpdateTodoInfo = (projectInfo) => {
@@ -624,7 +650,8 @@ const UI = (() => {
       } else if (categoryTitle === 'upcoming' || categoryTitle === 'today') {
         loadTodoList(categoryTitle);
       } else {
-        loadTodoList(olderProject);
+        projectListModule.updateTodoInProject(olderProject, updatedTodo);
+        loadTodoList(updatedTodo.project);
       }
 
       wrapper.classList.toggle('hidden');
@@ -636,8 +663,17 @@ const UI = (() => {
     const { id } = todo;
     const editTodoWrapper = document.querySelector('#edit-todo-wrapper');
     const editTodoForm = document.querySelector('#edit-todo-form');
+    const closeEditFormBtn = document.querySelector('.close-edit-form-todo');
 
-    editTodoWrapper.classList.toggle('hidden');
+    if (editTodoWrapper.classList.contains('hidden')) {
+      editTodoWrapper.classList.remove('hidden');
+    } else {
+      editTodoWrapper.classList.add('hidden');
+    }
+
+    closeEditFormBtn.addEventListener('click', () => {
+      editTodoWrapper.classList.add('hidden');
+    });
 
     editTodoForm.dataset.id = id;
 
@@ -676,19 +712,6 @@ const UI = (() => {
     return projectTitle.toLowerCase();
   };
 
-  const AddEventListenerToFetchTodoInProject = () => {
-    const projectName = document.querySelectorAll(
-      '.display-main-list, .project-info',
-    );
-
-    projectName.forEach((project) => {
-      project.addEventListener('click', () => {
-        const { list } = project.dataset;
-        loadTodoList(list);
-      });
-    });
-  };
-
   const toggleDropdowProjectsListAuto = () => {
     const chevronSVG = document.querySelector('.bi-chevron-right');
     const projectsList = document.getElementById('display-projects-list');
@@ -704,20 +727,20 @@ const UI = (() => {
 
   const addTodo = () => {
     const { addTodoToProject } = projectListModule;
+    const { addNewTodo, getTodoList } = todoListModule;
     const addTodoForm = document.getElementById('add-todo-form');
 
     addTodoForm.addEventListener('submit', (e) => {
       e.preventDefault();
       const newTodoInfo = getTodoInfo();
-      const newTodo = todoFactory2(newTodoInfo);
+      const newTodo = todoFactory(newTodoInfo);
       const { project } = newTodo;
-      console.log(newTodo);
-      // A LA FIN DESTRUCTURER CETTE FONCTION ET LA RENOMMER EN AddNewTodo()
-      todoListModule.addTodo(newTodo);
+      addNewTodo(newTodo);
       addTodoToProject(project, newTodo);
       loadTodoList(project);
       addTodoForm.reset();
       displayAddTodoForm(true);
+      getTodoList();
     });
   };
 
@@ -738,21 +761,33 @@ const UI = (() => {
       loadTodoList(title);
       displayAddProjectForm(true);
       displayProjectListInSelectChoice();
+      projectListModule.saveProjectListInLocalStorage();
     });
   };
 
+  const initApp = () => {
+    const { initProjectFromLocalStorage } = projectListModule;
+    const { initTodoListFromLocalStorage } = todoListModule;
+    const { initAnimationUi } = animationsUI;
+
+    setFavicons();
+    initProjectFromLocalStorage();
+    initTodoListFromLocalStorage();
+    displayAvatar();
+    loadTodoList();
+    loadProjectList();
+    addProject();
+    addTodo();
+    loadInboxTodoListWithHomeIcon();
+    AddEventListenerToFetchTodoInProject();
+    displayAddTodoForm();
+    displayAddProjectForm();
+    displayCompleteTodo();
+    initAnimationUi();
+  };
+
   return {
-    displayAvatar,
-    loadTodoList,
-    loadInboxTodoListWithHomeIcon,
-    loadProjectList,
-    AddEventListenerToFetchTodoInProject,
-    addTodo,
-    addProject,
-    displayAddTodoForm,
-    displayAddProjectForm,
-    displayCompleteTodo,
-    undoCompleteTodo,
+    initApp,
   };
 })();
 

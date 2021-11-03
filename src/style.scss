@@ -198,7 +198,6 @@ html {
               }
             }
             #add-todo-form {
-              // display: none;
               position: absolute;
               left: 50%;
             }
@@ -373,7 +372,6 @@ html {
           }
 
           .add-todo-content {
-            // flex: 1 1 auto;
             padding: 1.5rem 1rem;
 
             form {
@@ -534,7 +532,6 @@ html {
                 }
               }
               .add-project-buttons {
-                // padding: 1.5rem 1rem 0rem 1rem;
                 padding-top: 1.5rem;
                 align-self: flex-end;
                 .close-add-form-project {
@@ -698,7 +695,7 @@ html {
           justify-content: space-between;
           align-items: center;
           position: fixed;
-          width: 20%;
+          width: 200px;
           padding: 1rem;
           align-self: center;
           font-size: 1.4rem;

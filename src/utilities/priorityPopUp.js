@@ -15,7 +15,6 @@ const displayEditTodoPriorityPopUp = (popUp) => {
 };
 
 const createEditPriorityPopUp = (todo, reloadTodoFunctionFromUI) => {
-  console.log(todo.priority);
   const priorityChoice = ['High', 'Medium', 'Low'];
   const popUp = domElementFactory('div', '', 'pop-up-priority');
 

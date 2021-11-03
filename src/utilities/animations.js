@@ -53,10 +53,14 @@ const animationsUI = (() => {
     });
   };
 
+  const initAnimationUi = () => {
+    toggleDropdowProjectsListOnClick();
+    toggleClassOnSmallerScreen();
+    hideAside();
+  };
+
   return {
-    toggleDropdowProjectsListOnClick,
-    toggleClassOnSmallerScreen,
-    hideAside,
+    initAnimationUi,
   };
 })();
 
